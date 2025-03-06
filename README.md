@@ -1,25 +1,6 @@
-# Capital Markets Loaders Service
+# Capital Markets Agents Service
 
-This repository hosts the backend for the **Capital Markets Loaders** service. It is designed to handle the extraction, transformation, and loading (ETL) of financial data from various sources, including Yahoo Finance and the Federal Reserve Economic Data (FRED) API, as well as financial news processing.
-
-## What is the Capital Markets Loaders Service?
-
-The Capital Markets Loaders Service is responsible for:
-
-- Extracting market data from Yahoo Finance.
-- Extracting macroeconomic data from the FRED API.
-- Scraping and processing financial news.
-- Transforming and loading the extracted data into MongoDB for further analysis.
-
-#### ETL Processes
-
-- **Yahoo Finance Market Data ETL**: Extracts, transforms, and loads market data for various asset types using the `yfinance` Python package.
-- **FRED API Macroeconomic Data ETL**: Extracts, transforms, and loads macroeconomic data using the `pyfredapi` Python package.
-- **Financial News Processing**: Scrapes financial news, generates embeddings using AWS Bedrock with the Cohere English v3 model, and calculates sentiment scores using the FinBERT model from Hugging Face.
-
-#### Scheduler
-
-- **Job Scheduling**: Uses the `scheduler` Python package to schedule and manage ETL processes and financial news processing jobs.
+This repository hosts the backend for the **Capital Markets Agents** service.
 
 ## Where Does MongoDB Shine?
 
