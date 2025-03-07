@@ -1302,4 +1302,19 @@
     "$date": "2025-02-01T00:00:00.000Z"
   },
   "value": 2.03128216
+},
+{
+  "_id": {
+    "$oid": "67caf94a1d7fd75359fd7c32"
+  },
+  "title": "Unemployment Rate",
+  "series_id": "UNRATE",
+  "frequency": "Monthly",
+  "frequency_short": "M",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-02-01T00:00:00.000Z"
+  },
+  "value": 4.1
 }]

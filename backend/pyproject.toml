@@ -19,6 +19,8 @@ torch = "^2.6.0"
 yfinance = "^0.2.54"
 pyfredapi = "^0.9.1"
 pandas = "^2.2.3"
+langchain-aws = "^0.2.15"
+langchain-mongodb = "^0.5.0"
 
 
 [build-system]
