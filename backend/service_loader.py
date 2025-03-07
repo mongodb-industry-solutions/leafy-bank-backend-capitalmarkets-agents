@@ -8,9 +8,6 @@ from loaders.yfinance_tickers_load import YFinanceTickersLoad
 from loaders.yfinance_tickers_cleaner import YFinanceTickersCleaner
 
 from loaders.financial_news_scraper import FinancialNewsScraper
-from loaders.financial_news_embeddings import FinancialNewsEmbeddings
-from loaders.financial_news_sentiment_score import FinancialNewsSentimentScore
-from loaders.financial_news_cleaner import FinancialNewsCleaner
 
 from loaders.pyfredapi_macroindicators_extract import PyFredAPIExtract
 from loaders.pyfredapi_macroindicators_transform import PyFredAPITransform
@@ -48,15 +45,20 @@ class LoaderService:
         """
         logger.info("Starting Yahoo Finance market data loading process")
 
+        # Validate the date is not current date or future date
+        current_date = datetime.now(self.utc).strftime("%Y%m%d")
+        if date_str >= current_date:
+            raise ValueError("date_str cannot be the current date or a future date")
+
         # Date string for end date
-        end_date_str = date_str
+        start_date_str = date_str
 
         # Define date range for extraction
-        end_date = datetime.strptime(end_date_str, "%Y%m%d").replace(tzinfo=self.utc)
-        start_date = end_date - timedelta(days=1)
-        start_date_str = start_date.strftime("%Y%m%d")
+        start_date = datetime.strptime(start_date_str, "%Y%m%d").replace(tzinfo=self.utc)
+        end_date = start_date + timedelta(days=1)
+        end_date_str = end_date.strftime("%Y%m%d")
 
-        logger.info(f"Extracting data from {start_date_str} to {end_date_str}")
+        logger.info(f"Extracting data for {start_date_str}")
 
         # Extract Market Data
         extractor = YFinanceTickersExtract(start_date=start_date_str, end_date=end_date_str)
@@ -87,6 +89,11 @@ class LoaderService:
         :param date_str: Date in "%Y%m%d" format.
         """
         logger.info("Starting PyFredAPI macroeconomic data loading process")
+
+        # Validate the date is not current date or future date
+        current_date = datetime.now(self.utc).strftime("%Y%m%d")
+        if date_str >= current_date:
+            raise ValueError("date_str cannot be the current date or a future date")
 
         # Date string for end date
         end_date_str = date_str
@@ -124,25 +131,14 @@ class LoaderService:
             collection_name=os.getenv("NEWS_COLLECTION", "financial_news"),
             scrape_num_articles=int(os.getenv("SCRAPE_NUM_ARTICLES", 1))
         )
-        news_scraper.scrape_all_tickers()
-
-        # Embeddings
-        news_embeddings = FinancialNewsEmbeddings()
-        news_embeddings.run()
-
-        # Sentiment Score
-        news_sentiment_creator = FinancialNewsSentimentScore()
-        news_sentiment_creator.run()
-
-        # Clean up articles older than 100 for each ticker
-        news_cleaner = FinancialNewsCleaner()
-        news_cleaner.run()
+        news_scraper.run()
 
         logger.info("Financial News processing completed!")
 
-if __name__ == "__main__":
-    service = LoaderService()
+# Example usage:
+# if __name__ == "__main__":
+    # service = LoaderService()
     # Example usage:
-    service.load_yfinance_market_data("20250306")
-    service.load_pyfredapi_macroeconomic_data("20250306")
+    # service.load_yfinance_market_data("20250306")
+    # service.load_pyfredapi_macroeconomic_data("20250306")
     # service.load_recent_financial_news()

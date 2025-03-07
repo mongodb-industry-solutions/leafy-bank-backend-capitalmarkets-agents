@@ -1,6 +1,6 @@
 import pandas as pd
 from datetime import datetime
-from loaders.db.mongo_db import MongoDBConnector
+from db.mongo_db import MongoDBConnector
 import logging
 import os
 
