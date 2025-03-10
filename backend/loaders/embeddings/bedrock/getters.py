@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
     # Example text
     text = "Embed this text."
-    model_id = "cohere.embed-english-v3"
+    model_id = os.getenv("EMBEDDING_MODEL_ID")
 
     # Generate embedding
     embedding = get_embedding(text=text, model_id=model_id)

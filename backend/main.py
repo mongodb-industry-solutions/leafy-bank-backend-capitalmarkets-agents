@@ -8,9 +8,7 @@ from service_market_data import MarketDataService
 from service_portfolio_data import PortfolioDataService
 from service_macro_indicators_data import MacroIndicatorDataService
 from service_financial_news_data import FinancialNewsDataService
-
-from vector_store_query import create_vector_store, lookup_articles
-from loaders.embeddings.bedrock.getters import get_embedding_model
+from backend.vector_store_mdb import VectorStoreMongoDB
 
 from datetime import datetime, timezone
 from dotenv import load_dotenv
@@ -48,17 +46,7 @@ market_data_service = MarketDataService()
 portfolio_data_service = PortfolioDataService()
 macro_indicator_data_service = MacroIndicatorDataService()
 financial_news_data_service = FinancialNewsDataService()
-
-embedding_model = get_embedding_model(model_id="cohere.embed-english-v3")
-vector_store = create_vector_store(
-            cluster_uri=os.getenv("MONGODB_URI"),
-            database_name=os.getenv("DATABASE_NAME"),
-            collection_name=os.getenv("NEWS_COLLECTION"),
-            text_key="article_string",
-            embedding_key="article_embedding",
-            index_name=os.getenv("VECTOR_INDEX_NAME"),
-            embedding_model=embedding_model
-        )
+vector_store_query = VectorStoreMongoDB()
 
 class DateRequest(BaseModel):
     date_str: str
@@ -225,16 +213,16 @@ class ArticleQueryRequest(BaseModel):
 @app.post("/lookup-articles")
 async def lookup_articles_endpoint(request: ArticleQueryRequest):
     """
-    Look up articles in the vector store based on the query and ticker.
+    Look up articles in the vector store based on the query.
 
     Args:
-        request (ArticleQueryRequest): The request body containing the query, ticker, and number of articles to return.
+        request (ArticleQueryRequest): The request body containing the query and number of articles to return.
 
     Returns:
         str: A string representation of the search results.
     """
     try:
-        result = lookup_articles(vector_store, query=request.query, n=request.n)
+        result = vector_store_query.lookup_articles(query=request.query, n=request.n)
         return result
     except Exception as e:
         logging.error(f"Error looking up articles: {str(e)}")
