@@ -26,7 +26,7 @@ class BedrockCohereEnglishEmbeddings(BedrockClient):
     log: logging.Logger = logging.getLogger("BedrockCohereEnglishEmbeddings")
 
     def __init__(self, aws_access_key: Optional[str] = None, aws_secret_key: Optional[str] = None,
-                 region_name: Optional[str] = "us-east-1", model_id: Optional[str] = "cohere.embed-english-v3") -> None:
+                 region_name: Optional[str] = "us-east-1", model_id: Optional[str] = os.getenv("EMBEDDING_MODEL_ID")) -> None:
         super().__init__(aws_access_key=aws_access_key, aws_secret_key=aws_secret_key, region_name=region_name)
         """
         Initialize the BedrockCohereEnglishEmbeddings class.
@@ -104,7 +104,7 @@ if __name__ == '__main__':
     # 1. cd backend ---> (Make sure to be in the backend directory)
     # 2. poetry remove boto3 botocore ---> (This will remove the packages from the project)
 
-    embedding_model = "cohere.embed-english-v3" # You can change this to any other Cohere English model
+    embedding_model = os.getenv("EMBEDDING_MODEL_ID") # You can change this to any other Cohere English model
     aws_access_key = os.getenv("AWS_ACCESS_KEY_ID")
     aws_secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
     region_name = os.getenv("AWS_REGION")

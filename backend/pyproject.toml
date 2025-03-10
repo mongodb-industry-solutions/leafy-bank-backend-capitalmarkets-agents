@@ -21,6 +21,8 @@ pyfredapi = "^0.9.1"
 pandas = "^2.2.3"
 langchain-aws = "^0.2.15"
 langchain-mongodb = "^0.5.0"
+langgraph = "^0.3.5"
+grandalf = "^0.8"
 
 
 [build-system]
