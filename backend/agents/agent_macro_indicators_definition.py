@@ -15,7 +15,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-class AgentDefinitionMacroIndicators:
+class MacroIndicatorsAgentDefinition:
     def __init__(self, llm, tools):
         self.llm = llm
         self.tools = tools
@@ -59,6 +59,6 @@ class AgentDefinitionMacroIndicators:
 
 llm = get_llm()
 logger.info("Macro Indicators Agent LLM loaded successfully.")
-macro_indicators_agent = AgentDefinitionMacroIndicators(llm, tools)
+macro_indicators_agent = MacroIndicatorsAgentDefinition(llm, tools)
 chatbot_agent = macro_indicators_agent.get_agent()
 logger.info("Macro Indicators Agent created and ready to use.")
