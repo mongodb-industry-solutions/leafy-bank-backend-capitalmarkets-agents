@@ -1,5 +1,5 @@
 from langchain.agents import tool
-from db.mongo_db import MongoDBConnector
+from mdb import MongoDBConnector
 import os
 import logging
 from dotenv import load_dotenv
@@ -14,12 +14,12 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-class AgentToolsMacroIndicators(MongoDBConnector):
+class MacroIndicatorsAgentTools(MongoDBConnector):
     def __init__(self, uri=None, database_name=None, collection_name=None):
         super().__init__(uri, database_name)
         self.collection_name = collection_name or os.getenv("PYFREDAPI_COLLECTION", "pyfredapiMacroeconomicIndicators")
         self.collection = self.get_collection(self.collection_name)
-        logger.info("MacroIndicatorsAgent initialized")
+        logger.info("MacroIndicatorsAgentTools initialized")
 
     def get_most_recent_value(self, series_id):
         """
@@ -104,8 +104,8 @@ class AgentToolsMacroIndicators(MongoDBConnector):
         else:
             return f"Unemployment Rate is neutral with respect to the previous period."
 
-# Initialize the MacroIndicatorsAgent
-macro_indicators_agent_tools = AgentToolsMacroIndicators()
+# Initialize the MacroIndicatorsAgentTools
+macro_indicators_agent_tools = MacroIndicatorsAgentTools()
 
 # Define tools
 @tool
