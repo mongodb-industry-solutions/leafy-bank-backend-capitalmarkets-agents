@@ -4,7 +4,7 @@ from langchain_core.messages import AIMessage, ToolMessage
 
 from langgraph.prebuilt import ToolNode
 from agent_market_volatility_definition import chatbot_agent
-from agent_market_volatility_tools import tools
+from backend.agents.tools.market_volatility_tools import tools
 
 # Helper function to create a node for a given agent
 def agent_node(state, agent, name):

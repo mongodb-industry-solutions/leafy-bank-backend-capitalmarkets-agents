@@ -1,40 +1,32 @@
 import os
 from pymongo import MongoClient
-from abc import abstractmethod
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
 
 class MongoDBConnector:
-    _instance = None
+    """ A class to provide access to a MongoDB database.
+    This class handles the connection to the database and provides methods to interact with collections and documents.
 
-    def __new__(cls, uri=None, database_name=None, appname=None):
-
-        if not cls._instance:
-            cls._instance = super(MongoDBConnector, cls).__new__(cls)
-            cls._instance.uri = uri or os.getenv("MONGODB_URI")
-            cls._instance.database_name = database_name or os.getenv("DATABASE_NAME")
-            cls._instance.appname = appname or os.getenv("APP_NAME")
-            cls._instance.client = MongoClient(cls._instance.uri, appname=cls._instance.appname)
-            cls._instance.db = cls._instance.client[cls._instance.database_name]
-            cls._instance._initialized = True
-        return cls._instance
+    Attributes:
+        uri (str): The connection string URI for the MongoDB database.
+        database_name (str): The name of the database to connect to.
+        appname (str): The name of the application connecting to the database.
+    """
 
     def __init__(self, uri=None, database_name=None, appname=None):
-        """ Prevent reinitialization in the singleton. """
-        pass
+        """ Initialize the MongoDBConnector instance. """
+        self.uri = uri or os.getenv("MONGODB_URI")
+        self.database_name = database_name or os.getenv("DATABASE_NAME")
+        self.appname = appname or os.getenv("APP_NAME")
+        self.client = MongoClient(self.uri, appname=self.appname)
+        self.db = self.client[self.database_name]
 
-    @abstractmethod
-    def run(self, **kwargs):
-        """
-        Abstract method interface defining common run method.
-        """
-        pass
-
-    def get_collection(self, collection_name=None):
+    def get_collection(self, collection_name):
         """Retrieve a collection."""
-        collection_name = collection_name
+        if not collection_name:
+            raise ValueError("Collection name must be provided.")
         return self.db[collection_name]
 
     def insert_one(self, collection_name, document):
