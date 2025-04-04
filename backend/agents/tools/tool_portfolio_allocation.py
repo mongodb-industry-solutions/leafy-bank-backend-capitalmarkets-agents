@@ -50,7 +50,7 @@ class PortfolioAllocationTools(MongoDBConnector):
         # Set the next step in the state
         state.next_step = "asset_trends_node"
 
-        return { "portfolio_allocation": portfolio_allocation }
+        return {"portfolio_allocation": portfolio_allocation, "updates": state.updates, "next_step": state.next_step}
 
 # Initialize the PortfolioAllocationTools
 portfolio_allocation_tools = PortfolioAllocationTools()
