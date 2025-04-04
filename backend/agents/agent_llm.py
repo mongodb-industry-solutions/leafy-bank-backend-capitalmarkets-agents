@@ -1,3 +1,4 @@
+from bedrock.client import BedrockClient
 from langchain_aws import ChatBedrock
 
 import os
@@ -14,22 +15,16 @@ logging.basicConfig(
 )
 
 
-def get_llm(model_id: str = os.getenv("CHATCOMPLETION_MODEL_ID"), 
-            aws_access_key: str = os.getenv("AWS_ACCESS_KEY_ID"), 
-            aws_secret_key: str = os.getenv("AWS_SECRET_ACCESS_KEY"), 
-            aws_region: str = os.getenv("AWS_REGION")) -> ChatBedrock:
+def get_llm(model_id: str = os.getenv("CHATCOMPLETION_MODEL_ID")) -> ChatBedrock:
     """
     Get an instance of the ChatBedrock class for the specified model ID and AWS credentials.
 
     Args:
         model_id (str): The model ID to use for the ChatBedrock instance.
-        aws_access_key (str): The AWS access key ID.
-        aws_secret_key (str): The AWS secret access key.
-        aws_region (str): The AWS region to use.
     """
 
+    bedrock_client = BedrockClient()._get_bedrock_client()
+
     return ChatBedrock(model=model_id,
-                region=aws_region, 
-                aws_access_key_id=aws_access_key, 
-                aws_secret_access_key=aws_secret_key,
+                client=bedrock_client,
                 temperature=0)

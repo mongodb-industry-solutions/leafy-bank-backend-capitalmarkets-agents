@@ -4,7 +4,7 @@ from langchain_core.messages import AIMessage, ToolMessage
 
 from langgraph.prebuilt import ToolNode
 from agent_macro_indicators_definition import chatbot_agent
-from agent_macro_indicators_tools import tools
+from backend.agents.tools.macro_indicators_tools import tools
 
 # Helper function to create a node for a given agent
 def agent_node(state, agent, name):

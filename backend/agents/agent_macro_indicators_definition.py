@@ -2,7 +2,7 @@ from datetime import datetime
 import logging
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from agent_llm import get_llm
-from agent_macro_indicators_tools import tools
+from backend.agents.tools.macro_indicators_tools import tools
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
