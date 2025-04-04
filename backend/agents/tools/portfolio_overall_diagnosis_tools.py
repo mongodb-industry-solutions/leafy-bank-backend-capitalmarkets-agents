@@ -1,6 +1,6 @@
-from states.agent_market_analysis_state import MarketAnalysisAgentState
-from bedrock.anthropic_chat_completions import BedrockAnthropicChatCompletions
-from agent_profiles import AgentProfiles
+from tools.states.agent_market_analysis_state import MarketAnalysisAgentState
+from tools.bedrock.anthropic_chat_completions import BedrockAnthropicChatCompletions
+from tools.agent_profiles import AgentProfiles
 from typing import Optional
 import os
 import logging
@@ -29,7 +29,7 @@ class PortfolioOverallDiagnosisTools:
         self.chat_completions_model_id = chat_completions_model_id
         self.agent_id = agent_id
 
-    def generate_overall_diagnosis(self, state: MarketAnalysisAgentState) -> str:
+    def generate_overall_diagnosis(self, state: MarketAnalysisAgentState) -> dict:
         """
         Generate the overall diagnosis for the portfolio using the portfolio context and LLM.
 
@@ -39,7 +39,7 @@ class PortfolioOverallDiagnosisTools:
         Returns:
             str: The overall diagnosis of the portfolio.
         """
-        logger.info("Generating overall diagnosis for the portfolio...")
+        logger.info("[Tool] Generate overall diagnosis for the portfolio.")
 
         # Retrieve the MARKET_ANALYSIS_AGENT profile
         profiler = AgentProfiles()
@@ -47,7 +47,10 @@ class PortfolioOverallDiagnosisTools:
         if not agent_profile:
             logger.error(f"Agent profile not found for agent ID: {self.agent_id}")
             state.updates.append("Unable to generate overall diagnosis due to missing agent profile.")
-            return "Unable to generate overall diagnosis due to missing agent profile."
+            return { "overall_diagnosis": "Unable to generate overall diagnosis due to missing agent profile." }
+        else:
+            # Log the agent profile
+            state.updates.append(f"[Action] Using agent profile: {self.agent_id} - {agent_profile['role']}")
 
         # Extract portfolio context from the state
         asset_trends = state.report.asset_trends
@@ -107,15 +110,15 @@ class PortfolioOverallDiagnosisTools:
         # Update the state with the overall diagnosis
         state.report.overall_diagnosis = overall_diagnosis
         state.updates.append("[Tool] Generated overall diagnosis for the portfolio.")
-
-        return overall_diagnosis
-
+        state.next_step = "__end__"
+        
+        return { "overall_diagnosis": overall_diagnosis }
 
 # Initialize the PortfolioOverallDiagnosisTools
 portfolio_overall_diagnosis_tools = PortfolioOverallDiagnosisTools()
 
 # Define tools
-def generate_overall_diagnosis_tool(state: MarketAnalysisAgentState) -> str:
+def generate_overall_diagnosis_tool(state: MarketAnalysisAgentState) -> dict:
     """
     Generate the overall diagnosis for the portfolio and update the state.
 

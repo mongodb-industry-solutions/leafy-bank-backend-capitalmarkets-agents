@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Dict, Optional
+from typing import List, Literal, Optional
 
 
 class PortfolioAllocation(BaseModel):
@@ -36,5 +36,5 @@ class Report(BaseModel):
 class MarketAnalysisAgentState(BaseModel):
     portfolio_allocation: List[PortfolioAllocation] = Field(default_factory=list, description="The portfolio allocation details.")
     report: Report = Field(default_factory=Report, description="The report containing analysis results.")
-    next_step: Optional[str] = Field(None, description="The next step in the workflow (e.g., 'asset_trends').")
+    next_step: Literal["__start__", "portfolio_allocation_node", "asset_trends_node","macro_indicators_node", "market_volatility_node", "portfolio_overall_diagnosis_node", "__end__"] = Field(None, description="The next step in the workflow (e.g., 'portfolio_allocation_node').")
     updates: List[str] = Field(default_factory=list, description="A list of updates or messages for the workflow.")
