@@ -1,6 +1,6 @@
 import json
 
-from bedrock.client import BedrockClient
+from tools.bedrock.client import BedrockClient
 from botocore.exceptions import ClientError
 
 from typing import Optional

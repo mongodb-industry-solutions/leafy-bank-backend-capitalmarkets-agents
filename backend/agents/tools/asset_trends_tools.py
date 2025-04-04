@@ -1,6 +1,5 @@
-from typing import List, Dict
-from db.mdb import MongoDBConnector
-from states.agent_market_analysis_state import MarketAnalysisAgentState, AssetTrend
+from tools.db.mdb import MongoDBConnector
+from tools.states.agent_market_analysis_state import MarketAnalysisAgentState, AssetTrend
 import os
 import logging
 from dotenv import load_dotenv
@@ -49,7 +48,7 @@ class AssetTrendsTools(MongoDBConnector):
         result = list(self.collection.find({"symbol": symbol}).sort("timestamp", -1).limit(1))
         return result[0]["close"] if result else None
 
-    def calculate_asset_trends(self, state: MarketAnalysisAgentState) -> List[AssetTrend]:
+    def calculate_asset_trends(self, state: MarketAnalysisAgentState) -> dict:
         """
         Assess the trend of all symbols in the portfolio by comparing their last closing price with their moving average.
         """
@@ -90,16 +89,16 @@ class AssetTrendsTools(MongoDBConnector):
         state.updates.append(message)
 
         # Set the next step in the state
-        state.next_step = "macro_indicators"
+        state.next_step = "macro_indicators_node"
 
-        return asset_trends
+        return { "asset_trends": asset_trends }
 
 
 # Initialize the AssetTrendsTools
 asset_trends_tools = AssetTrendsTools()
 
 # Define tools
-def calculate_asset_trends_tool(state: MarketAnalysisAgentState) -> List[AssetTrend]:
+def calculate_asset_trends_tool(state: MarketAnalysisAgentState) -> dict:
     """
     Assess the trend of a given symbol by comparing its last closing price with its moving average.
     """
@@ -142,7 +141,7 @@ if __name__ == "__main__":
                 asset="USO", description="Oil ETF", allocation_percentage="6%"
             )
         ],
-        next_step="asset_trends",  # Set the next step in the workflow
+        next_step="macro_indicators_node",  # Set the next step in the workflow
     )
 
     # Use the tool to calculate asset trends

@@ -37,5 +37,5 @@ tools = [assess_news]
 
 if __name__ == "__main__":
     # Example usage
-    logger.info("Assessing News...")
+    logger.info("[Action] Assessing News...")
     print(market_news_tools.assess_news())

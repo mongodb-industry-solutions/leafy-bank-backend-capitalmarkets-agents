@@ -1,4 +1,4 @@
-from bedrock.client import BedrockClient
+from tools.bedrock.client import BedrockClient
 from langchain_aws import ChatBedrock
 
 import os

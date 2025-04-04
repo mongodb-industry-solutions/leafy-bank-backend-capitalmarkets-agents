@@ -1,6 +1,5 @@
-from db.mdb import MongoDBConnector
-from states.agent_market_analysis_state import MarketAnalysisAgentState, PortfolioAllocation
-from typing import List
+from tools.db.mdb import MongoDBConnector
+from tools.states.agent_market_analysis_state import MarketAnalysisAgentState, PortfolioAllocation
 import os
 import logging
 from dotenv import load_dotenv
@@ -22,10 +21,8 @@ class PortfolioAllocationTools(MongoDBConnector):
         self.collection = self.get_collection(self.collection_name)
         logger.info("PortfolioAllocationTools initialized")
 
-    def check_portfolio_allocation(self, state: MarketAnalysisAgentState) -> List[PortfolioAllocation]:
-        """
-        Query the portfolio_allocation collection and return a list of dictionaries with asset, description, and allocation_percentage.
-        """
+    def check_portfolio_allocation(self, state: MarketAnalysisAgentState) -> dict:
+        """Query the portfolio_allocation collection"""
         message = "[Tool] Check portfolio allocation."
         logger.info(message)
 
@@ -43,26 +40,24 @@ class PortfolioAllocationTools(MongoDBConnector):
         ]
 
         # Update the state with the portfolio allocation
-        state.updates.append(message)  # Append the message directly to the updates list
-
-        # Update the state with the portfolio allocation
         state.portfolio_allocation = [
             PortfolioAllocation(**allocation) for allocation in portfolio_allocation
         ]
+        
+        # Append the message to the updates list
+        state.updates.append(message)
 
         # Set the next step in the state
-        state.next_step = "asset_trends"
+        state.next_step = "asset_trends_node"
 
-        return portfolio_allocation
+        return { "portfolio_allocation": portfolio_allocation }
 
 # Initialize the PortfolioAllocationTools
 portfolio_allocation_tools = PortfolioAllocationTools()
 
 # Define tools
-def check_portfolio_allocation_tool(state: MarketAnalysisAgentState) -> List[PortfolioAllocation]:
-    """
-    Query the portfolio_allocation collection and return a list of dictionaries with asset, description, and allocation_percentage.
-    """
+def check_portfolio_allocation_tool(state: MarketAnalysisAgentState) -> dict:
+    """Query the portfolio_allocation collection"""
     return portfolio_allocation_tools.check_portfolio_allocation(state=state)
 
 if __name__ == "__main__":

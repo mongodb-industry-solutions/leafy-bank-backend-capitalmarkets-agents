@@ -1,5 +1,5 @@
-from db.mdb import MongoDBConnector
-from states.agent_market_analysis_state import MarketAnalysisAgentState, MarketVolatilityIndex
+from tools.db.mdb import MongoDBConnector
+from tools.states.agent_market_analysis_state import MarketAnalysisAgentState, MarketVolatilityIndex
 import os
 import logging
 from dotenv import load_dotenv
@@ -41,22 +41,23 @@ class MarketVolatilityTools(MongoDBConnector):
         }).sort("timestamp", -1).limit(1))
         return result[0] if len(result) > 0 else None
 
-    def assess_vix(self, state: MarketAnalysisAgentState) -> MarketVolatilityIndex:
+    def assess_vix(self, state: MarketAnalysisAgentState) -> dict:
         """
         Assess the VIX and update the state with the fluctuation and diagnosis.
         """
-        logger.info("Assessing VIX...")
+        logger.info("[Tool] Market Volatility - VIX")
+        logger.info("[Action] Assessing VIX...")
         vix_data = self.get_most_recent_value()
         if not vix_data:
             logger.warning("No VIX data available.")
-            vix_index = MarketVolatilityIndex(
+            vix_assess = MarketVolatilityIndex(
                 volatility_index=None,
                 fluctuation_answer="No VIX data available.",
                 diagnosis="No change"
             )
-            state.report.market_volatility_index = vix_index
-            state.updates.append("[Tool] Assessed VIX: No VIX data available.")
-            return vix_index
+            state.report.market_volatility_index = vix_assess
+            state.updates.append("[Action] Assessed VIX: No VIX data available.")
+            return { "market_volatility_index": vix_assess }
 
         # Extract the current VIX value and date
         current_vix_value = round(vix_data["close"], 2)
@@ -66,14 +67,14 @@ class MarketVolatilityTools(MongoDBConnector):
         previous_vix_data = self.get_previous_value(vix_data["timestamp"].date())
         if not previous_vix_data:
             logger.warning("Not enough VIX data to assess.")
-            vix_index = MarketVolatilityIndex(
+            vix_assess = MarketVolatilityIndex(
                 volatility_index=str(current_vix_value),
                 fluctuation_answer="Not enough VIX data to assess.",
                 diagnosis="No change"
             )
-            state.report.market_volatility_index = vix_index
-            state.updates.append("[Tool] Assessed VIX: Not enough VIX data to assess.")
-            return vix_index
+            state.report.market_volatility_index = vix_assess
+            state.updates.append("[Action] Assessed VIX: Not enough VIX data to assess.")
+            return { "market_volatility_index": vix_assess }
 
         # Extract the previous VIX value and date
         previous_vix_value = round(previous_vix_data["close"], 2)
@@ -99,24 +100,27 @@ class MarketVolatilityTools(MongoDBConnector):
         )
 
         # Create a MarketVolatilityIndex object
-        vix_index = MarketVolatilityIndex(
+        vix_assess = MarketVolatilityIndex(
             volatility_index="VIX",
             fluctuation_answer=fluctuation_answer,
             diagnosis=diagnosis
         )
 
         # Update the state
-        state.report.market_volatility_index = vix_index
-        state.updates.append(f"[Tool] Assessed VIX")
+        state.report.market_volatility_index = vix_assess
+        state.updates.append(f"[Action] Assessed VIX")
 
-        return vix_index
+        # Set the next step in the state
+        state.next_step = "portfolio_overall_diagnosis_node"
+
+        return { "market_volatility_index": vix_assess }
 
 
 # Initialize the MarketVolatilityTools
 market_volatility_tools = MarketVolatilityTools()
 
 # Define tools
-def assess_vix_tool(state: MarketAnalysisAgentState) -> MarketVolatilityIndex:
+def assess_vix_tool(state: MarketAnalysisAgentState) -> dict:
     """
     Assess the VIX and update the state with the fluctuation and diagnosis.
     """
@@ -129,7 +133,7 @@ if __name__ == "__main__":
     state = MarketAnalysisAgentState()
 
     # Use the tool to assess the VIX
-    vix_index = assess_vix_tool(state)
+    vix_assess = assess_vix_tool(state)
 
     # Print the updated state
     print("\nUpdated State:")

@@ -1,6 +1,6 @@
 from typing import List
-from db.mdb import MongoDBConnector
-from states.agent_market_analysis_state import MarketAnalysisAgentState, MacroIndicator
+from tools.db.mdb import MongoDBConnector
+from tools.states.agent_market_analysis_state import MarketAnalysisAgentState, MacroIndicator
 import os
 import logging
 from dotenv import load_dotenv
@@ -33,7 +33,7 @@ class MacroIndicatorsTools(MongoDBConnector):
         """
         Assess a macroeconomic indicator and update the state with the diagnosis.
         """
-        logger.info(f"Assessing {indicator_name}...")
+        logger.info(f"[Action] Assessing {indicator_name}...")
         current_data = self.get_most_recent_value(series_id)
         if not current_data:
             logger.warning(f"No {indicator_name} data available.")
@@ -78,16 +78,19 @@ class MacroIndicatorsTools(MongoDBConnector):
 
         # Update the state
         state.report.macro_indicators.append(macro_indicator)
-        state.updates.append(f"[Tool] Assessed {indicator_name}")
+        state.updates.append(f"[Action] Assessed {indicator_name}")
 
         return macro_indicator
 
-    def assess_macro_indicators(self, state: MarketAnalysisAgentState) -> List[MacroIndicator]:
+    def assess_macro_indicators(self, state: MarketAnalysisAgentState) -> dict:
         """
         Assess all macroeconomic indicators and update the state.
         """
         message = "[Tool] Assess macroeconomic indicators."
         logger.info(message)
+
+        # Append the message to the updates list
+        state.updates.append(message)
 
         # Define rules for each macroeconomic indicator
         rules = {
@@ -126,16 +129,16 @@ class MacroIndicatorsTools(MongoDBConnector):
             macro_indicators.append(macro_indicator)
 
         # Set the next step in the state
-        state.next_step = "market_volatility"
+        state.next_step = "market_volatility_node"
 
-        return macro_indicators
+        return { "macro_indicators": macro_indicators }
 
 
 # Initialize the MacroIndicatorsTools
 macro_indicators_tools = MacroIndicatorsTools()
 
 # Define tools
-def assess_macro_indicators_tool(state: MarketAnalysisAgentState) -> List[MacroIndicator]:
+def assess_macro_indicators_tool(state: MarketAnalysisAgentState) -> dict:
     """
     Assess all macroeconomic indicators and update the state.
     """

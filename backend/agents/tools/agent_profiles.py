@@ -1,7 +1,7 @@
 import logging
 import os
 from dotenv import load_dotenv
-from db.mdb import MongoDBConnector
+from tools.db.mdb import MongoDBConnector
 
 # Load environment variables from .env file
 load_dotenv()
