@@ -131,7 +131,7 @@ class MacroIndicatorsTools(MongoDBConnector):
         # Set the next step in the state
         state.next_step = "market_volatility_node"
 
-        return { "macro_indicators": macro_indicators }
+        return { "macro_indicators": macro_indicators, "updates": state.updates, "next_step": state.next_step }
 
 
 # Initialize the MacroIndicatorsTools

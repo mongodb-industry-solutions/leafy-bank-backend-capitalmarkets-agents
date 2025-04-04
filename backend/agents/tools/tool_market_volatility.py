@@ -57,7 +57,7 @@ class MarketVolatilityTools(MongoDBConnector):
             )
             state.report.market_volatility_index = vix_assess
             state.updates.append("[Action] Assessed VIX: No VIX data available.")
-            return { "market_volatility_index": vix_assess }
+            return { "market_volatility_index": vix_assess, "updates": state.updates, "next_step": state.next_step }
 
         # Extract the current VIX value and date
         current_vix_value = round(vix_data["close"], 2)
@@ -74,7 +74,7 @@ class MarketVolatilityTools(MongoDBConnector):
             )
             state.report.market_volatility_index = vix_assess
             state.updates.append("[Action] Assessed VIX: Not enough VIX data to assess.")
-            return { "market_volatility_index": vix_assess }
+            return { "market_volatility_index": vix_assess, "updates": state.updates, "next_step": state.next_step }
 
         # Extract the previous VIX value and date
         previous_vix_value = round(previous_vix_data["close"], 2)
@@ -113,7 +113,7 @@ class MarketVolatilityTools(MongoDBConnector):
         # Set the next step in the state
         state.next_step = "portfolio_overall_diagnosis_node"
 
-        return { "market_volatility_index": vix_assess }
+        return { "market_volatility_index": vix_assess, "updates": state.updates, "next_step": state.next_step }
 
 
 # Initialize the MarketVolatilityTools

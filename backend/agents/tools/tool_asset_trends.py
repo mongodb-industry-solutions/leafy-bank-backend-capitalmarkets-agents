@@ -91,7 +91,7 @@ class AssetTrendsTools(MongoDBConnector):
         # Set the next step in the state
         state.next_step = "macro_indicators_node"
 
-        return { "asset_trends": asset_trends }
+        return { "asset_trends": asset_trends, "updates": state.updates, "next_step": state.next_step }
 
 
 # Initialize the AssetTrendsTools

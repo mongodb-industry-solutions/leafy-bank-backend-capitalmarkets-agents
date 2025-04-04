@@ -47,7 +47,7 @@ class PortfolioOverallDiagnosisTools:
         if not agent_profile:
             logger.error(f"Agent profile not found for agent ID: {self.agent_id}")
             state.updates.append("Unable to generate overall diagnosis due to missing agent profile.")
-            return { "overall_diagnosis": "Unable to generate overall diagnosis due to missing agent profile." }
+            return { "overall_diagnosis": "Error while retrieving agent profile!", "updates": state.updates, "next_step": state.next_step }
         else:
             # Log the agent profile
             state.updates.append(f"[Action] Using agent profile: {self.agent_id} - {agent_profile['role']}")
@@ -112,7 +112,7 @@ class PortfolioOverallDiagnosisTools:
         state.updates.append("[Tool] Generated overall diagnosis for the portfolio.")
         state.next_step = "__end__"
         
-        return { "overall_diagnosis": overall_diagnosis }
+        return { "overall_diagnosis": overall_diagnosis, "updates": state.updates, "next_step": state.next_step }
 
 # Initialize the PortfolioOverallDiagnosisTools
 portfolio_overall_diagnosis_tools = PortfolioOverallDiagnosisTools()
