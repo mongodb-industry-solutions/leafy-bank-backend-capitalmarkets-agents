@@ -15,12 +15,12 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-class MarketVolatilityTools(MongoDBConnector):
+class MarketVolatilityTool(MongoDBConnector):
     def __init__(self, uri=None, database_name=None, collection_name=None):
         super().__init__(uri, database_name)
         self.collection_name = collection_name or os.getenv("YFINANCE_TIMESERIES_COLLECTION", "yfinanceMarketData")
         self.collection = self.get_collection(self.collection_name)
-        logger.info("MarketVolatilityTools initialized")
+        logger.info("MarketVolatilityTool initialized")
 
     def get_most_recent_value(self):
         """
@@ -116,15 +116,15 @@ class MarketVolatilityTools(MongoDBConnector):
         return { "market_volatility_index": vix_assess, "updates": state.updates, "next_step": state.next_step }
 
 
-# Initialize the MarketVolatilityTools
-market_volatility_tools = MarketVolatilityTools()
+# Initialize the MarketVolatilityTool
+market_volatility_tool = MarketVolatilityTool()
 
 # Define tools
 def assess_vix_tool(state: MarketAnalysisAgentState) -> dict:
     """
     Assess the VIX and update the state with the fluctuation and diagnosis.
     """
-    return market_volatility_tools.assess_vix(state=state)
+    return market_volatility_tool.assess_vix(state=state)
 
 if __name__ == "__main__":
     from states.agent_market_analysis_state import MarketAnalysisAgentState

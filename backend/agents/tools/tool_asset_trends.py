@@ -18,12 +18,12 @@ logger = logging.getLogger(__name__)
 # MA_PERIOD is the moving average period
 MA_PERIOD = int(os.getenv("MA_PERIOD", 50))  # Default to 50 if not set in the environment
 
-class AssetTrendsTools(MongoDBConnector):
+class AssetTrendsTool(MongoDBConnector):
     def __init__(self, uri=None, database_name=None, collection_name=None):
         super().__init__(uri, database_name)
         self.collection_name = collection_name or os.getenv("YFINANCE_TIMESERIES_COLLECTION", "yfinanceMarketData")
         self.collection = self.get_collection(self.collection_name)
-        logger.info("AssetTrendsTools initialized")
+        logger.info("AssetTrendsTool initialized")
 
     def calculate_moving_average(self, symbol: str, period: int = MA_PERIOD) -> float:
         """
@@ -94,15 +94,15 @@ class AssetTrendsTools(MongoDBConnector):
         return { "asset_trends": asset_trends, "updates": state.updates, "next_step": state.next_step }
 
 
-# Initialize the AssetTrendsTools
-asset_trends_tools = AssetTrendsTools()
+# Initialize the AssetTrendsTool
+asset_trends_tool = AssetTrendsTool()
 
 # Define tools
 def calculate_asset_trends_tool(state: MarketAnalysisAgentState) -> dict:
     """
     Assess the trend of a given symbol by comparing its last closing price with its moving average.
     """
-    return asset_trends_tools.calculate_asset_trends(state=state)
+    return asset_trends_tool.calculate_asset_trends(state=state)
 
 if __name__ == "__main__":
     from states.agent_market_analysis_state import MarketAnalysisAgentState, PortfolioAllocation
