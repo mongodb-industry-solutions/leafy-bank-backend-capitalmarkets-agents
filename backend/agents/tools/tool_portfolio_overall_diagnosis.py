@@ -16,10 +16,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-class PortfolioOverallDiagnosisTools:
-    def __init__(self, chat_completions_model_id: Optional[str] = os.getenv("CHAT_COMPLETIONS_MODEL_ID"), agent_id: Optional[str] = "MARKET_ANALYSIS_AGENT") -> None:
+class PortfolioOverallDiagnosisTool:
+    def __init__(self, chat_completions_model_id: Optional[str] = os.getenv("CHAT_COMPLETIONS_MODEL_ID"), agent_id: Optional[str] = "MARKET_ANALYSIS_AGENT"):
         """
-        PortfolioOverallDiagnosisTools class to generate overall diagnosis for the portfolio.
+        PortfolioOverallDiagnosisTool class to generate overall diagnosis for the portfolio.
         This class uses the BedrockAnthropicChatCompletions model to generate a comprehensive diagnosis based on the portfolio context.
         
         Args:
@@ -28,6 +28,7 @@ class PortfolioOverallDiagnosisTools:
         """
         self.chat_completions_model_id = chat_completions_model_id
         self.agent_id = agent_id
+        logger.info("PortfolioOverallDiagnosisTool initialized")
 
     def generate_overall_diagnosis(self, state: MarketAnalysisAgentState) -> dict:
         """
@@ -114,8 +115,8 @@ class PortfolioOverallDiagnosisTools:
         
         return { "overall_diagnosis": overall_diagnosis, "updates": state.updates, "next_step": state.next_step }
 
-# Initialize the PortfolioOverallDiagnosisTools
-portfolio_overall_diagnosis_tools = PortfolioOverallDiagnosisTools()
+# Initialize the PortfolioOverallDiagnosisTool
+portfolio_overall_diagnosis_tool = PortfolioOverallDiagnosisTool()
 
 # Define tools
 def generate_overall_diagnosis_tool(state: MarketAnalysisAgentState) -> dict:
@@ -128,7 +129,7 @@ def generate_overall_diagnosis_tool(state: MarketAnalysisAgentState) -> dict:
     Returns:
         str: The overall diagnosis of the portfolio.
     """
-    return portfolio_overall_diagnosis_tools.generate_overall_diagnosis(state=state)
+    return portfolio_overall_diagnosis_tool.generate_overall_diagnosis(state=state)
 
 if __name__ == "__main__":
     from states.agent_market_analysis_state import MarketAnalysisAgentState, PortfolioAllocation, AssetTrend, MacroIndicator, MarketVolatilityIndex

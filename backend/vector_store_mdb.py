@@ -1,6 +1,6 @@
 from langchain_mongodb import MongoDBAtlasVectorSearch
 from loaders.embeddings.bedrock.getters import get_embedding_model
-from db.mongo_db import MongoDBConnector
+from db.mdb import MongoDBConnector
 from dotenv import load_dotenv
 
 import os

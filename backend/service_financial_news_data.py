@@ -1,5 +1,5 @@
 import logging
-from db.mongo_db import MongoDBConnector
+from db.mdb import MongoDBConnector
 import os
 from dotenv import load_dotenv
 

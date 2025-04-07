@@ -1,6 +1,6 @@
 from agent_market_analysis_graph import create_workflow_graph
 from tools.states.agent_market_analysis_state import MarketAnalysisAgentState
-from tools.persist_data import PersistData
+from tools.persist_report import PersistReportInMongoDB
 
 import os
 from dotenv import load_dotenv
@@ -33,8 +33,8 @@ if __name__ == '__main__':
     reports_market_analysis_coll = os.getenv("REPORTS_COLLECTION_MARKET_ANALYSIS", "reports_market_analysis")
 
     # Persist the final state to MongoDB
-    # Initialize the PersistData class
-    persist_data = PersistData(collection_name=reports_market_analysis_coll)
+    # Initialize the PersistReportInMongoDB class
+    persist_data = PersistReportInMongoDB(collection_name=reports_market_analysis_coll)
     # Save the market analysis report
     persist_data.save_market_analysis_report(final_state)
     print("Market analysis report saved to MongoDB.")

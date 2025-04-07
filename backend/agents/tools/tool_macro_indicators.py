@@ -15,12 +15,12 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-class MacroIndicatorsTools(MongoDBConnector):
+class MacroIndicatorsTool(MongoDBConnector):
     def __init__(self, uri=None, database_name=None, collection_name=None):
         super().__init__(uri, database_name)
         self.collection_name = collection_name or os.getenv("PYFREDAPI_COLLECTION", "pyfredapiMacroeconomicIndicators")
         self.collection = self.get_collection(self.collection_name)
-        logger.info("MacroIndicatorsTools initialized")
+        logger.info("MacroIndicatorsTool initialized")
 
     def get_most_recent_value(self, series_id: str):
         """
@@ -134,15 +134,15 @@ class MacroIndicatorsTools(MongoDBConnector):
         return { "macro_indicators": macro_indicators, "updates": state.updates, "next_step": state.next_step }
 
 
-# Initialize the MacroIndicatorsTools
-macro_indicators_tools = MacroIndicatorsTools()
+# Initialize the MacroIndicatorsTool
+macro_indicators_tool = MacroIndicatorsTool()
 
 # Define tools
 def assess_macro_indicators_tool(state: MarketAnalysisAgentState) -> dict:
     """
     Assess all macroeconomic indicators and update the state.
     """
-    return macro_indicators_tools.assess_macro_indicators(state=state)
+    return macro_indicators_tool.assess_macro_indicators(state=state)
 
 if __name__ == "__main__":
 
