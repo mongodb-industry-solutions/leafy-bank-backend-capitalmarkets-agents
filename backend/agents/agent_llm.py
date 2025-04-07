@@ -15,7 +15,7 @@ logging.basicConfig(
 )
 
 
-def get_llm(model_id: str = os.getenv("CHATCOMPLETION_MODEL_ID")) -> ChatBedrock:
+def get_llm(model_id: str = os.getenv("CHAT_COMPLETIONS_MODEL_ID")) -> ChatBedrock:
     """
     Get an instance of the ChatBedrock class for the specified model ID and AWS credentials.
 

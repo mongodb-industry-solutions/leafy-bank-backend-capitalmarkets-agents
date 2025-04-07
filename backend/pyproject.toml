@@ -17,7 +17,6 @@ tqdm = "^4.67.1"
 transformers = "^4.49.0"
 torch = "^2.6.0"
 yfinance = "^0.2.54"
-pyfredapi = "^0.9.1"
 pandas = "^2.2.3"
 langchain-aws = "^0.2.15"
 langchain-mongodb = "^0.5.0"
@@ -25,6 +24,8 @@ langgraph = "^0.3.5"
 grandalf = "^0.8"
 langchain-community = "^0.3.20"
 voyageai = "^0.3.2"
+langgraph-checkpoint-mongodb = "^0.1.3"
+rich = "13.9.4"
 
 
 [build-system]
