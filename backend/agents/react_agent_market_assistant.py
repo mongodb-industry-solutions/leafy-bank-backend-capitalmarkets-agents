@@ -7,6 +7,8 @@ from langchain.tools import tool
 from tools.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
 from tools.db.mdb import MongoDBConnector
 
+from datetime import datetime, timezone
+
 from pymongo import AsyncMongoClient
 from langgraph.checkpoint.mongodb.aio import AsyncMongoDBSaver
 
@@ -46,6 +48,26 @@ mongodb_connector = MongoDBConnector()
 market_collection = mongodb_connector.get_collection(market_collection_name)
 news_collection = mongodb_connector.get_collection(news_collection_name)
 
+# Function to generate a new thread_id
+def generate_thread_id():
+    """Generate a unique thread_id based on current timestamp"""
+    return f"thread_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
+
+# Function to list available threads
+async def list_available_threads(memory_collection):
+    """List all available thread_ids from the MongoDB memory store"""
+    threads = set()
+    
+    # Query all distinct thread_ids (which is a top-level field)
+    try:
+        cursor = memory_collection.find({}, {"thread_id": 1})
+        async for doc in cursor:
+            if "thread_id" in doc and doc["thread_id"]:
+                threads.add(doc["thread_id"])
+    except Exception as e:
+        rich.print(f"[bright_red]Error retrieving thread IDs: {str(e)}[/bright_red]")
+    
+    return sorted(list(threads))  # Return sorted list of thread_ids
 
 @tool
 def market_analysis_reports_vector_search_tool(query: str, k: int = 1):
@@ -422,12 +444,73 @@ async def main():
     # Load MONGODB_URI from environment variables
     MONGODB_URI = os.getenv("MONGODB_URI")
     DATABASE_NAME = os.getenv("DATABASE_NAME")
+    CHECKPOINTS_AIO_COLLECTION = os.getenv("CHECKPOINTS_AIO_COLLECTION", "checkpoints_aio")
 
     # Initialize the async MongoDB client
     async_mongodb_client = AsyncMongoClient(MONGODB_URI)
+    
+    # Initialize the async MongoDB collection for memory
+    # NOTE: This collection is used for storing checkpoints and messages
+    async_mongodb_memory_collection = async_mongodb_client[DATABASE_NAME][CHECKPOINTS_AIO_COLLECTION]
 
     # Initialize persistent chat memory
     memory = AsyncMongoDBSaver(client=async_mongodb_client, db_name=DATABASE_NAME)
+
+    # Ask user if they want a new thread or to continue an existing one
+    rich.print("\nWelcome to the Market Assistant!\n", style="bold green")
+    rich.print("Would you like to start a new chat session or continue an existing one?")
+    rich.print("1. Start a new chat session")
+    rich.print("2. Continue an existing chat session")
+    
+    choice = input("\nEnter your choice (1 or 2): ")
+    
+    thread_id = None
+    
+    if choice == "2":
+        # List available threads
+        threads = await list_available_threads(async_mongodb_memory_collection)
+        
+        if not threads:
+            rich.print("No existing chat sessions found. Starting a new one.", style="yellow")
+            thread_id = generate_thread_id()
+        else:
+            # Display available threads
+            rich.print("\nAvailable chat sessions:", style="bold")
+            for i, thread in enumerate(threads, 1):
+                # Try to extract the datetime from the thread_id for a more readable format
+                try:
+                    date_part = thread.split('_')[1]
+                    time_part = thread.split('_')[2]
+                    formatted_date = f"{date_part[:4]}-{date_part[4:6]}-{date_part[6:]} {time_part[:2]}:{time_part[2:4]}:{time_part[4:]}"
+                    rich.print(f"{i}. Session from {formatted_date} (ID: {thread})")
+                except:
+                    rich.print(f"{i}. {thread}")
+            
+            # Let user select a thread
+            selection = input("\nEnter the number of the session you want to continue (or 'n' for a new session): ")
+
+            if selection.lower() == 'n':
+                thread_id = generate_thread_id()
+            else:
+                # First check if selection is one of the actual thread_ids in the list
+                if selection in threads:
+                    thread_id = selection
+                else:
+                    try:
+                        idx = int(selection) - 1
+                        if 0 <= idx < len(threads):
+                            thread_id = threads[idx]
+                        else:
+                            rich.print("Invalid selection. Starting a new session.", style="yellow")
+                            thread_id = generate_thread_id()
+                    except ValueError:
+                        rich.print("Invalid input. Starting a new session.", style="yellow")
+                        thread_id = generate_thread_id()
+    else:
+        # Generate a new thread_id
+        thread_id = generate_thread_id()
+    
+    rich.print(f"\nChat session ID: {thread_id}", style="cyan")
 
     # Create a LangGraph agent with the new tools
     langgraph_agent = create_react_agent(
@@ -455,13 +538,13 @@ async def main():
         # Use the async stream method of the LangGraph agent to get the agent's answer
         async for chunk in langgraph_agent.astream(
             {"messages": [HumanMessage(content=user_question)]},
-            {"configurable": {"thread_id": "1"}},
+            {"configurable": {"thread_id": thread_id}},  # Use the dynamic thread_id
         ):
             # Process the chunks from the agent
             process_chunks(chunk)
 
-            # Use the async list method of the memory to list all checkpoints that match a given configuration
-            checkpoints = memory.alist({"configurable": {"thread_id": "1"}})
+            # Use the async list method of the memory to list all checkpoints that match the current thread_id
+            checkpoints = memory.alist({"configurable": {"thread_id": thread_id}})
             # Process the checkpoints from the memory in an async way
             await process_checkpoints(checkpoints)
 
