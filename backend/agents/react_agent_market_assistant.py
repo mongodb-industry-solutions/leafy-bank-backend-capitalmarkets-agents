@@ -3,6 +3,9 @@ import asyncio
 from dotenv import load_dotenv
 from agent_llm import get_llm
 from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain.tools import tool
+from tools.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
+from tools.db.mdb import MongoDBConnector
 
 from pymongo import AsyncMongoClient
 from langgraph.checkpoint.mongodb.aio import AsyncMongoDBSaver
@@ -10,6 +13,15 @@ from langgraph.checkpoint.mongodb.aio import AsyncMongoDBSaver
 from langgraph.prebuilt import create_react_agent
 from langchain_core.messages import HumanMessage, AIMessage
 from rich.console import Console
+
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 # Initialize dotenv to load environment variables
 load_dotenv()
@@ -22,6 +34,255 @@ llm = get_llm()
 
 # Initialize Tavily
 tavily = TavilySearchResults(max_results=3)
+
+# Initialize the VoyageAI embeddings generator
+embedding_model_id = os.getenv("EMBEDDINGS_MODEL_ID", "voyage-finance-2")
+ve = VogayeAIEmbeddings(api_key=os.getenv("VOYAGE_API_KEY"))
+
+# Initialize MongoDB collections for reports
+market_collection_name = os.getenv("REPORTS_COLLECTION_MARKET_ANALYSIS", "reports_market_analysis")
+news_collection_name = os.getenv("REPORTS_COLLECTION_MARKET_NEWS", "reports_market_news")
+mongodb_connector = MongoDBConnector()
+market_collection = mongodb_connector.get_collection(market_collection_name)
+news_collection = mongodb_connector.get_collection(news_collection_name)
+
+
+@tool
+def market_analysis_reports_vector_search_tool(query: str, k: int = 1):
+    """
+    Perform a vector similarity search on market analysis reports for the CURRENT PORTFOLIO.
+    
+    IMPORTANT: This tool provides market analysis ONLY for assets in the current portfolio allocation.
+    It retrieves the most recent report of market analysis data available.
+    It is important to note that this tool DOES NOT provide real-time data or live updates.
+    
+    Use this tool when you need:
+    - Market trends and analysis for assets in the portfolio
+    - Recent portfolio performance insights
+    - Macroeconomic factors affecting the current portfolio
+    - Asset-specific diagnostics for portfolio holdings
+    
+    Args:
+        query (str): The search query about portfolio assets, market trends, etc.
+        k (int, optional): Number of top results to return. Defaults to 1.
+        
+    Returns:
+        dict: Contains relevant sections from the most recent market analysis report
+             for the current portfolio.
+    """
+    try:
+        rich.print(f"\n[Action] Searching portfolio market analysis for: {query}")
+        
+        # Get the most recent document for context information only
+        most_recent = market_collection.find_one(
+            {}, 
+            sort=[("timestamp", -1)]
+        )
+        
+        if not most_recent:
+            return {"results": "No market analysis reports found for the current portfolio."}
+        
+        # Generate query embedding
+        query_embedding = ve.get_embeddings(model_id=embedding_model_id, text=query)
+        
+        # Extract the date of the most recent report
+        report_date = most_recent.get("date_string", "Unknown date")
+        
+        # Get portfolio assets list for context
+        portfolio_assets = []
+        try:
+            for allocation in most_recent.get("portfolio_allocation", []):
+                asset = allocation.get("asset", "Unknown")
+                description = allocation.get("description", "")
+                allocation_pct = allocation.get("allocation_percentage", "")
+                portfolio_assets.append(f"{asset} ({description}): {allocation_pct}")
+        except Exception as e:
+            logger.error(f"Error extracting portfolio information: {e}")
+        
+        # Perform vector search across all documents
+        pipeline = [
+            {
+                "$vectorSearch": {
+                    "index": f"{market_collection_name}_report_vector_index",
+                    "path": "report_embedding",
+                    "queryVector": query_embedding,
+                    "numCandidates": 5,
+                    "limit": k
+                }
+            },
+            {
+                "$project": {
+                    "_id": 0,
+                    "date_string": 1,
+                    "report": 1,
+                    "score": {"$meta": "vectorSearchScore"}
+                }
+            }
+        ]
+        
+        results = list(market_collection.aggregate(pipeline))
+        
+        # If no results from vector search, just return the most recent document
+        if not results:
+            # Extract relevant information
+            overall_diagnosis = most_recent.get("report", {}).get("overall_diagnosis", "No diagnosis available")
+            asset_trends = most_recent.get("report", {}).get("asset_trends", [])
+            asset_insights = []
+            
+            # Format asset trends information
+            for trend in asset_trends[:5]:  # Limit to 5 assets for readability
+                asset = trend.get("asset", "Unknown")
+                diagnosis = trend.get("diagnosis", "No diagnosis")
+                asset_insights.append(f"{asset}: {diagnosis}")
+            
+            return {
+                "report_date": report_date,
+                "portfolio_assets": portfolio_assets[:5],  # Show top 5 portfolio assets
+                "overall_diagnosis": overall_diagnosis,
+                "asset_insights": asset_insights,
+                "note": "This is the most recent market analysis for your portfolio."
+            }
+        
+        # Process vector search results
+        report_data = results[0]
+        overall_diagnosis = report_data.get("report", {}).get("overall_diagnosis", "No diagnosis available")
+        
+        # Format the return data
+        return {
+            "report_date": report_date,
+            "portfolio_assets": portfolio_assets[:5],  # Show top 5 portfolio assets
+            "overall_diagnosis": overall_diagnosis,
+            "note": "This information is from relevant portfolio market analysis reports."
+        }
+        
+    except Exception as e:
+        rich.print(f"[bright_red]Error searching portfolio market reports: {str(e)}[/bright_red]")
+        return {"error": f"An error occurred: {str(e)}"}
+
+
+@tool
+def market_news_reports_vector_search_tool(query: str, k: int = 1):
+    """
+    Perform a vector similarity search on market news reports for the CURRENT PORTFOLIO.
+    
+    IMPORTANT: This tool provides market news summary and insights ONLY for assets in the current portfolio allocation.
+    It is important to note that this tool DOES NOT provide real-time data or live updates.
+    
+    Use this tool when you need:
+    - Recent news affecting portfolio assets
+    - Sentiment analysis for portfolio holdings
+    - News summaries for specific assets in the portfolio
+    - Overall news impact on the current portfolio
+    
+    Args:
+        query (str): The search query about news related to portfolio assets.
+        k (int, optional): Number of top results to return. Defaults to 1.
+        
+    Returns:
+        dict: Contains relevant news summaries from the most recent news report
+             for the current portfolio.
+    """
+    try:
+        rich.print(f"\n[Action] Searching portfolio news reports for: {query}")
+        
+        # Get the most recent document for context information only
+        most_recent = news_collection.find_one(
+            {}, 
+            sort=[("timestamp", -1)]
+        )
+        
+        if not most_recent:
+            return {"results": "No news reports found for the current portfolio."}
+        
+        # Generate query embedding
+        query_embedding = ve.get_embeddings(model_id=embedding_model_id, text=query)
+        
+        # Extract the date of the most recent report
+        report_date = most_recent.get("date_string", "Unknown date")
+        
+        # Get portfolio assets list for context
+        portfolio_assets = []
+        try:
+            for allocation in most_recent.get("portfolio_allocation", []):
+                asset = allocation.get("asset", "Unknown")
+                description = allocation.get("description", "")
+                allocation_pct = allocation.get("allocation_percentage", "")
+                portfolio_assets.append(f"{asset} ({description}): {allocation_pct}")
+        except Exception as e:
+            logger.error(f"Error extracting portfolio information: {e}")
+        
+        # Perform vector search across all documents
+        pipeline = [
+            {
+                "$vectorSearch": {
+                    "index": f"{news_collection_name}_report_vector_index",
+                    "path": "report_embedding",
+                    "queryVector": query_embedding,
+                    "numCandidates": 5,
+                    "limit": k
+                }
+            },
+            {
+                "$project": {
+                    "_id": 0,
+                    "date_string": 1,
+                    "report.asset_news_summary": 1,
+                    "report.overall_news_diagnosis": 1,
+                    "score": {"$meta": "vectorSearchScore"}
+                }
+            }
+        ]
+        
+        results = list(news_collection.aggregate(pipeline))
+        
+        # If no results from vector search, just return the most recent document
+        if not results:
+            # Extract relevant information
+            overall_diagnosis = most_recent.get("report", {}).get("overall_news_diagnosis", "No news diagnosis available")
+            asset_news_summaries = most_recent.get("report", {}).get("asset_news_summary", [])
+            
+            # Format asset news summary information
+            news_summaries = []
+            for summary in asset_news_summaries[:3]:  # Limit to 3 assets for readability
+                asset = summary.get("asset", "Unknown")
+                summary_text = summary.get("summary", "No summary available")
+                sentiment = summary.get("overall_sentiment_category", "Unknown")
+                news_summaries.append(f"{asset} ({sentiment}): {summary_text}")
+            
+            return {
+                "report_date": report_date,
+                "portfolio_assets": portfolio_assets[:5],  # Show top 5 portfolio assets
+                "overall_diagnosis": overall_diagnosis,
+                "news_summaries": news_summaries,
+                "note": "This is the most recent news report for your portfolio."
+            }
+        
+        # Process vector search results
+        report_data = results[0]
+        report = report_data.get("report", {})
+        overall_diagnosis = report.get("overall_news_diagnosis", "No news diagnosis available")
+        asset_news_summaries = report.get("asset_news_summary", [])
+        
+        # Format news summaries
+        news_summaries = []
+        for summary in asset_news_summaries:
+            asset = summary.get("asset", "Unknown")
+            summary_text = summary.get("summary", "No summary available")
+            sentiment = summary.get("overall_sentiment_category", "Unknown")
+            news_summaries.append(f"{asset} ({sentiment}): {summary_text}")
+        
+        # Format the return data
+        return {
+            "report_date": report_date,
+            "portfolio_assets": portfolio_assets[:5],  # Show top 5 portfolio assets
+            "overall_diagnosis": overall_diagnosis,
+            "news_summaries": news_summaries[:3],  # Limit to 3 for readability
+            "note": "This information is from relevant portfolio news reports."
+        }
+        
+    except Exception as e:
+        rich.print(f"[bright_red]Error searching portfolio news reports: {str(e)}[/bright_red]")
+        return {"error": f"An error occurred: {str(e)}"}
 
 
 # Define a function to process chunks from the agent
@@ -59,7 +320,7 @@ def process_chunks(chunk):
 
                     # Extract the tool query
                     tool_arguments = eval(tool_call["function"]["arguments"])
-                    tool_query = tool_arguments["query"]
+                    tool_query = tool_arguments.get("query", "")
 
                     # Display an informative message with tool call details
                     rich.print(
@@ -168,9 +429,15 @@ async def main():
     # Initialize persistent chat memory
     memory = AsyncMongoDBSaver(client=async_mongodb_client, db_name=DATABASE_NAME)
 
-    # Create a LangGraph agent
+    # Create a LangGraph agent with the new tools
     langgraph_agent = create_react_agent(
-        model=llm, tools=[tavily], checkpointer=memory
+        model=llm, 
+        tools=[
+            tavily, 
+            market_analysis_reports_vector_search_tool, 
+            market_news_reports_vector_search_tool
+        ], 
+        checkpointer=memory
     )
 
     # Loop until the user chooses to quit the chat
