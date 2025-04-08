@@ -1,6 +1,6 @@
 from agent_market_news_graph import create_workflow_graph
-from tools.states.agent_market_news_state import MarketNewsAgentState
-from tools.persist_report import PersistReportInMongoDB
+from agents.tools.states.agent_market_news_state import MarketNewsAgentState
+from agents.tools.persist_report import PersistReportInMongoDB
 
 import os
 from dotenv import load_dotenv

@@ -1,12 +1,12 @@
-from tools.db.mdb import MongoDBConnector
+from agents.tools.db.mdb import MongoDBConnector
 from typing import Union, TypeVar
 import os
 import logging
 from dotenv import load_dotenv
 
 # Import both state types
-from tools.states.agent_market_analysis_state import MarketAnalysisAgentState
-from tools.states.agent_market_news_state import MarketNewsAgentState
+from agents.tools.states.agent_market_analysis_state import MarketAnalysisAgentState
+from agents.tools.states.agent_market_news_state import MarketNewsAgentState
 
 # Load environment variables from .env file
 load_dotenv()
@@ -49,10 +49,10 @@ class PortfolioAllocationTool(MongoDBConnector):
         # Update the state with the portfolio allocation
         # Get the correct PortfolioAllocation class based on state type
         if isinstance(state, MarketAnalysisAgentState):
-            from tools.states.agent_market_analysis_state import PortfolioAllocation
+            from agents.tools.states.agent_market_analysis_state import PortfolioAllocation
             next_node = "asset_trends_node"
         else:  # MarketNewsAgentState
-            from tools.states.agent_market_news_state import PortfolioAllocation
+            from agents.tools.states.agent_market_news_state import PortfolioAllocation
             next_node = "fetch_market_news_node"
             
         # Apply to state using the correct type
@@ -78,8 +78,8 @@ def check_portfolio_allocation_tool(state: Union[MarketAnalysisAgentState, Marke
 
 if __name__ == "__main__":
     # Example usage with both state types
-    from tools.states.agent_market_analysis_state import MarketAnalysisAgentState
-    from tools.states.agent_market_news_state import MarketNewsAgentState
+    from agents.tools.states.agent_market_analysis_state import MarketAnalysisAgentState
+    from agents.tools.states.agent_market_news_state import MarketNewsAgentState
     
     # Test with analysis state
     analysis_state = MarketAnalysisAgentState()

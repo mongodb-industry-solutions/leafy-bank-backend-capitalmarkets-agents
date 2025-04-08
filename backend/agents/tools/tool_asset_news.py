@@ -1,7 +1,7 @@
 import logging
-from tools.db.mdb import MongoDBConnector
-from tools.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
-from tools.states.agent_market_news_state import MarketNewsAgentState, AssetNews
+from agents.tools.db.mdb import MongoDBConnector
+from agents.tools.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
+from agents.tools.states.agent_market_news_state import MarketNewsAgentState, AssetNews
 import os
 from dotenv import load_dotenv
 from typing import List
