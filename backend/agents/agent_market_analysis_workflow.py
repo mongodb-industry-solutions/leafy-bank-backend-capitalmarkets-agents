@@ -1,6 +1,6 @@
 from agent_market_analysis_graph import create_workflow_graph
-from tools.states.agent_market_analysis_state import MarketAnalysisAgentState
-from tools.persist_report import PersistReportInMongoDB
+from agents.tools.states.agent_market_analysis_state import MarketAnalysisAgentState
+from agents.tools.persist_report import PersistReportInMongoDB
 
 import os
 from dotenv import load_dotenv

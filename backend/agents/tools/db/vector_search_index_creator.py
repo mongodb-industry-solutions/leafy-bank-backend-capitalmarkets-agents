@@ -1,7 +1,7 @@
 import logging
 from pymongo.errors import OperationFailure
 
-from tools.db.mdb import MongoDBConnector
+from mdb import MongoDBConnector
 
 import os
 from dotenv import load_dotenv
@@ -76,14 +76,27 @@ class VectorSearchIndexCreator(MongoDBConnector):
             logger.error(f"Error creating vector search index: {e}")
             return {"status": "error", "message": f"Error creating vector search index: {e}"}
 
+
 # Example usage
 if __name__ == "__main__":
-    collection_name = os.getenv("NEWS_COLLECTION", "news")
-    vs_idx = VectorSearchIndexCreator(collection_name=collection_name)
-    vector_field = "article_embedding"
-    index_name = collection_name + "_" + vector_field + "_vs_index"
+    market_analysis_collection_name = os.getenv("REPORTS_COLLECTION_MARKET_ANALYSIS")
+    market_news_collection_name = os.getenv("REPORTS_COLLECTION_MARKET_NEWS")
+    market_analysis_vector_index_name = os.getenv("REPORT_MARKET_ANALISYS_VECTOR_INDEX_NAME")
+    market_news_vector_index_name = os.getenv("REPORT_MARKET_NEWS_VECTOR_INDEX_NAME")
+    report_vector_field = os.getenv("REPORT_VECTOR_FIELD")
+
+    # Create vector search index for market analysis
+    vs_idx = VectorSearchIndexCreator(collection_name=market_analysis_collection_name)
     result = vs_idx.create_index(
-        index_name=index_name,
-        vector_field=vector_field
+        index_name=market_analysis_vector_index_name,
+        vector_field=report_vector_field
     )
-    print(result)
+    logger.info(result)
+
+    # Create vector search index for market news
+    vs_idx = VectorSearchIndexCreator(collection_name=market_news_collection_name)
+    result = vs_idx.create_index(
+        index_name=market_news_vector_index_name,
+        vector_field=report_vector_field
+    )
+    logger.info(result)

@@ -1,6 +1,6 @@
 from typing import List
-from tools.db.mdb import MongoDBConnector
-from tools.states.agent_market_analysis_state import MarketAnalysisAgentState, MacroIndicator
+from agents.tools.db.mdb import MongoDBConnector
+from agents.tools.states.agent_market_analysis_state import MarketAnalysisAgentState, MacroIndicator
 import os
 import logging
 from dotenv import load_dotenv

@@ -1,12 +1,12 @@
 import os
-from tools.db.mdb import MongoDBConnector
-from tools.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
-from tools.states.agent_market_analysis_state import MarketAnalysisAgentState
-from tools.states.agent_market_news_state import MarketNewsAgentState
-from tools.db.vector_search_index_creator import VectorSearchIndexCreator
 import logging
 from datetime import datetime, timezone
 from dotenv import load_dotenv
+
+from agents.tools.db.mdb import MongoDBConnector
+from agents.tools.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
+from agents.tools.states.agent_market_analysis_state import MarketAnalysisAgentState
+from agents.tools.states.agent_market_news_state import MarketNewsAgentState
 
 # Load environment variables
 load_dotenv()
@@ -34,29 +34,7 @@ class PersistReportInMongoDB(MongoDBConnector):
         self.collection = self.get_collection(self.collection_name)
         self.embedding_model_id = os.getenv("EMBEDDINGS_MODEL_ID", "voyage-finance-2")
         self.ve = VogayeAIEmbeddings(api_key=os.getenv("VOYAGE_API_KEY"))
-        # Ensure vector index exists for this collection
-        self.ensure_vector_index_exists()
         logger.info(f"PersistReportInMongoDB initialized with collection: {self.collection_name}")
-
-    def ensure_vector_index_exists(self):
-        """
-        Ensure vector search index exists for the collection.
-        If the index doesn't exist, it will be created using the VectorSearchIndexCreator.
-        """
-        try:
-            logger.info("Checking Vector Search Index...")
-            vs_idx = VectorSearchIndexCreator(collection_name=self.collection_name)
-            vector_field = "report_embedding"
-            index_name = f"{self.collection_name}_{vector_field}_index"
-            result = vs_idx.create_index(
-                index_name=index_name,
-                vector_field=vector_field,
-                dimensions=1024,  # Voyage-finance-2 model dimension
-                similarity_metric="cosine"
-            )
-            logger.info(result)
-        except Exception as e:
-            logger.error(f"[MongoDB] Error checking vector search index: {e}")
 
     def generate_news_report_embeddings(self, report):
         """
@@ -204,6 +182,8 @@ class PersistReportInMongoDB(MongoDBConnector):
             if existing_report:
                 # Skip the entire operation if a report already exists for today
                 logger.info(f"Report for date {date_string} already exists. Skipping to save API tokens.")
+                # Clean old reports to maintain only the latest 30 days
+                self.clean_old_reports()
                 return
             
             # Only proceed if no report exists for today
@@ -258,6 +238,8 @@ class PersistReportInMongoDB(MongoDBConnector):
             if existing_report:
                 # Skip the entire operation if a report already exists for today
                 logger.info(f"News report for date {date_string} already exists. Skipping to save API tokens.")
+                # Clean old reports to maintain only the latest 30 days
+                self.clean_old_reports()
                 return
             
             # Only proceed if no report exists for today

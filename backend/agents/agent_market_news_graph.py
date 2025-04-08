@@ -1,9 +1,9 @@
 from langgraph.graph import END, StateGraph
 
-from tools.states.agent_market_news_state import  MarketNewsAgentState
-from tools.tool_portfolio_allocation import check_portfolio_allocation_tool
-from tools.tool_asset_news import fetch_market_news_tool
-from tools.tool_asset_news_summary import generate_news_summaries_tool
+from agents.tools.states.agent_market_news_state import  MarketNewsAgentState
+from agents.tools.tool_portfolio_allocation import check_portfolio_allocation_tool
+from agents.tools.tool_asset_news import fetch_market_news_tool
+from agents.tools.tool_asset_news_summary import generate_news_summaries_tool
 
 
 # --- Create LangGraph StateGraph ---
