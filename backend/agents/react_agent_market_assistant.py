@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 from agent_llm import get_llm
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain.tools import tool
-from agents.tools.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
-from agents.tools.db.mdb import MongoDBConnector
+from tools.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
+from tools.db.mdb import MongoDBConnector
 
 from datetime import datetime, timezone
 
@@ -75,8 +75,8 @@ def market_analysis_reports_vector_search_tool(query: str, k: int = 1):
     Perform a vector similarity search on market analysis reports for the CURRENT PORTFOLIO.
     
     IMPORTANT: This tool provides market analysis ONLY for assets in the current portfolio allocation.
-    It retrieves the most recent report of market analysis data available.
     It is important to note that this tool DOES NOT provide real-time data or live updates.
+    If someone asks for real-time data or live updates regarding assets that are not in the current portfolio, use the Tavily Search tool.
     
     Use this tool when you need:
     - Market trends and analysis for assets in the portfolio
@@ -189,6 +189,7 @@ def market_news_reports_vector_search_tool(query: str, k: int = 1):
     
     IMPORTANT: This tool provides market news summary and insights ONLY for assets in the current portfolio allocation.
     It is important to note that this tool DOES NOT provide real-time data or live updates.
+    If someone asks for real-time data or live updates regarding assets that are not in the current portfolio, use the Tavily Search tool.
     
     Use this tool when you need:
     - Recent news affecting portfolio assets
