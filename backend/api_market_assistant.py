@@ -25,19 +25,12 @@ class MessageRequest(BaseModel):
 class ThreadRequest(BaseModel):
     thread_selection: Optional[str] = None
 
-class CheckpointData(BaseModel):
-    timestamp: str = ""
-    checkpoint_id: str = ""
-    messages: List[Dict[str, Any]] = []
-
 class MessageResponse(BaseModel):
     status: str
     thread_id: str
     message_type: str
-    content: str
+    final_answer: str
     tool_calls: Optional[List[dict]] = None
-    checkpoint_data: Optional[CheckpointData] = None
-    thoughts: Optional[List[str]] = None
 
 class ThreadsResponse(BaseModel):
     status: str
