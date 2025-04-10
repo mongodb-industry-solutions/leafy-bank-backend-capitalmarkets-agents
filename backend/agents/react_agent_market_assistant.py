@@ -6,6 +6,8 @@ from langchain_aws import ChatBedrock
 from agents.tools.bedrock.client import BedrockClient
 from pymongo import AsyncMongoClient
 from langgraph.checkpoint.mongodb.aio import AsyncMongoDBSaver
+# How to use the pre-built ReAct agent:
+# https://langchain-ai.github.io/langgraph/how-tos/create-react-agent/
 from langgraph.prebuilt import create_react_agent
 from langchain_core.messages import HumanMessage, AIMessage
 
@@ -266,105 +268,6 @@ class MarketAssistantReactAgent:
             "message": f"Deleted {deleted_count} memory records. All chat history has been cleared."
         }
         
-    async def get_checkpoint_data(self, thread_id):
-        """
-        Retrieve the conversation history and tool usage data from checkpoints.
-        
-        Args:
-            thread_id (str): The thread ID to retrieve checkpoint data for
-            
-        Returns:
-            dict: Checkpoint data including timestamp, ID, and messages
-        """
-        try:
-            # Try multiple query formats to ensure we get the right checkpoint data
-            checkpoints_list = []
-            
-            # First try with configurable.thread_id
-            async for checkpoint_tuple in self.memory.alist({"configurable": {"thread_id": thread_id}}):
-                checkpoints_list.append(checkpoint_tuple)
-            
-            # If no results, try with direct thread_id
-            if not checkpoints_list:
-                async for checkpoint_tuple in self.memory.alist({"thread_id": thread_id}):
-                    checkpoints_list.append(checkpoint_tuple)
-                    
-            # If still no results, try looking in metadata.thread_id (binary format)
-            if not checkpoints_list:
-                try:
-                    thread_id_binary = str(thread_id).encode('utf-8')
-                    async for checkpoint_tuple in self.memory.alist({"metadata.thread_id": thread_id_binary}):
-                        checkpoints_list.append(checkpoint_tuple)
-                except Exception as e:
-                    logger.error(f"Error querying binary thread_id: {str(e)}")
-            
-            if not checkpoints_list:
-                logger.warning(f"No checkpoints found for thread_id: {thread_id}")
-                return {"messages": []}
-            
-            # Log the number of checkpoints found
-            logger.info(f"Found {len(checkpoints_list)} checkpoints for thread_id: {thread_id}")
-            
-            # Get the most recent checkpoint
-            latest_checkpoint = checkpoints_list[-1].checkpoint
-            
-            # Log checkpoint structure for debugging
-            logger.debug(f"Checkpoint structure: {latest_checkpoint.keys()}")
-            logger.debug(f"Channel values: {latest_checkpoint.get('channel_values', {}).keys()}")
-            
-            # Extract messages from the checkpoint
-            messages = []
-            checkpoint_messages = latest_checkpoint["channel_values"].get("messages", [])
-            logger.info(f"Number of messages in checkpoint: {len(checkpoint_messages)}")
-            
-            for message in checkpoint_messages:
-                message_data = {
-                    "content": message.content,
-                    "message_id": message.id if hasattr(message, "id") else "",
-                    "type": "human" if isinstance(message, HumanMessage) else "agent"
-                }
-                
-                # Check for tool calls in agent messages - try multiple formats
-                if isinstance(message, AIMessage):
-                    # Standard format
-                    if hasattr(message, "additional_kwargs") and "tool_calls" in message.additional_kwargs:
-                        tool_calls = []
-                        for tool_call in message.additional_kwargs["tool_calls"]:
-                            tool_name = tool_call["function"]["name"]
-                            try:
-                                tool_arguments = eval(tool_call["function"]["arguments"])
-                                tool_query = tool_arguments.get("query", "")
-                            except:
-                                # If eval fails, use the raw arguments string
-                                tool_query = tool_call["function"]["arguments"]
-                                
-                            tool_calls.append({
-                                "tool_name": tool_name,
-                                "query": tool_query
-                            })
-                        message_data["tool_calls"] = tool_calls
-                    
-                    # Alternative format: tool_call_id
-                    elif hasattr(message, "tool_call_id") and message.tool_call_id:
-                        message_data["tool_call_id"] = message.tool_call_id
-                    
-                    # Alternative format: tool_inputs
-                    elif hasattr(message, "tool_inputs") and message.tool_inputs:
-                        message_data["tool_inputs"] = message.tool_inputs
-                
-                messages.append(message_data)
-            
-            return {
-                "timestamp": latest_checkpoint.get("ts", ""),
-                "checkpoint_id": latest_checkpoint.get("id", ""),
-                "messages": messages
-            }
-                
-        except Exception as e:
-            logger.error(f"Error retrieving checkpoint data: {str(e)}")
-            logger.exception("Full exception details:")
-            return {"messages": []}
-    
     async def process_user_message(self, thread_id, message_content):
         """
         Process a user message and get the agent's response.
@@ -382,15 +285,13 @@ class MarketAssistantReactAgent:
             return {
                 "status": "success",
                 "message_type": "system",
-                "content": result["message"],
+                "final_answer": result["message"],
                 "thread_id": result["thread_id"]
             }
         
         # Process the message with the agent
-        response_chunks = []
         tool_calls = []
-        thoughts = []
-        final_answer = None
+        final_answer = ""
         
         try:
             # Log that we're about to invoke the agent with tools
@@ -410,62 +311,91 @@ class MarketAssistantReactAgent:
                         final_answer = message.content
                         logger.info(f"Final answer captured: {final_answer[:100]}...")
                 
+                # Track intermediate steps - this is where ReAct's tool usage appears
+                if "intermediate_steps" in chunk:
+                    for step in chunk["intermediate_steps"]:
+                        # Extract tool call
+                        if hasattr(step, "action"):
+                            tool_name = step.action.tool
+                            tool_input = step.action.tool_input
+                            
+                            # Handle different input formats
+                            if isinstance(tool_input, dict) and "query" in tool_input:
+                                tool_query = tool_input["query"]
+                            else:
+                                tool_query = str(tool_input)
+                            
+                            tool_calls.append({
+                                "tool_name": tool_name,
+                                "query": tool_query
+                            })
+                            
+                            logger.info(f"Tool called: {tool_name} with query: {tool_query[:100]}...")
+                
                 # Process chunks to extract the response and any tool calls
                 if "agent" in chunk:
                     for message in chunk["agent"]["messages"]:
-                        # Check for tool calls using multiple possible formats
-                        if hasattr(message, "additional_kwargs") and "tool_calls" in message.additional_kwargs:
+                        # Check for direct tool_calls attribute
+                        if hasattr(message, "tool_calls") and message.tool_calls:
+                            for tool_call in message.tool_calls:
+                                tool_name = tool_call.get("name")
+                                tool_args = tool_call.get("args", {})
+                                tool_query = tool_args.get("query", "") if isinstance(tool_args, dict) else str(tool_args)
+                                
+                                tool_calls.append({
+                                    "tool_name": tool_name,
+                                    "query": tool_query,
+                                    "id": tool_call.get("id", "")
+                                })
+                                
+                                logger.info(f"Tool called (direct): {tool_name} with query: {tool_query[:100]}...")
+                        
+                        # Also check the additional_kwargs approach as fallback
+                        elif hasattr(message, "additional_kwargs") and "tool_calls" in message.additional_kwargs:
                             tool_calls_data = message.additional_kwargs["tool_calls"]
                             for tool_call in tool_calls_data:
-                                tool_name = tool_call["function"]["name"]
-                                # Log tool calls for debugging
-                                logger.info(f"Tool called: {tool_name}")
-                                try:
-                                    tool_arguments = eval(tool_call["function"]["arguments"])
-                                    tool_query = tool_arguments.get("query", "")
-                                except:
-                                    tool_query = tool_call["function"]["arguments"]
+                                tool_name = tool_call["function"]["name"] if "function" in tool_call else tool_call.get("name", "")
+                                
+                                # Handle different formats of tool call arguments
+                                if "function" in tool_call and "arguments" in tool_call["function"]:
+                                    try:
+                                        tool_arguments = eval(tool_call["function"]["arguments"])
+                                        tool_query = tool_arguments.get("query", "")
+                                    except:
+                                        tool_query = tool_call["function"]["arguments"]
+                                elif "args" in tool_call:
+                                    tool_args = tool_call["args"]
+                                    tool_query = tool_args.get("query", "") if isinstance(tool_args, dict) else str(tool_args)
+                                else:
+                                    tool_query = ""
                                     
                                 tool_calls.append({
                                     "tool_name": tool_name,
-                                    "query": tool_query
+                                    "query": tool_query,
+                                    "id": tool_call.get("id", "")
                                 })
-                                thoughts.append(f"I'll use {tool_name} to find information about {tool_query}")
-                        else:
-                            # Could be a thought or regular message content
-                            content = message.content
-                            if content.strip():  # Only add non-empty content
-                                if "I need to" in content or "I should" in content or "Let me" in content:
-                                    thoughts.append(content)
-                                else:
-                                    response_chunks.append(content)
-                
-                # Also check for ReAct thought process in other formats
-                if "intermediate_steps" in chunk:
-                    for step in chunk["intermediate_steps"]:
-                        if hasattr(step, "thought") and step.thought:
-                            thoughts.append(step.thought)
-                        if hasattr(step, "action") and step.action:
-                            tool_calls.append({
-                                "tool_name": step.action.tool,
-                                "query": str(step.action.tool_input)
-                            })
+                                
+                                logger.info(f"Tool called (kwargs): {tool_name} with query: {tool_query[:100]}...")
+                        # If message doesn't have tool_calls, capture its content as potential final_answer
+                        elif not final_answer and message.content and message.content.strip():
+                            final_answer = message.content
             
-            # Get checkpoint data for the conversation history
-            checkpoint_data = await self.get_checkpoint_data(thread_id)
+            # Find the final answer in the last step if not already captured
+            # The "thoughts" issue was happening because detailed final answers were being misclassified
+            if not final_answer:
+                async for checkpoint_tuple in self.memory.alist({"configurable": {"thread_id": thread_id}}):
+                    if "channel_values" in checkpoint_tuple.checkpoint:
+                        messages = checkpoint_tuple.checkpoint["channel_values"].get("messages", [])
+                        if messages and hasattr(messages[-1], "content"):
+                            final_answer = messages[-1].content
             
-            # For the final response, prioritize the final answer if available
-            final_response = final_answer if final_answer else " ".join(response_chunks)
-            
-            # Return the response with checkpoint data and thoughts
+            # Return the response with tool calls
             return {
                 "status": "success",
                 "message_type": "agent",
-                "content": final_response,
+                "final_answer": final_answer,
                 "tool_calls": tool_calls,
                 "thread_id": thread_id,
-                "checkpoint_data": checkpoint_data,
-                "thoughts": thoughts if thoughts else None
             }
                     
         except Exception as e:
