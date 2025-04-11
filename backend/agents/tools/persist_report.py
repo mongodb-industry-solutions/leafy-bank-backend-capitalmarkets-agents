@@ -59,6 +59,20 @@ class PersistReportInMongoDB(MongoDBConnector):
                     score = summary.get("overall_sentiment_score", "")
                     summary_texts.append(f"{asset} ({category}, score: {score}): {summary_text}")
             
+            # Add individual news items from asset_news, including only the specified fields
+            if "asset_news" in report:
+                for news_item in report.get("asset_news", []):
+                    # Include only the requested fields (excluding posted, sentiment_score, and sentiment_category)
+                    asset = news_item.get("asset", "")
+                    headline = news_item.get("headline", "")
+                    description = news_item.get("description", "")
+                    source = news_item.get("source", "")
+                    link = news_item.get("link", "")
+                    
+                    # Format the news item text with emphasis on the link
+                    news_text = f"{asset} - {headline}: {description} (Source: {source}, Link: {link})"
+                    summary_texts.append(news_text)
+            
             # Add overall news diagnosis - this provides the big picture assessment
             if "overall_news_diagnosis" in report:
                 summary_texts.append(f"OVERALL: {report['overall_news_diagnosis']}")
