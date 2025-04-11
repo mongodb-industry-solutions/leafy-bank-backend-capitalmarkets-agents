@@ -2,6 +2,9 @@ import logging
 from db.mdb import MongoDBConnector
 import os
 from dotenv import load_dotenv
+from bson import ObjectId
+import json
+from datetime import datetime
 
 # Load environment variables from .env file
 load_dotenv()
@@ -12,6 +15,15 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
+
+# Custom JSON encoder to handle MongoDB ObjectId and datetime
+class MongoJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, ObjectId):
+            return str(obj)
+        if isinstance(obj, datetime):
+            return obj.isoformat()
+        return super().default(obj)
 
 class MarketDataService(MongoDBConnector):
     def __init__(self, uri=None, database_name: str = None, appname: str = None, collection_name: str = os.getenv("YFINANCE_TIMESERIES_COLLECTION")):
@@ -79,9 +91,102 @@ class MarketDataService(MongoDBConnector):
             logger.error(f"Error retrieving close prices: {e}")
             return {}
 
+    def fetch_most_recent_assets_data(self, limit=3):
+        """
+        Get the most recent data points for all assets.
+        
+        Args:
+            limit (int, optional): Number of recent documents to fetch per symbol. Defaults to 3.
+            
+        Returns:
+            dict: A dictionary where keys are asset symbols and values are lists of recent data documents.
+                 ObjectId values are converted to strings to ensure JSON serialization compatibility.
+        """
+        try:
+            # This aggregation pipeline efficiently retrieves the latest documents for each symbol:
+            # 1. $sort: Sorts all documents by timestamp in descending order (newest first)
+            # 2. $group: Groups by symbol and creates an array of recent documents
+            # 3. $project: Limits the array to the specified number of documents
+            pipeline = [
+                {
+                    "$sort": {"timestamp": -1}
+                },
+                {
+                    "$group": {
+                        "_id": "$symbol",
+                        "recent_data": {
+                            "$push": {
+                                "_id": {"$toString": "$_id"},
+                                "symbol": "$symbol",
+                                "timestamp": "$timestamp",
+                                "open": "$open",
+                                "high": "$high",
+                                "low": "$low",
+                                "close": "$close",
+                                "volume": "$volume",
+                                "date_load_iso_utc": "$date_load_iso_utc"
+                            }
+                        }
+                    }
+                },
+                {
+                    "$project": {
+                        "_id": 1,
+                        "recent_data": {"$slice": ["$recent_data", limit]}
+                    }
+                }
+            ]
+            
+            # Execute the aggregation pipeline
+            result = self.db[self.collection_name].aggregate(pipeline)
+            
+            # Process the results and handle ObjectId serialization
+            assets_data = {}
+            for doc in result:
+                symbol = doc["_id"]
+                
+                # Process each document in recent_data to handle ObjectId
+                recent_data = []
+                for item in doc["recent_data"]:
+                    # Ensure each document has its _id field preserved
+                    if "_id" in item:
+                        if isinstance(item["_id"], ObjectId):
+                            item["_id"] = str(item["_id"])
+                    else:
+                        # Add a warning if _id is missing
+                        logger.warning(f"Document for symbol {symbol} is missing _id field")
+                    
+                    # Also handle nested ObjectIds if any exist
+                    for key, value in item.items():
+                        if isinstance(value, ObjectId):
+                            item[key] = str(value)
+                        elif isinstance(value, dict) and "$oid" in value:
+                            item[key] = str(value["$oid"])
+                    
+                    recent_data.append(item)
+                
+                assets_data[symbol] = recent_data
+                
+            logger.info(f"Retrieved {limit} recent data points for {len(assets_data)} assets")
+            return assets_data
+        except Exception as e:
+            logger.error(f"Error retrieving recent assets data: {e}")
+            return {}
+
 if __name__ == "__main__":
     # Example usage
     market_data_service = MarketDataService()
+    
+    # Test fetch_assets_close_price
     close_prices = market_data_service.fetch_assets_close_price()
     for symbol, data in close_prices.items():
         print(f"Symbol: {symbol}, Close Price: {data['close_price']}, Timestamp: {data['timestamp']}")
+    
+    # Test fetch_most_recent_assets_data
+    print("\nFetching recent asset data:")
+    recent_data = market_data_service.fetch_most_recent_assets_data()
+    for symbol, data_points in recent_data.items():
+        print(f"Symbol: {symbol}, Recent data points: {len(data_points)}")
+        # Example of accessing the first data point if available
+        if data_points:
+            print(f"  Latest close: {data_points[0].get('close')}, timestamp: {data_points[0].get('timestamp')}")
