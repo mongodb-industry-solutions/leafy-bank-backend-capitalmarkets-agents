@@ -46,23 +46,23 @@ REPORT_VECTOR_FIELD = os.getenv("REPORT_VECTOR_FIELD", "report_embedding")
 def market_analysis_reports_vector_search_tool(query: str, k: int = 1):
     """
     Perform a vector similarity search on market analysis reports for the CURRENT PORTFOLIO.
-    
-    IMPORTANT: This tool provides market analysis ONLY for assets in the current portfolio allocation.
-    If someone asks for real-time data or live updates regarding assets that are not in the current portfolio, use the Tavily Search tool.
-    
+
+    IMPORTANT: This tool provides market analysis ONLY for assets included in the current portfolio allocation.  
+    If someone requests real-time data or live updates for assets outside the current portfolio, use the Tavily Search tool instead.
+
     Use this tool when you need:
-    - Market trends and analysis for assets in the portfolio
-    - Recent portfolio performance insights
+    - Market trends and analysis for portfolio assets
+    - Insights on recent portfolio performance
     - Macroeconomic factors affecting the current portfolio
     - Asset-specific diagnostics for portfolio holdings
-    
+
     Args:
-        query (str): The search query about portfolio assets, market trends, etc.
-        k (int, optional): Number of top results to return. Defaults to 1.
-        
+        query (str): The search query related to portfolio assets, market trends, etc.
+        k (int, optional): The number of top results to return. Defaults to 1.
+
     Returns:
         dict: Contains relevant sections from the most recent market analysis report
-            for the current portfolio.
+              for the current portfolio.
     """
     try:
         logger.info(f"Searching portfolio market analysis for: {query}")
@@ -203,24 +203,26 @@ def market_analysis_reports_vector_search_tool(query: str, k: int = 1):
 def market_news_reports_vector_search_tool(query: str, k: int = 1):
     """
     Perform a vector similarity search on market news reports for the CURRENT PORTFOLIO.
-    
-    IMPORTANT: This tool provides market news summary and insights ONLY for assets in the current portfolio allocation.
-    It is important to note that this tool DOES NOT provide real-time data or live updates.
-    If someone asks for real-time data or live updates regarding assets that are not in the current portfolio, use the Tavily Search tool.
-    
+
+    IMPORTANT: This tool provides market news summaries and insights ONLY for assets included in the current portfolio allocation.  
+    Note that it DOES NOT offer real-time data or live updates.  
+
+    When possible, include links to the original news articles at the end of the summary for reference.  
+    If someone requests real-time data or information on assets not in the current portfolio, use the Tavily Search tool instead.
+
     Use this tool when you need:
     - Recent news affecting portfolio assets
     - Sentiment analysis for portfolio holdings
     - News summaries for specific assets in the portfolio
-    - Overall news impact on the current portfolio
-    
+    - An overview of the news impact on the current portfolio
+
     Args:
-        query (str): The search query about news related to portfolio assets.
-        k (int, optional): Number of top results to return. Defaults to 1.
-        
+        query (str): The search query related to portfolio assets.
+        k (int, optional): The number of top results to return. Defaults to 1.
+
     Returns:
-        dict: Contains relevant news summaries from the most recent news report
-            for the current portfolio.
+        dict: Contains relevant news summaries from the most recent reports
+              for the current portfolio.
     """
     try:
         logger.info(f"Searching portfolio news reports for: {query}")
