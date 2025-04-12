@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 import logging
-from typing import List
+from typing import List, Optional
 from service_asset_suggestions import AssetSuggestions
 
 # Configure logging
@@ -23,27 +23,35 @@ class AssetSuggestion(BaseModel):
     asset_type: str
     description: str
     explanation: str
+    note: Optional[str] = None
 
 class MessageResponse(BaseModel):
     asset_suggestions: List[AssetSuggestion]
 
 ### Asset Suggestions Endpoints ###
 
-@router.post("/fetch-asset-suggestions", response_model=MessageResponse)
-async def fetch_asset_suggestions():
+@router.post("/fetch-asset-suggestions-macro-indicators-based", response_model=MessageResponse)
+async def fetch_asset_suggestions_macro_indicators_based():
     """
     Fetch asset suggestions based on the current portfolio and market conditions.
     
     Rules applied:
-    - GDP: Up → Increase Equity assets, Down → Increase Bond assets
-    - Interest Rate: Up → Increase Bond assets, Down → Increase Real Estate assets
-    - Unemployment Rate: Up → Reduce Equity assets, Down → Increase Equity assets
+    - GDP:
+        - Up → Keep Equity assets, Reduce Bond assets, Keep Commodity assets
+        - Down → Reduce Equity assets, Keep Bond assets, Reduce Commodity assets
+    - Interest Rate:
+        - Up → Keep Bond assets, Reduce Real Estate assets, Reduce Commodity assets
+        - Down → Reduce Bond assets, Keep Real Estate assets, Keep Commodity assets
+    - Unemployment Rate:
+        - Up → Reduce Equity assets, Reduce Commodity assets
+        - Down → Keep Equity assets, Keep Commodity assets
 
     Returns:
-        MessageResponse: An object containing the asset suggestions with actions (KEEP or REDUCE).
+        MessageResponse: An object containing the asset suggestions with actions (KEEP or REDUCE)
+                         and optional notes about conflicting signals.
     """
     try:
-        suggestions = asset_suggestions_service.fetch_asset_suggestions()
+        suggestions = asset_suggestions_service.fetch_asset_suggestions_macro_indicators_based()
         if not suggestions:
             logger.warning("No asset suggestions generated")
             return MessageResponse(asset_suggestions=[])
