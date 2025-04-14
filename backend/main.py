@@ -2,9 +2,6 @@ import logging
 from fastapi import FastAPI, Request, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 
-from scheduled_agents import ScheduledAgents
-import threading
-
 # Add market assistant API router
 from api_scheduled_agents import router as schuduled_agents_router
 # Add market data API router
@@ -48,10 +45,3 @@ app.include_router(portfolio_data_router)
 app.include_router(macro_indicators_router)
 app.include_router(report_data_router)
 app.include_router(asset_suggestions_router)
-
-def start_scheduler():
-    scheduler.start()
-
-scheduler = ScheduledAgents()
-scheduler_thread = threading.Thread(target=start_scheduler)
-scheduler_thread.start()

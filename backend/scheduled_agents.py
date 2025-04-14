@@ -146,12 +146,7 @@ class ScheduledAgents:
         """
         # Define the schedule for the market analysis workflow
         agent_market_analysis_workflow_time = dt.time(hour=5, minute=0, tzinfo=timezone.utc)
-        self.scheduler.weekly(trigger.Tuesday(agent_market_analysis_workflow_time), self.run_agent_market_analysis_workflow)
-        self.scheduler.weekly(trigger.Wednesday(agent_market_analysis_workflow_time), self.run_agent_market_analysis_workflow)
-        self.scheduler.weekly(trigger.Thursday(agent_market_analysis_workflow_time), self.run_agent_market_analysis_workflow)
-        self.scheduler.weekly(trigger.Friday(agent_market_analysis_workflow_time), self.run_agent_market_analysis_workflow)
-        self.scheduler.weekly(trigger.Saturday(agent_market_analysis_workflow_time), self.run_agent_market_analysis_workflow)
-
+        self.scheduler.daily(agent_market_analysis_workflow_time, self.run_agent_market_analysis_workflow)
         # Define the schedule for the market news workflow
         agent_market_news_workflow_time = dt.time(hour=5, minute=10, tzinfo=timezone.utc)
         self.scheduler.daily(agent_market_news_workflow_time, self.run_agent_market_news_workflow)
