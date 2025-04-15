@@ -42,16 +42,9 @@ class AssetSuggestions(MongoDBConnector):
     def fetch_asset_suggestions_macro_indicators_based(self):
         """
         Generate asset allocation suggestions based on the latest macroeconomic indicators coming from the market analysis report.
-
-        This method:
-        1. Retrieves the latest market analysis report
-        2. Gets current portfolio allocation data
-        3. Analyzes macroeconomic indicators (GDP, interest rates, unemployment)
-        4. Applies predefined investment rules based on indicator directions
-        5. Generates balanced action recommendations (KEEP/REDUCE) for each asset
         
         Returns:
-            list: List of dictionaries containing asset suggestions with actions and explanations
+            list: List of dictionaries containing asset suggestions with per-indicator actions and explanations
         """
         try:
             # Fetch latest market analysis report
@@ -93,8 +86,7 @@ class AssetSuggestions(MongoDBConnector):
                 return []
 
             logger.info(f"Fetched {len(portfolio_allocation)} portfolio allocation(s)")
-            logger.info(f"Portfolio Allocation: {portfolio_allocation}")
-
+            
             # Determine macroeconomic indicator directions
             gdp_direction = "neutral"
             interest_rate_direction = "neutral"
@@ -122,130 +114,373 @@ class AssetSuggestions(MongoDBConnector):
 
             logger.info(f"Indicator directions - GDP: {gdp_direction}, Interest Rate: {interest_rate_direction}, Unemployment: {unemployment_direction}")
 
-            # Generate macroeconomic-based actions for each asset class
-            # Each tuple contains (action, explanation)
-            equity_actions = []
-            bond_actions = []
-            real_estate_actions = []
-            commodity_actions = []
-
-            # GDP rules - economic growth impact on asset classes
-            if gdp_direction == "up":
-                # Rising GDP typically benefits stocks due to better corporate earnings
-                equity_actions.append(("KEEP", "Keep due to rising GDP supporting equity assets."))
-                # Rising GDP often leads to inflation concerns and higher rates, negative for bonds
-                bond_actions.append(("REDUCE", "Reduce due to rising GDP favoring equity over bonds."))
-                # Strong economy supports commodity demand for production
-                commodity_actions.append(("KEEP", "Keep commodities due to stronger growth increasing demand for raw materials."))
-            elif gdp_direction == "down":
-                # Economic contraction typically harms equities due to falling earnings
-                equity_actions.append(("REDUCE", "Reduce due to declining GDP."))
-                # Flight to safety during economic downturns benefits bonds
-                bond_actions.append(("KEEP", "Keep due to declining GDP favoring bond assets."))
-                # Slowing economic activity reduces commodity demand
-                commodity_actions.append(("REDUCE", "Reduce commodities due to economic slowdown reducing industrial demand."))
-
-            # Interest Rate rules - monetary policy impact on asset classes
-            if interest_rate_direction == "up":
-                # Higher yield on new issuances can be attractive for income investors
-                bond_actions.append(("KEEP", "Keep due to rising interest rates favoring bond assets."))
-                # Higher financing costs and higher discount rates on future cash flows
-                real_estate_actions.append(("REDUCE", "Reduce due to rising interest rates impacting real estate."))
-                # Higher rates strengthen currency making commodities more expensive, reducing demand
-                commodity_actions.append(("REDUCE", "Reduce commodities due to rising rates strengthening USD and lowering inflation expectations."))
-            elif interest_rate_direction == "down":
-                # Lower rates decrease yield on new bond issuances
-                bond_actions.append(("REDUCE", "Reduce due to falling interest rates."))
-                # Lower financing costs benefit real estate valuations
-                real_estate_actions.append(("KEEP", "Keep due to declining interest rates favoring real estate assets."))
-                # Lower rates tend to weaken currency and increase inflation expectations
-                commodity_actions.append(("KEEP", "Keep commodities due to falling interest rates increasing inflation hedge appeal."))
-
-            # Unemployment Rate rules - labor market impact on asset classes
-            if unemployment_direction == "up":
-                # Rising unemployment signals potential consumer spending reduction
-                equity_actions.append(("REDUCE", "Reduce due to rising unemployment rate."))
-                # Reduced economic activity decreases demand for raw materials
-                commodity_actions.append(("REDUCE", "Reduce commodities as rising unemployment indicates weakening demand."))
-            elif unemployment_direction == "down":
-                # Improving labor market supports consumer spending and corporate earnings
-                equity_actions.append(("KEEP", "Keep due to declining unemployment rate supporting equity assets."))
-                # Stronger economic activity increases commodity demand
-                commodity_actions.append(("KEEP", "Keep commodities as lower unemployment supports economic expansion and consumption."))
-
-            # Generate final suggestions considering conflicting signals
+            # Define rules for each indicator and asset type combination based on business requirements
+            # Each rule maps an indicator direction to asset type recommendations
+            rules = {
+                "GDP": {
+                    "up": {
+                        "Equity": ("KEEP", "Increase Equity assets due to rising GDP indicating economic growth."),
+                        "Bonds": ("REDUCE", "Reduce Bond assets as rising GDP typically favors equity over fixed income."),
+                        "Real Estate": ("KEEP", "Keep Real Estate as rising GDP supports property values and rental income."),
+                        "Commodity": ("KEEP", "Keep Commodities as economic growth increases demand for raw materials.")
+                    },
+                    "down": {
+                        "Equity": ("REDUCE", "Reduce Equity assets as declining GDP indicates economic contraction."),
+                        "Bonds": ("KEEP", "Increase Bond assets as declining GDP favors safer fixed income investments."),
+                        "Real Estate": ("REDUCE", "Reduce Real Estate as economic contraction may impact property values."),
+                        "Commodity": ("REDUCE", "Reduce Commodities as economic slowdown decreases industrial demand.")
+                    },
+                    "neutral": {
+                        "Equity": ("KEEP", "No change needed as GDP remains stable."),
+                        "Bonds": ("KEEP", "No change needed as GDP remains stable."),
+                        "Real Estate": ("KEEP", "No change needed as GDP remains stable."),
+                        "Commodity": ("KEEP", "No change needed as GDP remains stable.")
+                    }
+                },
+                "Interest Rate": {
+                    "up": {
+                        "Equity": ("REDUCE", "Reduce Equity assets as higher rates increase cost of capital and discount future earnings."),
+                        "Bonds": ("KEEP", "Increase Bond assets as rising rates provide better yields on new issuances."),
+                        "Real Estate": ("REDUCE", "Reduce Real Estate as rising rates increase financing costs."),
+                        "Commodity": ("REDUCE", "Reduce Commodities as rising rates strengthen currency and reduce inflation hedge appeal.")
+                    },
+                    "down": {
+                        "Equity": ("KEEP", "Keep Equity assets as lower rates support corporate financing and valuations."),
+                        "Bonds": ("REDUCE", "Reduce Bond assets as falling rates decrease yield on new issuances."),
+                        "Real Estate": ("KEEP", "Increase Real Estate as declining rates lower financing costs and improve yields."),
+                        "Commodity": ("KEEP", "Keep Commodities as falling rates may weaken currency and increase inflation risk.")
+                    },
+                    "neutral": {
+                        "Equity": ("KEEP", "No change needed as interest rates remain stable."),
+                        "Bonds": ("KEEP", "No change needed as interest rates remain stable."),
+                        "Real Estate": ("KEEP", "No change needed as interest rates remain stable."),
+                        "Commodity": ("KEEP", "No change needed as interest rates remain stable.")
+                    }
+                },
+                "Unemployment Rate": {
+                    "up": {
+                        "Equity": ("REDUCE", "Reduce Equity assets as rising unemployment signals weaker consumer spending and earnings."),
+                        "Bonds": ("KEEP", "Keep Bond assets as rising unemployment may lead to accommodative monetary policy."),
+                        "Real Estate": ("REDUCE", "Reduce Real Estate as rising unemployment may impact demand and rental income."),
+                        "Commodity": ("REDUCE", "Reduce Commodities as rising unemployment indicates weakening economic activity.")
+                    },
+                    "down": {
+                        "Equity": ("KEEP", "Increase Equity assets as declining unemployment supports consumer spending and earnings."),
+                        "Bonds": ("REDUCE", "Reduce Bond assets as improving labor market may lead to tighter monetary policy."),
+                        "Real Estate": ("KEEP", "Keep Real Estate as improving employment supports housing demand."),
+                        "Commodity": ("KEEP", "Keep Commodities as lower unemployment supports economic growth and consumption.")
+                    },
+                    "neutral": {
+                        "Equity": ("KEEP", "No change needed as unemployment remains stable."),
+                        "Bonds": ("KEEP", "No change needed as unemployment remains stable."),
+                        "Real Estate": ("KEEP", "No change needed as unemployment remains stable."),
+                        "Commodity": ("KEEP", "No change needed as unemployment remains stable.")
+                    }
+                }
+            }
+            
+            # Generate suggestions with per-indicator recommendations
             suggestions = []
+            indicators_directions = {
+                "GDP": gdp_direction,
+                "Interest Rate": interest_rate_direction,
+                "Unemployment Rate": unemployment_direction
+            }
+            
             for symbol, data in portfolio_allocation.items():
                 asset_type = data["asset_type"]
                 
-                # Default to neutral stance if no signals present
-                action = "KEEP"
-                explanation = "No significant macroeconomic changes affecting this asset."
-                note = None  # Initialize note as None
+                macro_indicators_suggestions = []
+                for indicator, direction in indicators_directions.items():
+                    action, explanation = rules[indicator][direction].get(
+                        asset_type, 
+                        ("KEEP", f"Default recommendation for {asset_type} under {indicator} {direction} condition.")
+                    )
+                    
+                    # Determine if there are conflicting signals with other indicators
+                    conflicts = []
+                    for other_indicator, other_direction in indicators_directions.items():
+                        if other_indicator != indicator:
+                            other_action = rules[other_indicator][other_direction].get(asset_type, ("KEEP", ""))[0]
+                            if other_action != action:
+                                conflicts.append(other_indicator)
+                    
+                    indicator_suggestion = {
+                        "indicator": indicator,
+                        "action": action,
+                        "explanation": explanation
+                    }
+                    
+                    # Add note if there are conflicting signals
+                    if conflicts:
+                        indicator_suggestion["note"] = f"Conflicting signal with {', '.join(conflicts)}"
+                    
+                    macro_indicators_suggestions.append(indicator_suggestion)
                 
-                # Determine which set of actions apply to this asset type
-                applicable_actions = []
-                if asset_type == "Equity":
-                    applicable_actions = equity_actions
-                elif asset_type == "Bonds":
-                    applicable_actions = bond_actions
-                elif asset_type == "Real Estate":
-                    applicable_actions = real_estate_actions
-                elif asset_type == "Commodity":
-                    applicable_actions = commodity_actions
-                
-                # Handle conflicting signals by balancing them rather than prioritizing REDUCE
-                # Count the number of KEEP vs REDUCE signals for this asset class
-                keep_count = len([act for act, _ in applicable_actions if act == "KEEP"])
-                reduce_count = len([act for act, _ in applicable_actions if act == "REDUCE"])
-                
-                # Determine action based on signal balance
-                if keep_count == 0 and reduce_count == 0:
-                    # No signals present, keep default
-                    pass
-                elif keep_count > reduce_count:
-                    # More signals suggesting to keep
-                    action = "KEEP"
-                    # Take the first KEEP explanation as representative
-                    keep_explanations = [exp for act, exp in applicable_actions if act == "KEEP"]
-                    explanation = keep_explanations[0]
-                    if reduce_count > 0:
-                        # Add conflicting signals as a note
-                        note = f"{reduce_count} conflicting indicator(s) suggested reduction"
-                elif reduce_count > keep_count:
-                    # More signals suggesting to reduce
-                    action = "REDUCE"
-                    # Take the first REDUCE explanation as representative
-                    reduce_explanations = [exp for act, exp in applicable_actions if act == "REDUCE"]
-                    explanation = reduce_explanations[0]
-                    if keep_count > 0:
-                        # Add conflicting signals as a note
-                        note = f"{keep_count} conflicting indicator(s) suggested keeping"
-                else:
-                    # Equal signals - use conservative approach but note the conflict
-                    action = "REDUCE"  # Conservative bias in case of equal signals
-                    reduce_explanations = [exp for act, exp in applicable_actions if act == "REDUCE"]
-                    explanation = reduce_explanations[0]
-                    note = "Equal conflicting signals present, using conservative stance"
-
-                # Construct the suggestion with separate note field
                 suggestion = {
                     "asset": symbol,
-                    "action": action,
                     "asset_type": asset_type,
                     "description": data["description"],
-                    "explanation": explanation
+                    "macro_indicators": macro_indicators_suggestions
                 }
                 
-                # Add note field only if there's a note
-                if note:
-                    suggestion["note"] = note
-                
                 suggestions.append(suggestion)
-
-            logger.info(f"Generated {len(suggestions)} asset suggestions")
+            
+            logger.info(f"Generated {len(suggestions)} asset suggestions with granular indicator-based recommendations")
             return suggestions
 
         except Exception as e:
-            logger.error(f"Error generating asset suggestions: {e}")
+            logger.error(f"Error generating asset suggestions: {e}", exc_info=True)
             return []
+
+    def fetch_asset_suggestions_market_volatility_based(self):
+        """
+        Generate asset allocation suggestions based on the latest Market Volatility Index (VIX)
+        from the market analysis report, considering each asset's VIX sensitivity and current trend.
+        
+        Returns:
+            list: List of dictionaries containing asset suggestions with VIX-based actions and explanations
+        """
+        try:
+            # Fetch latest market analysis report
+            market_analysis_collection = self.collections["market_analysis"]
+            pipeline = [
+                {"$sort": {"timestamp": -1}},
+                {"$limit": 1}
+            ]
+            result = list(self.db[market_analysis_collection].aggregate(pipeline))
+            logger.info(f"Fetched {len(result)} market analysis report(s)")
+
+            if not result:
+                logger.error("No market analysis report found")
+                return []
+
+            market_analysis = result[0].get("report", {})
+            logger.info(f"Market Analysis Report: {market_analysis}")
+
+            # Extract VIX data
+            volatility_data = market_analysis.get("market_volatility_index", {})
+            if not volatility_data:
+                logger.warning("No market volatility data found in the market analysis report")
+                return []
+                
+            # Extract VIX value from fluctuation_answer
+            vix_fluctuation = volatility_data.get("fluctuation_answer", "")
+            vix_value = None
+            
+            # Parse the VIX value from the fluctuation_answer string
+            import re
+            vix_match = re.search(r"VIX close price is (\d+\.\d+)", vix_fluctuation)
+            if vix_match:
+                vix_value = float(vix_match.group(1))
+                logger.info(f"Extracted VIX value: {vix_value}")
+            else:
+                logger.error(f"Could not extract VIX value from: {vix_fluctuation}")
+                return []
+
+            # Extract asset trends from the market analysis report
+            asset_trends = {}
+            for trend_data in market_analysis.get("asset_trends", []):
+                asset_symbol = trend_data.get("asset")
+                diagnosis = trend_data.get("diagnosis", "").lower()
+                
+                if "uptrend" in diagnosis:
+                    asset_trends[asset_symbol] = "UPTREND"
+                elif "downtrend" in diagnosis:
+                    asset_trends[asset_symbol] = "DOWNTREND"
+                else:
+                    asset_trends[asset_symbol] = "NEUTRAL"
+                    
+            logger.info(f"Extracted trends for {len(asset_trends)} assets")
+
+            # Fetch portfolio allocation data
+            portfolio_collection = self.collections["portfolio_allocation"]
+            portfolio_allocation = {}
+            try:
+                cursor = self.db[portfolio_collection].find()
+                for doc in cursor:
+                    symbol = doc["symbol"]
+                    portfolio_allocation[symbol] = {
+                        "allocation_percentage": doc.get("allocation_percentage"),
+                        "allocation_number": doc.get("allocation_number"),
+                        "allocation_decimal": doc.get("allocation_decimal"),
+                        "description": doc.get("description"),
+                        "asset_type": doc.get("asset_type")
+                    }
+            except Exception as e:
+                logger.error(f"Error fetching portfolio allocation: {e}")
+                return []
+
+            logger.info(f"Fetched {len(portfolio_allocation)} portfolio allocation(s)")
+            
+            # Define VIX sensitivity for each asset
+            vix_sensitivity = {
+                "SPY": "NEUTRAL",  # S&P 500 ETF
+                "QQQ": "HIGH",     # Nasdaq ETF
+                "EEM": "HIGH",     # Emerging Markets ETF
+                "XLE": "NEUTRAL",  # Energy Sector ETF
+                "TLT": "LOW",      # Long-Term Treasury Bonds
+                "LQD": "LOW",      # Investment-Grade Bonds
+                "HYG": "HIGH",     # High-Yield Bonds
+                "VNQ": "NEUTRAL",  # Real Estate ETF
+                "GLD": "LOW",      # Gold ETF
+                "USO": "NEUTRAL",  # Oil ETF
+            }
+            
+            # Determine VIX state based on value
+            if vix_value > 20:
+                vix_state = "HIGH"
+            elif vix_value < 12:
+                vix_state = "LOW"
+            else:
+                vix_state = "NORMAL"
+            
+            logger.info(f"VIX state: {vix_state} ({vix_value})")
+            
+            # Generate suggestions based on VIX state, asset sensitivity and trend
+            suggestions = []
+            
+            for symbol, data in portfolio_allocation.items():
+                asset_description = data["description"]
+                asset_type = data["asset_type"]
+                sensitivity = vix_sensitivity.get(symbol, "NEUTRAL")
+                asset_trend = asset_trends.get(symbol, "NEUTRAL")
+                
+                # Determine action based on both sensitivity and trend
+                action = self._get_vix_action_with_trend(vix_state, sensitivity, asset_trend)
+                explanation = self._get_vix_explanation_with_trend(symbol, vix_value, vix_state, sensitivity, asset_trend)
+                
+                # VIX-based recommendation
+                vix_indicator = {
+                    "indicator": "VIX",
+                    "action": action,
+                    "sensitivity": sensitivity,
+                    "explanation": explanation
+                }
+                
+                # Add note about trend if applicable
+                note_parts = []
+                if sensitivity != "NEUTRAL":
+                    note_parts.append(f"{symbol} has {sensitivity} sensitivity to market volatility")
+                if asset_trend != "NEUTRAL":
+                    note_parts.append(f"Currently in {asset_trend}")
+                    
+                if note_parts:
+                    vix_indicator["note"] = ". ".join(note_parts)
+                
+                suggestion = {
+                    "asset": symbol,
+                    "asset_type": asset_type,
+                    "description": asset_description,
+                    "macro_indicators": [vix_indicator]
+                }
+                
+                suggestions.append(suggestion)
+            
+            logger.info(f"Generated {len(suggestions)} asset suggestions based on market volatility and asset trends")
+            return suggestions
+
+        except Exception as e:
+            logger.error(f"Error generating market volatility-based asset suggestions: {e}", exc_info=True)
+            return []
+
+    @staticmethod
+    def _get_vix_action_with_trend(vix_state, sensitivity, asset_trend):
+        """
+        Determine the action based on VIX state, asset sensitivity, and trend.
+        
+        Args:
+            vix_state (str): HIGH, LOW, or NORMAL
+            sensitivity (str): HIGH, LOW, or NEUTRAL
+            asset_trend (str): UPTREND, DOWNTREND, or NEUTRAL
+            
+        Returns:
+            str: Action recommendation (KEEP or REDUCE)
+        """
+        # For HIGH sensitivity assets, VIX is the primary factor
+        if sensitivity == "HIGH":
+            if vix_state == "HIGH":
+                return "REDUCE"
+            elif vix_state == "LOW":
+                return "KEEP"  # Means increase but keeping consistent with available actions
+            else:  # NORMAL
+                # For normal VIX, look at the asset's trend
+                return "REDUCE" if asset_trend == "DOWNTREND" else "KEEP"
+        
+        # For NEUTRAL sensitivity assets, consider both VIX and trend
+        elif sensitivity == "NEUTRAL":
+            if vix_state == "HIGH" and asset_trend == "DOWNTREND":
+                return "REDUCE"  # Strong signal to reduce
+            elif vix_state == "LOW" and asset_trend == "UPTREND":
+                return "KEEP"    # Strong signal to keep/increase
+            elif asset_trend == "DOWNTREND":
+                return "REDUCE"  # Prioritize trend for neutral sensitivity
+            else:
+                return "KEEP"    # Default to keep
+        
+        # For LOW sensitivity assets, trend is more important than VIX
+        else:  # LOW sensitivity
+            if asset_trend == "DOWNTREND":
+                return "REDUCE"  # Even low sensitivity assets should be reduced in downtrend
+            else:
+                return "KEEP"    # Otherwise keep
+
+    @staticmethod
+    def _get_vix_explanation_with_trend(symbol, vix_value, vix_state, sensitivity, asset_trend):
+        """
+        Generate explanation for the VIX-based recommendation, considering asset trend.
+        
+        Args:
+            symbol (str): Asset symbol
+            vix_value (float): Current VIX value
+            vix_state (str): HIGH, LOW, or NORMAL
+            sensitivity (str): HIGH, LOW, or NEUTRAL
+            asset_trend (str): UPTREND, DOWNTREND, or NEUTRAL
+            
+        Returns:
+            str: Explanation text
+        """
+        # Build explanations based on both VIX and trend
+        if sensitivity == "HIGH":
+            # For high sensitivity, VIX is primary factor
+            if vix_state == "HIGH":
+                return f"{symbol} has high VIX sensitivity and volatility is elevated ({vix_value}). Reducing position advised."
+            elif vix_state == "LOW":
+                return f"{symbol} has high VIX sensitivity and volatility is low ({vix_value}). Favorable time to increase exposure."
+            else:  # NORMAL VIX
+                if asset_trend == "DOWNTREND":
+                    return f"{symbol} shows downtrend movement despite normal volatility ({vix_value}). Reducing position advised."
+                else:
+                    return f"{symbol} has high sensitivity but VIX is at normal levels ({vix_value}). Current trend supports maintaining position."
+        
+        elif sensitivity == "NEUTRAL":
+            # For neutral sensitivity, consider both factors equally
+            if vix_state == "HIGH":
+                if asset_trend == "DOWNTREND":
+                    return f"{symbol} faces both elevated volatility ({vix_value}) and downward trend. Risk reduction advised."
+                else:
+                    return f"{symbol} faces elevated volatility ({vix_value}) but trend is not negative. Monitor closely."
+            elif vix_state == "LOW":
+                if asset_trend == "UPTREND":
+                    return f"{symbol} benefits from low volatility ({vix_value}) and positive trend. Good conditions for exposure."
+                else:
+                    return f"{symbol} has low volatility ({vix_value}) but lacks upward momentum. Maintain current allocation."
+            else:  # NORMAL VIX
+                if asset_trend == "DOWNTREND":
+                    return f"{symbol} shows downtrend despite normal volatility ({vix_value}). Consider reducing position."
+                elif asset_trend == "UPTREND":
+                    return f"{symbol} shows positive momentum with stable volatility ({vix_value}). Favorable conditions."
+                else:
+                    return f"{symbol} has neutral sensitivity and stable conditions. Maintain current allocation."
+        
+        else:  # LOW sensitivity
+            # For low sensitivity, trend is more important than VIX
+            if asset_trend == "DOWNTREND":
+                return f"{symbol} has low VIX sensitivity but shows downward trend. Consider tactical reduction despite lower volatility risk."
+            elif asset_trend == "UPTREND":
+                return f"{symbol} has low VIX sensitivity and positive trend. Good candidate for stable returns in current conditions."
+            else:
+                if vix_state == "HIGH":
+                    return f"{symbol} provides good diversification during high volatility ({vix_value}) due to low sensitivity. Maintain position."
+                else:
+                    return f"{symbol} has low volatility sensitivity. Current market conditions don't warrant position changes."
