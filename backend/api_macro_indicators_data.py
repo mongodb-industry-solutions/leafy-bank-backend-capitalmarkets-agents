@@ -34,6 +34,22 @@ class MacroIndicatorsResponse(BaseModel):
 class MessageResponse(BaseModel):
     macro_indicators: MacroIndicatorsResponse = None
 
+class MacroIndicatorTrend(BaseModel):
+    title: str
+    arrow_direction: str
+    latest_value: float
+    latest_date: datetime
+    previous_value: float
+    previous_date: datetime
+
+class MacroIndicatorsTrendResponse(BaseModel):
+    GDP: MacroIndicatorTrend = None
+    UNRATE: MacroIndicatorTrend = None
+    REAINTRATREARAT10Y: MacroIndicatorTrend = None
+
+class TrendMessageResponse(BaseModel):
+    trend_indicators: dict = None
+
 
 ### Macro Indicators Data Endpoints ###
 
@@ -50,4 +66,19 @@ async def fetch_most_recent_macro_indicators():
         return MessageResponse(macro_indicators=macro_indicators)
     except Exception as e:
         logging.error(f"Error fetching most recent macro indicators: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+    
+@router.post("/fetch-macro-indicators-trend", response_model=TrendMessageResponse)
+async def get_macro_indicators_trend():
+    """
+    Get the trend direction for each macroeconomic indicator by comparing the two most recent values.
+    
+    Returns:
+        TrendMessageResponse: Object containing trend information for each macro indicator.
+    """
+    try:
+        trend_indicators = macro_indicator_data_service.get_macro_indicators_trend()
+        return TrendMessageResponse(trend_indicators=trend_indicators)
+    except Exception as e:
+        logging.error(f"Error fetching macro indicators trend: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
