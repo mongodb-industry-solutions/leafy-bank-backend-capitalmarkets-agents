@@ -87,9 +87,84 @@ class MacroIndicatorDataService(MongoDBConnector):
             logger.error(f"Error retrieving most recent macro indicators: {e}")
             return {}
 
+    def get_macro_indicators_trend(self):
+        """
+        Get the trend direction for each macroeconomic indicator by comparing the two most recent values.
+        
+        Returns:
+            dict: A dictionary containing the trend information for each macro indicator.
+                Format: {series_id: {'title': title, 'arrow_direction': 'ARROW_UP/ARROW_DOWN/EQUAL'}}
+        """
+        try:
+            # Aggregation pipeline to get the two most recent values for each series_id
+            pipeline = [
+                {
+                    "$sort": {"date": -1}  # Sort by date in descending order
+                },
+                {
+                    "$group": {
+                        "_id": "$series_id",
+                        "title": {"$first": "$title"},
+                        "latest_values": {"$push": {"date": "$date", "value": "$value"}},
+                    }
+                },
+                {
+                    "$project": {
+                        "title": 1,
+                        "latest_values": {"$slice": ["$latest_values", 2]}  # Get only the first 2 values
+                    }
+                }
+            ]
+
+            # Execute the aggregation pipeline
+            result = self.db[self.collection_name].aggregate(pipeline)
+
+            # Process the result to determine trend direction
+            trend_indicators = {}
+            for doc in result:
+                series_id = doc["_id"]
+                title = doc["title"]
+                
+                # Skip if we don't have at least 2 values to compare
+                if len(doc["latest_values"]) < 2:
+                    continue
+                    
+                latest_value = doc["latest_values"][0]["value"]
+                previous_value = doc["latest_values"][1]["value"]
+                latest_date = doc["latest_values"][0]["date"]
+                previous_date = doc["latest_values"][1]["date"]
+                
+                # Determine trend direction
+                if latest_value > previous_value:
+                    arrow_direction = "ARROW_UP"
+                elif latest_value < previous_value:
+                    arrow_direction = "ARROW_DOWN"
+                else:
+                    arrow_direction = "EQUAL"
+                
+                trend_indicators[series_id] = {
+                    "title": title,
+                    "arrow_direction": arrow_direction,
+                    "latest_value": latest_value,
+                    "latest_date": latest_date,
+                    "previous_value": previous_value,
+                    "previous_date": previous_date
+                }
+
+            logger.info(f"Retrieved trend direction for {len(trend_indicators)} macro indicators")
+            return trend_indicators
+        except Exception as e:
+            logger.error(f"Error retrieving macro indicators trend: {e}")
+            return {}
+
 if __name__ == "__main__":
+
+    import pprint
     # Example usage
     macro_indicator_data_service = MacroIndicatorDataService()
+    
     most_recent_macro_indicators = macro_indicator_data_service.fetch_most_recent_macro_indicators()
-    for series_id, data in most_recent_macro_indicators.items():
-        print(f"Series ID: {series_id}, Title: {data['title']}, Date: {data['date']}, Value: {data['value']}")
+    pprint.pprint(most_recent_macro_indicators)
+
+    trend_indicators = macro_indicator_data_service.get_macro_indicators_trend()
+    pprint.pprint(trend_indicators)
