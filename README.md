@@ -2,6 +2,10 @@
 
 This repository hosts the backend for the **Capital Markets Agents** service.
 
+## High Level Architecture
+
+![High Level Architecture](architecture/diagram.png)
+
 ## Where Does MongoDB Shine?
 
 MongoDB is a powerful database solution that excels in managing financial data, particularly in the capital markets domain. Here are some key reasons why MongoDB is an ideal choice for financial services:
