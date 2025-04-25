@@ -1,6 +1,15 @@
 # Capital Markets Agents Service
 
-This repository hosts the backend for the **Capital Markets Agents** service.
+This repository hosts the backend for the Capital Markets Agents service. It is designed to provide automated, AI-driven market intelligence for capital markets professionals through specialized agent workflows. The service combines market data analysis, news sentiment processing, and portfolio insights to deliver comprehensive financial intelligence.
+
+The system features two primary agent workflows:
+
+1. **Market Analysis Agent:** Analyzes asset trends, macroeconomic indicators, and market volatility to generate portfolio insights and recommendations.
+2. **Market News Agent:** Processes financial news, performs sentiment analysis, and produces summarized market news intelligence
+
+Built on a modular architecture using LangGraph for workflow orchestration, the service leverages MongoDB Atlas for data persistence, FastAPI for API endpoints, and integrates with financial data sources including Yahoo Finance and FRED API. Reports are enhanced with vector embeddings to enable semantic search capabilities across market insights and news sentiment.
+
+This solution enables financial professionals to access AI-powered market intelligence through scheduled reports and on-demand analysis, helping to inform investment decisions with data-driven insights.
 
 ## High Level Architecture
 
@@ -8,7 +17,21 @@ This repository hosts the backend for the **Capital Markets Agents** service.
 
 ## Where Does MongoDB Shine?
 
-MongoDB is a powerful database solution that excels in managing financial data, particularly in the capital markets domain. Here are some key reasons why MongoDB is an ideal choice for financial services:
+MongoDB stands out as the ideal database solution for the Capital Markets Agents service, offering several key advantages for AI-driven financial intelligence workflows:
+
+### Perfect Fit for Agentic Workflows
+
+1. **Document Model:** MongoDB's document model stores data in JSON-like BSON format, which aligns perfectly with the agent state representation in LangGraph workflows. This enables near-seamless transitions between application objects and database storage with minimal serialization overhead.
+2. **Agent State Management:** The service leverages MongoDB to store complex state objects from both Market Analysis and Market News agents. Each workflow stage can read from and write to MongoDB collections with minimal transformation, creating a natural persistence layer for multi-step AI processes.
+3. **Agent Profiles Storage:** MongoDB efficiently stores and retrieves different agent profiles with distinct roles, instructions, and rules. The document model accommodates these nested, semi-structured configurations without requiring rigid schemas or complex joins.
+
+### Advanced Financial Data Operations
+
+4. **Time Series Collections:** For analyzing asset trends and market volatility, MongoDB's Time Series collections provide optimized storage and efficient querying of chronological market data from Yahoo Finance, supporting sophisticated trend analysis.
+5. **Vector Search for News Intelligence:** The service's financial news functionality relies on MongoDB Atlas Vector Search to find semantically similar articles, enabling the discovery of related content beyond simple keyword matching and powering the sentiment analysis pipeline.
+6. **Aggregation Pipelines:** Market analysis tools utilize MongoDB's powerful aggregation framework to calculate moving averages, assess macroeconomic indicators, and generate portfolio insights from raw financial data.
+
+This combination of features enables the Capital Markets Agents service to maintain complex agent state, perform sophisticated financial data analysis, and deliver consistent AI-powered insights without the complexity of multiple specialized database systems.
 
 ## The 4 Pillars of the Document Model
 
@@ -22,24 +45,55 @@ MongoDB is a powerful database solution that excels in managing financial data, 
 
 ## MongoDB Key Features
 
-- **Time Series** - ([More info](https://www.mongodb.com/products/capabilities/time-series)): For storing market data in a time series format.
-- **Atlas Vector Search**  ([More info](https://www.mongodb.com/products/platform/atlas-vector-search)): For enabling vector search on financial news data.
+- **Document Model** - ([More info](https://www.mongodb.com/resources/products/fundamentals/basics#documents)): Perfect for storing complex agent states and profiles in native JSON format.
+- **Time Series Collections**  ([More info](https://www.mongodb.com/products/capabilities/time-series)): Optimized storage and querying of chronological market data from Yahoo Finance.
+- **Atlas Vector Search**  ([More info](https://www.mongodb.com/products/platform/atlas-vector-search)): For semantic search across financial news and report embeddings.
+- **Aggregation Framework**  ([More info](https://www.mongodb.com/docs/manual/aggregation/)): Powers financial calculations like moving averages and trend analysis.
+- **Schema Flexibility**  ([More info](https://www.mongodb.com/resources/products/fundamentals/why-use-mongodb)): Adapts to evolving agent workflows and data requirements without migrations.
 
 ## Tech Stack
 
-- [MongoDB Atlas](https://www.mongodb.com/atlas/database) for the database.
-- [FastAPI](https://fastapi.tiangolo.com/) for the backend framework.
-- [Poetry](https://python-poetry.org/) for dependency management.
-- [Uvicorn](https://www.uvicorn.org/) for ASGI server.
+- [MongoDB Atlas](https://www.mongodb.com/atlas/database) for database storage and vector search capabilities.
+- [LangGraph](https://langchain-ai.github.io/langgraph/) for orchestrating multi-step agent workflows.
+- [VoyageAI](https://www.voyageai.com/) for domain-specific financial embeddings.
+- [AWS Bedrock/Anthropic](https://aws.amazon.com/bedrock/) for LLM inference in agent reasoning steps.
+- [FastAPI](https://fastapi.tiangolo.com/) for RESTful API endpoints and documentation.
+- [Poetry](https://python-poetry.org/) for dependency management and packaging.
+- [Uvicorn](https://www.uvicorn.org/) for ASGI server implementation.
 - [Docker](https://www.docker.com/) for containerization.
 
 ## Relevant Python Packages
 
-- [yfinance](https://pypi.org/project/yfinance/) for extracting market data from Yahoo Finance.
-- [pyfredapi](https://pypi.org/project/pyfredapi/) for extracting macroeconomic data from the FRED API.
-- [pandas](https://pandas.pydata.org/) for data manipulation.
-- [scheduler](https://pypi.org/project/scheduler/) for job scheduling.
-- [transformers](https://huggingface.co/transformers/) for natural language processing.
+- [pymongo](https://pymongo.readthedocs.io/) for MongoDB connectivity and operations.
+- [langgraph](https://github.com/langchain-ai/langgraph) for building agent workflow graphs.
+- [boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) for AWS Bedrock API integration.
+- [voyageai](https://voyageai.com/) for generating finance-specific embeddings.
+- [scheduler](https://pypi.org/project/scheduler/) for agent workflow scheduling.
+- [python-dotenv](https://pypi.org/project/python-dotenv/) for environment variable management.
+- [pytz](https://pypi.org/project/pytz/) for timezone handling in scheduled reports.
+
+
+## Relevant Models
+
+- [voyage-finance-2](https://blog.voyageai.com/2024/06/03/domain-specific-embeddings-finance-edition-voyage-finance-2/) for generating embeddings for market and news reports.
+
+### Agentic Workflows
+
+- **Market Analysis Agent**: Analyzes asset trends, macroeconomic indicators, and market volatility to generate portfolio insights and recommendations.
+- **Market News Agent**: Processes financial news, performs sentiment analysis, and produces summarized market news intelligence.
+
+### News Sentiment Logic (Vector Search)
+The news sentiment logic utilizes MongoDB's Vector Search capabilities to enhance the analysis of financial news articles. The process involves two key components:
+
+1. **Semantic Search Implementation**: Using MongoDB's Vector Search capability, the system can find semantically similar news articles based on these embeddings—identifying both explicit mentions of a ticker symbol and contextually relevant articles that don't directly reference it.
+
+2. **Portfolio Sentiment Calculation**: For each asset in the portfolio, the system calculates an average sentiment score from its related articles, providing a consolidated sentiment indicator that helps assess market perception of that asset.
+
+This approach enables both explicit keyword matching and deeper semantic understanding of financial news, offering more comprehensive insights than traditional text-based searches.
+
+### Scheduler
+
+- **Job Scheduling**: Uses the [`scheduler`](https://digon.io/hyd/project/scheduler/t/master/readme.html) Python package to schedule and manage ETL processes.
 
 ## Prerequisites
 
@@ -51,22 +105,19 @@ Before you begin, ensure you have met the following requirements:
 
 ## Setup Instructions
 
-### Step 1a: Set Up MongoDB Database and Collections
+### Step 1: Set Up MongoDB Database and Collections
 
 1. Log in to **MongoDB Atlas** and create a database named `agentic_capital_markets`. Ensure the name is reflected in the environment variables.
-2. Create the following collections:
-   - `financial_news` (for storing financial news data) - You can export some sample data to this collection using `backend/loaders/db/collections/agentic_capital_markets.financial_news.json` file.
-   - `pyfredapiMacroeconomicIndicators` (for storing macroeconomic data) - You can export some sample data to this collection using `backend/loaders/db/collections/agentic_capital_markets.pyfredapiMacroeconomicIndicators.json` file.
-   - `yfinanceMarketData` (for storing market data) - You can export some sample data to this collection using `backend/loaders/db/collections/agentic_capital_markets.yfinanceMarketData.json` file. Additionally, there are some more backup files in this directory that you can use to populate the collection:  `backend/loaders/backup/*`
-
-> **_Note:_** For creating the time series collection, you can run the following python script located in the `backend/loaders/db/` directory: `create_time_series_collection.py`. Make sure to parametrize the script accordingly.
-
-### Step 1b: Set Up Vector Search Index
-
-1. Create the vector search index for the `financial_news` collection.
-
-> **_Note:_** For creating the vector search index, you can run the following python script located in the `backend/loaders/db/` directory: `vector_search_idx_creator.py`. Make sure to parametrize the script accordingly.
-
+2. Create the following collections if they do not already exist:
+   - `agent_profiles` (for storing agent profiles)
+   - `reports_market_analysis` (for storing market analysis reports)
+   - `reports_market_news` (for storing market news reports)
+   - `chartMappings` (for storing chart mappings)
+   - `pyfredapiMacroeconomicIndicators` (for storing macroeconomic indicators)
+   - `portfolio_allocation` (for storing portfolio allocation data)
+   - `portfolio_performance` (for storing portfolio performance data) 
+   - `financial_news` (for storing financial news articles)
+   - `yfinanceMarketData` (for storing Yahoo Finance time series data)
 
 ### Step 2: Add MongoDB User
 
@@ -77,17 +128,25 @@ Follow [MongoDB's guide](https://www.mongodb.com/docs/atlas/security-add-mongodb
 Create a `.env` file in the `/backend` directory with the following content:
 
 ```bash
-MONGODB_URI=
+MONGODB_URI="your_mongodb_uri"
 DATABASE_NAME="agentic_capital_markets"
 APP_NAME="your_app_name"
-AWS_REGION=
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-FRED_API_KEY="your_fred_api_key"
+VOYAGE_API_KEY="your_voyage_api_key"
+EMBEDDINGS_MODEL_ID="voyage-finance-2"
+AWS_REGION="us-east-1"
+CHAT_COMPLETIONS_MODEL_ID="anthropic.claude-3-haiku-20240307-v1:0"
 YFINANCE_TIMESERIES_COLLECTION = "yfinanceMarketData"
 PYFREDAPI_COLLECTION = "pyfredapiMacroeconomicIndicators"
 NEWS_COLLECTION = "financial_news"
-SCRAPE_NUM_ARTICLES = 1
+VECTOR_INDEX_NAME = "financial_news_VS_IDX"
+VECTOR_FIELD = "article_embedding"
+PORTFOLIO_PERFORMANCE_COLLECTION = "portfolio_performance"
+PORTFOLIO_COLLECTION = "portfolio_allocation"
+AGENT_PROFILES_COLLECTION = "agent_profiles"
+REPORTS_COLLECTION_MARKET_ANALYSIS = "reports_market_analysis"
+REPORTS_COLLECTION_MARKET_NEWS = "reports_market_news"
+CHART_MAPPINGS_COLLECTION = "chartMappings"
+MA_PERIOD=50
 ```
 
 ## Running the Backend
@@ -107,10 +166,10 @@ SCRAPE_NUM_ARTICLES = 1
 To start the backend service, run:
 
 ```bash
-poetry run uvicorn main:app --host 0.0.0.0 --port 8004
+poetry run uvicorn main:app --host 0.0.0.0 --port 8005
 ```
 
-> Default port is `8004`, modify the `--port` flag if needed.
+> Default port is `8005`, modify the `--port` flag if needed.
 
 ## Running with Docker
 
@@ -133,7 +192,7 @@ You can access the API documentation by visiting the following URL:
 ```
 http://localhost:<PORT_NUMBER>/docs
 ```
-E.g. `http://localhost:8004/docs`
+E.g. `http://localhost:8005/docs`
 
 > **_Note:_** Make sure to replace `<PORT_NUMBER>` with the port number you are using and ensure the backend is running.
 
