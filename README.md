@@ -11,7 +11,7 @@ This repository hosts the backend for the **Capital Markets Agents** service, a 
 -  **Automated Intelligence**: Daily scheduled analysis of market trends and financial news
 -  **Portfolio-Specific Insightse**: Personalized recommendations based on current portfolio allocation
 -  **Sentiment Analysise**: AI-powered processing of news sentiment and its potential impact on investments
--  **Vector Searche**: Semantic understanding of financial news beyond simple keyword matching
+-  **Vector Search**: Semantic understanding of financial news beyond simple keyword matching
 
 ### Technical Architecture
 The service is built on a modular foundation using:
