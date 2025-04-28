@@ -1,15 +1,57 @@
 # Capital Markets Agents Service
 
-This repository hosts the backend for the Capital Markets Agents service. It is designed to provide automated, AI-driven market intelligence for capital markets professionals through specialized agent workflows. The service combines market data analysis, news sentiment processing, and portfolio insights to deliver comprehensive financial intelligence.
+This repository hosts the backend for the **Capital Markets Agents** service, a sophisticated AI-powered system that delivers automated financial intelligence to capital markets professionals. By combining real-time market data analysis, news sentiment processing, and portfolio insights, the service helps investment professionals make more informed decisions backed by comprehensive, data-driven intelligence.
 
-The system features two primary agent workflows:
+### Key Features
+
+-  **Automated Intelligence**: Daily scheduled analysis of market trends and financial news
+-  **Portfolio-Specific Insightse**: Personalized recommendations based on current portfolio allocation
+-  **Sentiment Analysise**: AI-powered processing of news sentiment and its potential impact on investments
+-  **Vector Searche**: Semantic understanding of financial news beyond simple keyword matching
+
+### Technical Architecture
+The service is built on a modular foundation using:
+
+-  **LangGraph**: For orchestrating complex, multi-step agent workflows
+-  **MongoDB Atlas**: For data persistence, time series analysis, and vector search capabilities
+-  **FastAPI**: For reliable, documented API endpoints
+-  **Financial Data Integration**: With Yahoo Finance and FRED economic indicators
+
+## Agentic Workflows
 
 1. **Market Analysis Agent:** Analyzes asset trends, macroeconomic indicators, and market volatility to generate portfolio insights and recommendations.
-2. **Market News Agent:** Processes financial news, performs sentiment analysis, and produces summarized market news intelligence
 
-Built on a modular architecture using LangGraph for workflow orchestration, the service leverages MongoDB Atlas for data persistence, FastAPI for API endpoints, and integrates with financial data sources including Yahoo Finance and FRED API. Reports are enhanced with vector embeddings to enable semantic search capabilities across market insights and news sentiment.
+> * This agent workflow is scheduled to execute automatically **on a daily basis at 5:00 AM UTC**, delivering consistent market analysis reports for financial decision-making.
 
-This solution enables financial professionals to access AI-powered market intelligence through scheduled reports and on-demand analysis, helping to inform investment decisions with data-driven insights.
+2. **Market News Agent:** Processes financial news data to provide portfolio-specific sentiment analysis and summarized market intelligence, helping investors understand how current news may impact their investments.
+
+> * This agent workflow is scheduled to execute automatically **on a daily basis at 5:10 AM UTC**, delivering timely news sentiment reports for financial decision-making.
+
+> **_Note:_** The current implementation of both agent workflows has been intentionally streamlined for demonstration and educational purposes. While the workflows may appear relatively linear and deterministic, the underlying architecture has been designed with extensibility in mind. Some components are simplified or emulated to ensure predictable outputs and controllable execution flows during demonstrations. There is substantial room for increasing complexity in terms of perception (adding more data sources), planning (implementing more sophisticated decision trees or recursive reasoning), and overall reasoning capabilities (incorporating feedback loops or multi-agent collaboration). This foundation provides an excellent starting point for more advanced capital markets intelligence applications while maintaining clarity and reliability in the core functionality.
+
+## Agent Tools
+
+-  **Accessible for Market Analysis Agent:** 
+   - **Portfolio Allocation Tool**: Retrieves current portfolio composition from MongoDB, including assets, descriptions, and allocation percentages.
+   - **Asset Trends Tool**: Analyzes price movements of portfolio assets by comparing current prices with 50-day moving averages to identify trends.
+   - **Macroeconomic Indicators Tool**: Evaluates key economic metrics (GDP, Interest Rates, Unemployment) from the FRED API to provide market context and asset allocation recommendations.
+   - **Market Volatility Tool**: Assesses market risk using VIX index data, calculating percentage changes and providing guidance on equity exposure.
+   - **Portfolio Overall Diagnosis Tool**: Generates comprehensive investment recommendations by synthesizing all analyses through an LLM (AWS Bedrock/Anthropic).
+
+-  **Accessible for Market News Agent:** 
+   - **Portfolio Allocation Tool**: Retrieves current portfolio composition from MongoDB, including assets, descriptions, and allocation percentages.
+   - **Asset News Tool**: Uses MongoDB Atlas Vector Search to find relevant financial news articles for each portfolio asset, leveraging semantic search capabilities.
+   - **Asset News Summary Tool**: Performs sentiment analysis on financial news, calculates sentiment scores, and generates concise summaries using AWS Bedrock/Anthropic LLM.
+   
+### News Sentiment Logic (Vector Search)
+The news sentiment logic utilizes MongoDB's Vector Search capabilities to enhance the analysis of financial news articles. The process involves two key components:
+
+1. **Semantic Search Implementation**: Using MongoDB's Vector Search capability, the system can find semantically similar news articles based on these embeddings—identifying both explicit mentions of a ticker symbol and contextually relevant articles that don't directly reference it.
+
+2. **Portfolio Sentiment Calculation**: For each asset in the portfolio, the system calculates an average sentiment score from its related articles, providing a consolidated sentiment indicator that helps assess market perception of that asset.
+
+This approach enables both explicit keyword matching and deeper semantic understanding of financial news, offering more comprehensive insights than traditional text-based searches.
+
 
 ## High Level Architecture
 
@@ -72,24 +114,9 @@ This combination of features enables the Capital Markets Agents service to maint
 - [python-dotenv](https://pypi.org/project/python-dotenv/) for environment variable management.
 - [pytz](https://pypi.org/project/pytz/) for timezone handling in scheduled reports.
 
-
 ## Relevant Models
 
 - [voyage-finance-2](https://blog.voyageai.com/2024/06/03/domain-specific-embeddings-finance-edition-voyage-finance-2/) for generating embeddings for market and news reports.
-
-### Agentic Workflows
-
-- **Market Analysis Agent**: Analyzes asset trends, macroeconomic indicators, and market volatility to generate portfolio insights and recommendations.
-- **Market News Agent**: Processes financial news, performs sentiment analysis, and produces summarized market news intelligence.
-
-### News Sentiment Logic (Vector Search)
-The news sentiment logic utilizes MongoDB's Vector Search capabilities to enhance the analysis of financial news articles. The process involves two key components:
-
-1. **Semantic Search Implementation**: Using MongoDB's Vector Search capability, the system can find semantically similar news articles based on these embeddings—identifying both explicit mentions of a ticker symbol and contextually relevant articles that don't directly reference it.
-
-2. **Portfolio Sentiment Calculation**: For each asset in the portfolio, the system calculates an average sentiment score from its related articles, providing a consolidated sentiment indicator that helps assess market perception of that asset.
-
-This approach enables both explicit keyword matching and deeper semantic understanding of financial news, offering more comprehensive insights than traditional text-based searches.
 
 ### Scheduler
 
