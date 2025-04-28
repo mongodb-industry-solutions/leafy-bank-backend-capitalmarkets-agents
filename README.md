@@ -23,13 +23,21 @@ The service is built on a modular foundation using:
 
 ## Agentic Workflows
 
-1. **Market Analysis Agent:** Analyzes asset trends, macroeconomic indicators, and market volatility to generate portfolio insights and recommendations.
+###  1. Market Analysis Agent:
 
-> * This agent workflow is scheduled to execute automatically **on a daily basis at 5:00 AM UTC**, delivering consistent market analysis reports for financial decision-making.
+Analyzes asset trends, macroeconomic indicators, and market volatility to generate portfolio insights and recommendations.
 
-2. **Market News Agent:** Processes financial news data to provide portfolio-specific sentiment analysis and summarized market intelligence, helping investors understand how current news may impact their investments.
+> [!IMPORTANT]
+> This agent workflow is scheduled to execute automatically **on a daily basis at 5:00 AM UTC**, delivering consistent market analysis reports for financial decision-making.
 
-> * This agent workflow is scheduled to execute automatically **on a daily basis at 5:10 AM UTC**, delivering timely news sentiment reports for financial decision-making.
+###  2. Market News Agent:
+
+Processes financial news data to provide portfolio-specific sentiment analysis and summarized market intelligence, helping investors understand how current news may impact their investments.
+
+> [!IMPORTANT]
+> This agent workflow is scheduled to execute automatically **on a daily basis at 5:10 AM UTC**, delivering timely news sentiment reports for financial decision-making.
+
+======================================================
 
 > [!NOTE]
 > The current implementation of both agent workflows has been intentionally streamlined for demonstration and educational purposes. While the workflows may appear relatively linear and deterministic, the underlying architecture has been designed with extensibility in mind. Some components are simplified or emulated to ensure predictable outputs and controllable execution flows during demonstrations. There is substantial room for increasing complexity in terms of perception (adding more data sources), planning (implementing more sophisticated decision trees or recursive reasoning), and overall reasoning capabilities (incorporating feedback loops or multi-agent collaboration). This foundation provides an excellent starting point for more advanced capital markets intelligence applications while maintaining clarity and reliability in the core functionality.
