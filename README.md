@@ -2,6 +2,10 @@
 
 This repository hosts the backend for the **Capital Markets Agents** service, a sophisticated AI-powered system that delivers automated financial intelligence to capital markets professionals. By combining real-time market data analysis, news sentiment processing, and portfolio insights, the service helps investment professionals make more informed decisions backed by comprehensive, data-driven intelligence.
 
+## High Level Architecture
+
+![High Level Architecture](architecture/diagram.png)
+
 ### Key Features
 
 -  **Automated Intelligence**: Daily scheduled analysis of market trends and financial news
@@ -27,7 +31,7 @@ The service is built on a modular foundation using:
 
 > * This agent workflow is scheduled to execute automatically **on a daily basis at 5:10 AM UTC**, delivering timely news sentiment reports for financial decision-making.
 
-> **_Note:_** The current implementation of both agent workflows has been intentionally streamlined for demonstration and educational purposes. While the workflows may appear relatively linear and deterministic, the underlying architecture has been designed with extensibility in mind. Some components are simplified or emulated to ensure predictable outputs and controllable execution flows during demonstrations. There is substantial room for increasing complexity in terms of perception (adding more data sources), planning (implementing more sophisticated decision trees or recursive reasoning), and overall reasoning capabilities (incorporating feedback loops or multi-agent collaboration). This foundation provides an excellent starting point for more advanced capital markets intelligence applications while maintaining clarity and reliability in the core functionality.
+**Note:** The current implementation of both agent workflows has been intentionally streamlined for demonstration and educational purposes. While the workflows may appear relatively linear and deterministic, the underlying architecture has been designed with extensibility in mind. Some components are simplified or emulated to ensure predictable outputs and controllable execution flows during demonstrations. There is substantial room for increasing complexity in terms of perception (adding more data sources), planning (implementing more sophisticated decision trees or recursive reasoning), and overall reasoning capabilities (incorporating feedback loops or multi-agent collaboration). This foundation provides an excellent starting point for more advanced capital markets intelligence applications while maintaining clarity and reliability in the core functionality.
 
 ## Agent Tools
 
@@ -43,7 +47,7 @@ The service is built on a modular foundation using:
    - **Asset News Tool**: Uses MongoDB Atlas Vector Search to find relevant financial news articles for each portfolio asset, leveraging semantic search capabilities.
    - **Asset News Summary Tool**: Performs sentiment analysis on financial news, calculates sentiment scores, and generates concise summaries using AWS Bedrock/Anthropic LLM.
    
-### News Sentiment Logic (Vector Search)
+#### News Sentiment Logic (Vector Search)
 The news sentiment logic utilizes MongoDB's Vector Search capabilities to enhance the analysis of financial news articles. The process involves two key components:
 
 1. **Semantic Search Implementation**: Using MongoDB's Vector Search capability, the system can find semantically similar news articles based on these embeddings—identifying both explicit mentions of a ticker symbol and contextually relevant articles that don't directly reference it.
@@ -51,11 +55,6 @@ The news sentiment logic utilizes MongoDB's Vector Search capabilities to enhanc
 2. **Portfolio Sentiment Calculation**: For each asset in the portfolio, the system calculates an average sentiment score from its related articles, providing a consolidated sentiment indicator that helps assess market perception of that asset.
 
 This approach enables both explicit keyword matching and deeper semantic understanding of financial news, offering more comprehensive insights than traditional text-based searches.
-
-
-## High Level Architecture
-
-![High Level Architecture](architecture/diagram.png)
 
 ## Where Does MongoDB Shine?
 
