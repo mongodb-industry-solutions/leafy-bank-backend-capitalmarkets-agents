@@ -29,7 +29,7 @@ class MacroIndicator(BaseModel):
 class MacroIndicatorsResponse(BaseModel):
     GDP: MacroIndicator
     UNRATE: MacroIndicator
-    REAINTRATREARAT10Y: MacroIndicator
+    DFF: MacroIndicator
 
 class MessageResponse(BaseModel):
     macro_indicators: MacroIndicatorsResponse = None
@@ -45,7 +45,7 @@ class MacroIndicatorTrend(BaseModel):
 class MacroIndicatorsTrendResponse(BaseModel):
     GDP: MacroIndicatorTrend = None
     UNRATE: MacroIndicatorTrend = None
-    REAINTRATREARAT10Y: MacroIndicatorTrend = None
+    DFF: MacroIndicatorTrend = None
 
 class TrendMessageResponse(BaseModel):
     trend_indicators: dict = None

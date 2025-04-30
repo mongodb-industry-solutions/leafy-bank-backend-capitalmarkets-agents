@@ -47,7 +47,7 @@ async def fetch_asset_suggestions_macro_indicators_based():
     
     Macro indicators analyzed:
     - GDP: Economic growth indicator
-    - Interest Rate: Cost of capital indicator  
+    - Effective Interest Rate: Cost of capital indicator  
     - Unemployment Rate: Labor market health indicator
     
     For each indicator, assets receive a recommendation (KEEP or REDUCE) with explanation
@@ -56,7 +56,7 @@ async def fetch_asset_suggestions_macro_indicators_based():
     - GDP:
         - Up → Keep Equity assets, Reduce Bond assets, Keep Commodity assets
         - Down → Reduce Equity assets, Keep Bond assets, Reduce Commodity assets
-    - Interest Rate:
+    - Effective Interest Rate:
         - Up → Keep Bond assets, Reduce Real Estate assets, Reduce Commodity assets
         - Down → Reduce Bond assets, Keep Real Estate assets, Keep Commodity assets
     - Unemployment Rate:

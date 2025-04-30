@@ -47,7 +47,7 @@ Processes financial news data to provide portfolio-specific sentiment analysis a
 -  **Accessible for Market Analysis Agent:** 
    - **Portfolio Allocation Tool**: Retrieves current portfolio composition from MongoDB, including assets, descriptions, and allocation percentages.
    - **Asset Trends Tool**: Analyzes price movements of portfolio assets by comparing current prices with 50-day moving averages to identify trends.
-   - **Macroeconomic Indicators Tool**: Evaluates key economic metrics (GDP, Interest Rates, Unemployment) from the FRED API to provide market context and asset allocation recommendations.
+   - **Macroeconomic Indicators Tool**: Evaluates key economic metrics (GDP, Effective Interest Rate, Unemployment Rate) from the FRED API to provide market context and asset allocation recommendations.
    - **Market Volatility Tool**: Assesses market risk using VIX index data, calculating percentage changes and providing guidance on equity exposure.
    - **Portfolio Overall Diagnosis Tool**: Generates comprehensive investment recommendations by synthesizing all analyses through an LLM (AWS Bedrock/Anthropic).
 

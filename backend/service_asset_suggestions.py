@@ -18,7 +18,7 @@ class AssetSuggestions(MongoDBConnector):
     Service class for generating asset allocation suggestions based on macroeconomic indicators.
     
     This service analyzes the most recent market data, particularly focusing on macroeconomic 
-    indicators (GDP, Interest Rate, Unemployment Rate), to provide investment recommendations
+    indicators (GDP, Effective Interest Rate, Unemployment Rate), to provide investment recommendations
     for different asset classes in a portfolio. The recommendations are rule-based and consider
     the traditional relationships between macro indicators and asset classes.
     """
@@ -101,7 +101,7 @@ class AssetSuggestions(MongoDBConnector):
                         gdp_direction = "up"
                     elif "down by" in fluctuation:
                         gdp_direction = "down"
-                elif indicator_name == "Interest Rate":
+                elif indicator_name == "Effective Interest Rate":
                     if "up by" in fluctuation:
                         interest_rate_direction = "up"
                     elif "down by" in fluctuation:
@@ -112,7 +112,7 @@ class AssetSuggestions(MongoDBConnector):
                     elif "down by" in fluctuation:
                         unemployment_direction = "down"
 
-            logger.info(f"Indicator directions - GDP: {gdp_direction}, Interest Rate: {interest_rate_direction}, Unemployment: {unemployment_direction}")
+            logger.info(f"Indicator directions - GDP: {gdp_direction}, Effective Interest Rate: {interest_rate_direction}, Unemployment: {unemployment_direction}")
 
             # Define rules for each indicator and asset type combination based on business requirements
             # Each rule maps an indicator direction to asset type recommendations
@@ -137,7 +137,7 @@ class AssetSuggestions(MongoDBConnector):
                         "Commodity": ("KEEP", "No change needed as GDP remains stable.")
                     }
                 },
-                "Interest Rate": {
+                "Effective Interest Rate": {
                     "up": {
                         "Equity": ("REDUCE", "Reduce Equity assets as higher rates increase cost of capital and discount future earnings."),
                         "Bonds": ("KEEP", "Increase Bond assets as rising rates provide better yields on new issuances."),
@@ -183,7 +183,7 @@ class AssetSuggestions(MongoDBConnector):
             suggestions = []
             indicators_directions = {
                 "GDP": gdp_direction,
-                "Interest Rate": interest_rate_direction,
+                "Effective Interest Rate": interest_rate_direction,
                 "Unemployment Rate": unemployment_direction
             }
             

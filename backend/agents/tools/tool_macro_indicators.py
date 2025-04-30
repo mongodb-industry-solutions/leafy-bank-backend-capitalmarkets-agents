@@ -99,7 +99,7 @@ class MacroIndicatorsTool(MongoDBConnector):
                 "down": "Increase Bond assets",
                 "neutral": "No change"
             },
-            "REAINTRATREARAT10Y": {  # Interest Rate
+            "DFF": {  # Effective Interest Rate
                 "up": "Increase Bond assets",
                 "down": "Increase Real Estate assets",
                 "neutral": "No change"
@@ -114,7 +114,7 @@ class MacroIndicatorsTool(MongoDBConnector):
         # Assess each macroeconomic indicator
         indicators = [
             {"series_id": "GDP", "name": "GDP"},
-            {"series_id": "REAINTRATREARAT10Y", "name": "Interest Rate"},
+            {"series_id": "DFF", "name": "Effective Interest Rate"},
             {"series_id": "UNRATE", "name": "Unemployment Rate"}
         ]
 
