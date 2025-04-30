@@ -147,7 +147,7 @@ if __name__ == "__main__":
             ],
             "macro_indicators": [
                 MacroIndicator(macro_indicator="US GDP", fluctuation_answer="US GDP is up by +4.21 with respect to the previous period.", diagnosis="Increase Equity assets"),
-                MacroIndicator(macro_indicator="US Interest Rate", fluctuation_answer="US Interest Rate is down by -0.17 with respect to the previous period.", diagnosis="Increase Real Estate assets"),
+                MacroIndicator(macro_indicator="US Effective Interest Rate", fluctuation_answer="US Effective Interest Rate is down by -0.17 with respect to the previous period.", diagnosis="Increase Real Estate assets"),
             ],
             "market_volatility_index": MarketVolatilityIndex(
                 volatility_index="29.96",
