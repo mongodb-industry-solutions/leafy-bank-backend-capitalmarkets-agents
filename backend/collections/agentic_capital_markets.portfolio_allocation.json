@@ -6,7 +6,8 @@
   "allocation_percentage": "25%",
   "allocation_number": 25,
   "allocation_decimal": 0.25,
-  "description": "S&P 500 ETF"
+  "description": "S&P 500 ETF",
+  "asset_type": "Equity"
 },
 {
   "_id": {
@@ -16,7 +17,8 @@
   "allocation_percentage": "20%",
   "allocation_number": 20,
   "allocation_decimal": 0.2,
-  "description": "Nasdaq ETF"
+  "description": "Nasdaq ETF",
+  "asset_type": "Equity"
 },
 {
   "_id": {
@@ -26,7 +28,8 @@
   "allocation_percentage": "8%",
   "allocation_number": 8,
   "allocation_decimal": 0.08,
-  "description": "Emerging Markets ETF"
+  "description": "Emerging Markets ETF",
+  "asset_type": "Equity"
 },
 {
   "_id": {
@@ -36,7 +39,8 @@
   "allocation_percentage": "5%",
   "allocation_number": 5,
   "allocation_decimal": 0.05,
-  "description": "Energy Sector ETF"
+  "description": "Energy Sector ETF",
+  "asset_type": "Equity"
 },
 {
   "_id": {
@@ -46,7 +50,8 @@
   "allocation_percentage": "10%",
   "allocation_number": 10,
   "allocation_decimal": 0.1,
-  "description": "Long-Term Treasury Bonds"
+  "description": "Long-Term Treasury Bonds",
+  "asset_type": "Bonds"
 },
 {
   "_id": {
@@ -56,7 +61,8 @@
   "allocation_percentage": "7%",
   "allocation_number": 7,
   "allocation_decimal": 0.07,
-  "description": "Investment-Grade Bonds"
+  "description": "Investment-Grade Bonds",
+  "asset_type": "Bonds"
 },
 {
   "_id": {
@@ -66,7 +72,8 @@
   "allocation_percentage": "5%",
   "allocation_number": 5,
   "allocation_decimal": 0.05,
-  "description": "High-Yield Bonds"
+  "description": "High-Yield Bonds",
+  "asset_type": "Bonds"
 },
 {
   "_id": {
@@ -76,7 +83,8 @@
   "allocation_percentage": "6%",
   "allocation_number": 6,
   "allocation_decimal": 0.06,
-  "description": "Real Estate ETF"
+  "description": "Real Estate ETF",
+  "asset_type": "Real Estate"
 },
 {
   "_id": {
@@ -86,7 +94,8 @@
   "allocation_percentage": "8%",
   "allocation_number": 8,
   "allocation_decimal": 0.08,
-  "description": "Gold ETF"
+  "description": "Gold ETF",
+  "asset_type": "Commodity"
 },
 {
   "_id": {
@@ -96,5 +105,6 @@
   "allocation_percentage": "6%",
   "allocation_number": 6,
   "allocation_decimal": 0.06,
-  "description": "Oil ETF"
+  "description": "Oil ETF",
+  "asset_type": "Commodity"
 }]
