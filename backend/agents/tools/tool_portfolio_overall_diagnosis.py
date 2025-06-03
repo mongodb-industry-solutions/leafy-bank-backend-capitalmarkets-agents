@@ -1,6 +1,7 @@
 from agents.tools.states.agent_market_analysis_state import MarketAnalysisAgentState
 from agents.tools.bedrock.anthropic_chat_completions import BedrockAnthropicChatCompletions
 from agents.tools.agent_profiles import AgentProfiles
+from agents.tools.risk_profiles import RiskProfiles
 from typing import Optional
 import os
 import logging
@@ -42,6 +43,13 @@ class PortfolioOverallDiagnosisTool:
         """
         logger.info("[Tool] Generate overall diagnosis for the portfolio.")
 
+        # Retrieve the active risk profile (fallback is handled internally in RiskProfiles)
+        risk_profiles = RiskProfiles()
+        active_risk_profile = risk_profiles.get_active_risk_profile()
+        state.updates.append(
+            f"[Action] Using risk profile: {active_risk_profile['risk_id']} - {active_risk_profile.get('short_description', 'No description')}"
+        )
+
         # Retrieve the MARKET_ANALYSIS_AGENT profile
         profiler = AgentProfiles()
         agent_profile = profiler.get_agent_profile(self.agent_id)
@@ -80,14 +88,18 @@ class PortfolioOverallDiagnosisTool:
 
         # Generate the LLM prompt
         llm_prompt = (
-            f"You are an AI assistant for a market analysis agent. "
-            f"Your task is to provide a comprehensive overall diagnosis of the portfolio based on the following context:\n\n"
-            f"Role: {agent_profile['role']}\n"
-            f"Kind of Data: {agent_profile['kind_of_data']}\n"
-            f"Instructions: {agent_profile['instructions']}\n\n"
-            f"Rules: {agent_profile['rules']}\n\n"
-            f"Portfolio Context:\n{portfolio_context}\n\n"
-            f"Based on the above context, provide a comprehensive overall diagnosis of the portfolio."
+            f"===== INVESTOR RISK PROFILE =====\n"
+            f"Risk Profile ID      : {active_risk_profile['risk_id']}\n"
+            f"Description          : {active_risk_profile.get('short_description', 'No description')}\n"
+            f"================================\n\n"
+            f"Investor Profile Details:\n"
+            f"Role                 : {agent_profile['role']}\n"
+            f"Kind of Data         : {agent_profile['kind_of_data']}\n"
+            f"Instructions         : {agent_profile['instructions']}\n"
+            f"Rules                : {agent_profile['rules']}\n\n"
+            f"Portfolio Analysis Context:\n{portfolio_context}\n\n"
+            f"Based on the above details, provide a comprehensive overall diagnosis of the portfolio, "
+            f"clearly taking into account the investor's risk profile and investment objectives."
         )
 
         logger.info("LLM Prompt for Overall Diagnosis:")

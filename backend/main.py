@@ -16,6 +16,8 @@ from api_report_data import router as report_data_router
 from api_asset_suggestions import router as asset_suggestions_router
 # Add chart mappings API router
 from api_charts import router as charts_router
+# Add risk profiles API router
+from api_risk_profiles import router as risk_profiles_router
 
 # Configure logging
 logging.basicConfig(
@@ -48,3 +50,4 @@ app.include_router(macro_indicators_router)
 app.include_router(report_data_router)
 app.include_router(asset_suggestions_router)
 app.include_router(charts_router)
+app.include_router(risk_profiles_router)
