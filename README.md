@@ -145,6 +145,7 @@ Before you begin, ensure you have met the following requirements:
 1. Log in to **MongoDB Atlas** and create a database named `agentic_capital_markets`. Ensure the name is reflected in the environment variables.
 2. Create the following collections if they do not already exist:
    - `agent_profiles` (for storing agent profiles)
+   - `risk_profiles` (for storing investor risk profiles)
    - `reports_market_analysis` (for storing market analysis reports)
    - `reports_market_news` (for storing market news reports)
    - `chartMappings` (for storing chart mappings)
@@ -178,6 +179,7 @@ VECTOR_FIELD = "article_embedding"
 PORTFOLIO_PERFORMANCE_COLLECTION = "portfolio_performance"
 PORTFOLIO_COLLECTION = "portfolio_allocation"
 AGENT_PROFILES_COLLECTION = "agent_profiles"
+RISK_PROFILES_COLLECTION = "risk_profiles"
 REPORTS_COLLECTION_MARKET_ANALYSIS = "reports_market_analysis"
 REPORTS_COLLECTION_MARKET_NEWS = "reports_market_news"
 CHART_MAPPINGS_COLLECTION = "chartMappings"
