@@ -4,9 +4,10 @@ import os
 import logging
 from dotenv import load_dotenv
 
-# Import both state types
+# Import all state types
 from agents.tools.states.agent_market_analysis_state import MarketAnalysisAgentState
 from agents.tools.states.agent_market_news_state import MarketNewsAgentState
+from agents.tools.states.agent_crypto_analysis_state import CryptoAnalysisAgentState
 
 # Load environment variables from .env file
 load_dotenv()
@@ -19,38 +20,82 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Type variable for state
-StateType = TypeVar('StateType', MarketAnalysisAgentState, MarketNewsAgentState)
+StateType = TypeVar('StateType', MarketAnalysisAgentState, MarketNewsAgentState, CryptoAnalysisAgentState)
 
 class PortfolioAllocationTool(MongoDBConnector):
-    def __init__(self, uri=None, database_name=None, collection_name=None):
+    def __init__(self, uri=None, database_name=None):
         super().__init__(uri, database_name)
-        self.collection_name = collection_name or os.getenv("PORTFOLIO_COLLECTION", "portfolio_allocation")
-        self.collection = self.get_collection(self.collection_name)
-        logger.info("PortfolioAllocationTool initialized")
+        
+        # Define both collection names explicitly
+        self.traditional_assets_collection_name = os.getenv("PORTFOLIO_COLLECTION", "portfolio_allocation")
+        self.cryptos_collection_name = os.getenv("CRYPTO_PORTFOLIO_COLLECTION", "crypto_portfolio_allocation")
+        
+        # Initialize both collections
+        self.traditional_assets_collection = self.get_collection(self.traditional_assets_collection_name)
+        self.cryptos_collection = self.get_collection(self.cryptos_collection_name)
+        
+        logger.info(f"PortfolioAllocationTool initialized with collections: {self.traditional_assets_collection_name}, {self.cryptos_collection_name}")
 
-    def check_portfolio_allocation(self, state: Union[MarketAnalysisAgentState, MarketNewsAgentState]) -> dict:
-        """Query the portfolio_allocation collection"""
-        message = "[Tool] Check portfolio allocation."
+    def check_portfolio_allocation(self, state: Union[MarketAnalysisAgentState, MarketNewsAgentState, CryptoAnalysisAgentState]) -> dict:
+        """Query the appropriate portfolio allocation collection based on state type"""
+        
+        # Determine collection, message, and projection based on state type
+        if isinstance(state, CryptoAnalysisAgentState):
+            message = "[Tool] Check crypto portfolio allocation."
+            collection = self.cryptos_collection
+            # Fields for crypto portfolio - matching CryptoAnalysisAgentState.PortfolioAllocation
+            projection = {
+                "symbol": 1, 
+                "asset_type": 1, 
+                "description": 1, 
+                "allocation_percentage": 1, 
+                "_id": 0
+            }
+        else:
+            message = "[Tool] Check portfolio allocation."
+            collection = self.traditional_assets_collection
+            # Fields for traditional portfolio - matching MarketAnalysisAgentState.PortfolioAllocation
+            projection = {
+                "symbol": 1, 
+                "description": 1, 
+                "allocation_percentage": 1, 
+                "_id": 0
+            }
+        
         logger.info(message)
 
-        # Query the collection
-        results = list(self.collection.find({}, {"symbol": 1, "description": 1, "allocation_percentage": 1, "_id": 0}))
+        # Query the appropriate collection
+        results = list(collection.find({}, projection))
         
-        # Transform the results into the required format
-        portfolio_allocation = [
-            {
-                "asset": result["symbol"],
-                "description": result["description"],
-                "allocation_percentage": result["allocation_percentage"]
-            }
-            for result in results
-        ]
+        # Transform the results into the required format based on state type
+        if isinstance(state, CryptoAnalysisAgentState):
+            portfolio_allocation = [
+                {
+                    "asset": result["symbol"],
+                    "asset_type": result.get("asset_type"),
+                    "description": result["description"],
+                    "allocation_percentage": result["allocation_percentage"]
+                }
+                for result in results
+            ]
+        else:
+            portfolio_allocation = [
+                {
+                    "asset": result["symbol"],
+                    "description": result["description"],
+                    "allocation_percentage": result["allocation_percentage"]
+                }
+                for result in results
+            ]
 
         # Update the state with the portfolio allocation
-        # Get the correct PortfolioAllocation class based on state type
+        # Get the correct PortfolioAllocation class and next node based on state type
         if isinstance(state, MarketAnalysisAgentState):
             from agents.tools.states.agent_market_analysis_state import PortfolioAllocation
             next_node = "asset_trends_node"
+        elif isinstance(state, CryptoAnalysisAgentState):
+            from agents.tools.states.agent_crypto_analysis_state import PortfolioAllocation
+            next_node = "crypto_trends_node"
         else:  # MarketNewsAgentState
             from agents.tools.states.agent_market_news_state import PortfolioAllocation
             next_node = "fetch_market_news_node"
@@ -68,33 +113,38 @@ class PortfolioAllocationTool(MongoDBConnector):
 
         return {"portfolio_allocation": portfolio_allocation, "updates": state.updates, "next_step": state.next_step}
 
+
 # Initialize the PortfolioAllocationTool
 portfolio_allocation_tool = PortfolioAllocationTool()
 
-# Define tools - this is the function used by both workflows
-def check_portfolio_allocation_tool(state: Union[MarketAnalysisAgentState, MarketNewsAgentState]) -> dict:
-    """Query the portfolio_allocation collection for any supported state type"""
+# Define tools - this is the function used by all workflows
+def check_portfolio_allocation_tool(state: Union[MarketAnalysisAgentState, MarketNewsAgentState, CryptoAnalysisAgentState]) -> dict:
+    """Query the appropriate portfolio allocation collection for any supported state type"""
     return portfolio_allocation_tool.check_portfolio_allocation(state=state)
 
 if __name__ == "__main__":
-    # Example usage with both state types
+    # Example usage with all state types
     from agents.tools.states.agent_market_analysis_state import MarketAnalysisAgentState
     from agents.tools.states.agent_market_news_state import MarketNewsAgentState
+    from agents.tools.states.agent_crypto_analysis_state import CryptoAnalysisAgentState
     
     # Test with analysis state
     analysis_state = MarketAnalysisAgentState()
     analysis_result = check_portfolio_allocation_tool(analysis_state)
     print("\nAnalysis State Next Step:", analysis_state.next_step)
-    # Print the analysis result
     print("Analysis Result:", analysis_result)
-    # Print the analysis state
     print("Analysis State:", analysis_state)
     
     # Test with news state
     news_state = MarketNewsAgentState()
     news_result = check_portfolio_allocation_tool(news_state)
     print("\nNews State Next Step:", news_state.next_step)
-    # Print the news result
     print("News Result:", news_result)
-    # Print the news state
     print("News State:", news_state)
+    
+    # Test with crypto state
+    crypto_state = CryptoAnalysisAgentState()
+    crypto_result = check_portfolio_allocation_tool(crypto_state)
+    print("\nCrypto State Next Step:", crypto_state.next_step)
+    print("Crypto Result:", crypto_result)
+    print("Crypto State:", crypto_state)
