@@ -1,5 +1,5 @@
 from db.mdb import MongoDBConnector
-from states.agent_crypto_analysis_state import CryptoAnalysisAgentState, CryptoMomentumIndicator, MomentumIndicator
+from agents.tools.states.agent_crypto_analysis_state import CryptoAnalysisAgentState, CryptoMomentumIndicator, MomentumIndicator
 import os
 import logging
 from dotenv import load_dotenv
@@ -15,9 +15,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Constants for crypto momentum analysis
-RSI_PERIOD = int(os.getenv("RSI_PERIOD", 14))    # 14-day RSI
-ATR_PERIOD = int(os.getenv("ATR_PERIOD", 14))    # 14-day ATR
-VOLUME_PERIOD = int(os.getenv("VOLUME_PERIOD", 20))  # 20-day volume average
+CRYPTO_RSI_PERIOD = int(os.getenv("CRYPTO_RSI_PERIOD", 14))    # 14-day RSI
+CRYPTO_VOLUME_PERIOD = int(os.getenv("CRYPTO_VOLUME_PERIOD", 20))  # 20-day volume average
 
 class CryptoMomentumTool(MongoDBConnector):
     def __init__(self, uri=None, database_name=None, collection_name=None):
@@ -26,9 +25,10 @@ class CryptoMomentumTool(MongoDBConnector):
         self.collection = self.get_collection(self.collection_name)
         logger.info("CryptoMomentumTool initialized")
 
-    def calculate_rsi(self, symbol: str, period: int = RSI_PERIOD) -> tuple:
+    def calculate_rsi(self, symbol: str, period: int = CRYPTO_RSI_PERIOD) -> tuple:
         """
         Calculate RSI using Wilder's smoothing method (industry standard).
+        Returns tuple of (rsi_value, price_date)
         """
         pipeline = [
             {"$match": {"symbol": symbol}},
@@ -74,51 +74,7 @@ class CryptoMomentumTool(MongoDBConnector):
         price_date = data[-1]["timestamp"].strftime("%Y-%m-%d")
         return round(rsi, 2), price_date
 
-    def calculate_atr(self, symbol: str, period: int = ATR_PERIOD) -> tuple:
-        """
-        Calculate ATR (Average True Range) for a crypto symbol.
-        Returns tuple of (atr_value, atr_percentage, price_date)
-        """
-        pipeline = [
-            {"$match": {"symbol": symbol}},
-            {"$sort": {"timestamp": -1}},
-            {"$limit": period + 1},
-            {"$sort": {"timestamp": 1}}
-        ]
-        
-        data = list(self.collection.aggregate(pipeline))
-        if len(data) < period + 1:
-            return None, None, None
-            
-        true_ranges = []
-        for i in range(1, len(data)):
-            current = data[i]
-            previous = data[i-1]
-            
-            # True Range = max(high-low, abs(high-prev_close), abs(low-prev_close))
-            tr1 = current["high"] - current["low"]
-            tr2 = abs(current["high"] - previous["close"])
-            tr3 = abs(current["low"] - previous["close"])
-            
-            true_range = max(tr1, tr2, tr3)
-            true_ranges.append(true_range)
-        
-        if len(true_ranges) < period:
-            return None, None, None
-            
-        # Calculate ATR (simple moving average of true ranges)
-        atr = sum(true_ranges[-period:]) / period
-        
-        # Calculate ATR as percentage of current price
-        current_price = data[-1]["close"]
-        atr_percentage = (atr / current_price) * 100
-        
-        # Get the date
-        price_date = data[-1]["timestamp"].strftime("%Y-%m-%d")
-        
-        return round(atr, 6), round(atr_percentage, 2), price_date
-
-    def calculate_volume_analysis(self, symbol: str, period: int = VOLUME_PERIOD) -> tuple:
+    def calculate_volume_analysis(self, symbol: str, period: int = CRYPTO_VOLUME_PERIOD) -> tuple:
         """
         Calculate volume analysis for a crypto symbol.
         Returns tuple of (current_volume, avg_volume, volume_ratio, price_date)
@@ -150,7 +106,7 @@ class CryptoMomentumTool(MongoDBConnector):
 
     def analyze_momentum_indicator(self, indicator_type: str, value: float, asset_type: str, symbol: str = "", **kwargs) -> str:
         """
-        Enhanced analysis with asset-type specific logic.
+        Analysis focusing on RSI and Volume only with enhanced volume ratio display.
         """
         if indicator_type == "RSI":
             # Special handling for stablecoins
@@ -172,32 +128,17 @@ class CryptoMomentumTool(MongoDBConnector):
             else:
                 return f"RSI at {value} shows bearish momentum. Downward pressure may persist."
                 
-        elif indicator_type == "ATR":
-            atr_percentage = kwargs.get("atr_percentage", 0)
-            
-            # Asset-specific ATR thresholds
-            if asset_type == "Stablecoin":
-                if atr_percentage > 0.1:
-                    return f"High volatility for stablecoin (ATR {atr_percentage}%). Monitor peg stability."
-                else:
-                    return f"Normal stablecoin volatility (ATR {atr_percentage}%). Peg maintained."
-            
-            # Cryptocurrency ATR analysis
-            if atr_percentage > 5:
-                return f"High volatility (ATR {atr_percentage}% of price). Increase stop-losses and reduce position sizes."
-            elif atr_percentage > 2:
-                return f"Moderate volatility (ATR {atr_percentage}% of price). Normal trading conditions for {symbol}."
-            else:
-                return f"Low volatility (ATR {atr_percentage}% of price). Potential consolidation or breakout setup."
-                
         elif indicator_type == "Volume":
             volume_ratio = kwargs.get("volume_ratio", 0)
+            # Fix volume ratio display precision - avoid showing 0.0x
+            vol_ratio_display = max(0.1, volume_ratio)
+            
             if volume_ratio > 2:
                 return f"Exceptionally high volume ({volume_ratio:.1f}x average). Strong conviction in price movement."
             elif volume_ratio > 1.5:
                 return f"Above average volume ({volume_ratio:.1f}x average). Increased market interest."
             elif volume_ratio < 0.7:
-                return f"Below average volume ({volume_ratio:.1f}x average). Low market activity."
+                return f"Below average volume ({vol_ratio_display:.1f}x average). Low market activity."
             else:
                 return f"Normal volume levels ({volume_ratio:.1f}x average). Standard trading activity."
                 
@@ -205,7 +146,8 @@ class CryptoMomentumTool(MongoDBConnector):
 
     def calculate_crypto_momentum_indicators(self, state: CryptoAnalysisAgentState) -> dict:
         """
-        Calculate momentum indicators with enhanced validation and asset-specific logic.
+        Calculate momentum indicators focusing on RSI and Volume analysis.
+        Each asset gets one CryptoMomentumIndicator with nested MomentumIndicator objects.
         """
         message = "[Tool] Calculate crypto momentum indicators."
         logger.info(message)
@@ -217,7 +159,7 @@ class CryptoMomentumTool(MongoDBConnector):
             asset_type = allocation.asset_type
             momentum_indicators = []
 
-            # Calculate RSI with validation
+            # Calculate RSI
             rsi_value, rsi_date = self.calculate_rsi(symbol)
             if rsi_value is not None:
                 # Validate RSI for stablecoins
@@ -232,26 +174,7 @@ class CryptoMomentumTool(MongoDBConnector):
                 )
                 momentum_indicators.append(rsi_momentum_indicator)
 
-            # Calculate ATR with enhanced validation
-            atr_value, atr_percentage, atr_date = self.calculate_atr(symbol)
-            if atr_value is not None and atr_percentage is not None:
-                # Validate ATR reasonableness
-                if asset_type == "Cryptocurrency" and atr_percentage < 0.5:
-                    logger.warning(f"Unusually low ATR {atr_percentage}% for {symbol}. Verify calculation.")
-                
-                atr_diagnosis = self.analyze_momentum_indicator("ATR", atr_value, asset_type, symbol, atr_percentage=atr_percentage)
-                
-                # Enhanced formatting
-                atr_formatted = f"${atr_value:,.6f}" if atr_value < 1 else f"${atr_value:,.2f}"
-                
-                atr_momentum_indicator = MomentumIndicator(
-                    indicator_name="ATR",
-                    fluctuation_answer=f"{symbol} ATR (14-day) is {atr_formatted} ({atr_percentage}% of price) on {atr_date}.",
-                    diagnosis=atr_diagnosis
-                )
-                momentum_indicators.append(atr_momentum_indicator)
-
-            # Volume analysis with context
+            # Volume analysis
             current_vol, avg_vol, vol_ratio, vol_date = self.calculate_volume_analysis(symbol)
             if current_vol is not None:
                 vol_diagnosis = self.analyze_momentum_indicator("Volume", current_vol, asset_type, symbol, volume_ratio=vol_ratio)
@@ -266,12 +189,12 @@ class CryptoMomentumTool(MongoDBConnector):
                 
                 vol_momentum_indicator = MomentumIndicator(
                     indicator_name="Volume",
-                    fluctuation_answer=f"{symbol} volume is {current_vol_formatted} vs {VOLUME_PERIOD}-day avg of {avg_vol_formatted} on {vol_date}.",
+                    fluctuation_answer=f"{symbol} volume is {current_vol_formatted} vs {CRYPTO_VOLUME_PERIOD}-day avg of {avg_vol_formatted} on {vol_date}.",
                     diagnosis=vol_diagnosis
                 )
                 momentum_indicators.append(vol_momentum_indicator)
 
-            # Create CryptoMomentumIndicator only if we have valid indicators
+            # Create CryptoMomentumIndicator with RSI + Volume only
             if momentum_indicators:
                 crypto_momentum_indicator = CryptoMomentumIndicator(
                     asset=symbol,
@@ -282,7 +205,7 @@ class CryptoMomentumTool(MongoDBConnector):
         # Update state
         state.report.crypto_momentum_indicators = crypto_momentum_indicators
         state.updates.append(message)
-        state.next_step = "portfolio_overall_diagnosis_node"
+        state.next_step = "crypto_portfolio_overall_diagnosis_node"
 
         return {"crypto_momentum_indicators": crypto_momentum_indicators, "updates": state.updates, "next_step": state.next_step}
 
@@ -293,12 +216,12 @@ crypto_momentum_indicators_tool = CryptoMomentumTool()
 # Define tools
 def calculate_crypto_momentum_indicators_tool(state: CryptoAnalysisAgentState) -> dict:
     """
-    Calculate crypto momentum indicators (RSI, ATR, Volume analysis) for portfolio assets.
+    Calculate crypto momentum indicators (RSI and Volume analysis) for portfolio assets.
     """
     return crypto_momentum_indicators_tool.calculate_crypto_momentum_indicators(state=state)
 
 if __name__ == "__main__":
-    from states.agent_crypto_analysis_state import CryptoAnalysisAgentState, PortfolioAllocation
+    from agents.tools.states.agent_crypto_analysis_state import CryptoAnalysisAgentState, PortfolioAllocation
 
     # Initialize the state with crypto assets for testing
     state = CryptoAnalysisAgentState(

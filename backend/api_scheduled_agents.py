@@ -51,6 +51,20 @@ async def execute_market_news_workflow():
     except Exception as e:
         logging.error(f"Error executing market news workflow: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+    
+@router.post("/execute-crypto-analysis-workflow", response_model=MessageResponse)
+async def execute_crypto_analysis_workflow():
+    """
+    Execute the crypto analysis workflow.
+
+    Returns:
+        dict: A dictionary containing the status of the workflow execution.
+    """
+    try:
+        return scheduled_agents_service.run_agent_crypto_analysis_ws()
+    except Exception as e:
+        logging.error(f"Error executing crypto analysis workflow: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 ##############################
 ## -- SCHEDULER OVERVIEW -- ##
@@ -83,6 +97,8 @@ async def scheduler_overview():
                         job["function"] = "run_agent_market_analysis_workflow"
                     elif job["function"] == "#ws_workflow(..)":
                         job["function"] = "run_agent_market_news_workflow"
+                    elif job["function"] == "#analysis_ws(..)":
+                        job["function"] = "run_agent_crypto_analysis_ws"
                     
                     # Add "d" to single digit due_in values
                     if job["due_in"].isdigit():
@@ -102,6 +118,8 @@ async def scheduler_overview():
                         job["function"] = "run_agent_market_analysis_workflow"
                     elif job["function"] == "#ws_workflow(..)":
                         job["function"] = "run_agent_market_news_workflow"
+                    elif job["function"] == "#analysis_ws(..)":
+                        job["function"] = "run_agent_crypto_analysis_ws"
                     
                     # Add "d" to single digit due_in values
                     if job["due_in"].isdigit():

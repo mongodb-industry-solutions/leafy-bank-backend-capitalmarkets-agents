@@ -7,6 +7,7 @@ from agents.tools.db.mdb import MongoDBConnector
 from agents.tools.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
 from agents.tools.states.agent_market_analysis_state import MarketAnalysisAgentState
 from agents.tools.states.agent_market_news_state import MarketNewsAgentState
+from agents.tools.states.agent_crypto_analysis_state import CryptoAnalysisAgentState
 
 # Load environment variables
 load_dotenv()
@@ -142,6 +143,57 @@ class PersistReportInMongoDB(MongoDBConnector):
             
         except Exception as e:
             logger.error(f"Error generating market embeddings: {e}")
+            return None
+
+    def generate_crypto_report_embeddings(self, report):
+        """
+        Generate embeddings for a crypto analysis report using VogayeAI.
+        
+        Args:
+            report (dict): The crypto analysis report data
+            
+        Returns:
+            list: The embeddings vector
+        """
+        try:
+            # Use overall_diagnosis as the primary text for embedding
+            if "overall_diagnosis" in report:
+                text_to_embed = report.get("overall_diagnosis", "")
+                logger.info("Using overall_diagnosis for crypto report embeddings")
+            else:
+                # Fallback to crypto trends and momentum indicators if overall_diagnosis isn't available
+                logger.info("overall_diagnosis not found, using crypto trends and momentum indicators as fallback")
+                text_parts = []
+                
+                # Add crypto trends diagnoses
+                if "crypto_trends" in report:
+                    for trend in report.get("crypto_trends", []):
+                        asset = trend.get("asset", "")
+                        diagnosis = trend.get("diagnosis", "")
+                        text_parts.append(f"{asset} trend: {diagnosis}")
+                
+                # Add crypto momentum indicators
+                if "crypto_momentum_indicators" in report:
+                    for momentum_data in report.get("crypto_momentum_indicators", []):
+                        asset = momentum_data.get("asset", "")
+                        momentum_indicators = momentum_data.get("momentum_indicators", [])
+                        
+                        for indicator in momentum_indicators:
+                            indicator_name = indicator.get("indicator_name", "")
+                            diagnosis = indicator.get("diagnosis", "")
+                            text_parts.append(f"{asset} {indicator_name}: {diagnosis}")
+                    
+                # Join all parts
+                text_to_embed = " ".join(text_parts)
+            
+            # Generate embeddings
+            logger.info(f"Generating crypto embeddings using model: {self.embedding_model_id}")
+            logger.info(f"Embedding content length: {len(text_to_embed)} characters")
+            embeddings = self.ve.get_embeddings(model_id=self.embedding_model_id, text=text_to_embed)
+            return embeddings
+            
+        except Exception as e:
+            logger.error(f"Error generating crypto embeddings: {e}")
             return None
 
     def clean_old_reports(self):
@@ -286,3 +338,59 @@ class PersistReportInMongoDB(MongoDBConnector):
                 
         except Exception as e:
             logger.error(f"Error saving news report to MongoDB: {e}")
+
+    def save_crypto_analysis_report(self, final_state):
+        """
+        Save the crypto analysis report to the MongoDB collection.
+        This method takes the final state of the workflow, prepares the report data, and inserts it into the MongoDB collection.
+        If a report for the current date already exists, it will be skipped entirely to save API tokens.
+        After saving, maintains a rolling 30-day window of reports.
+
+        Args:
+            final_state: The final state of the workflow containing the crypto analysis report data.
+        """
+        try:
+            # Get current date in UTC
+            current_date = datetime.now(timezone.utc)
+            date_string = current_date.strftime("%Y%m%d")  # Date in "YYYYMMDD" format
+            
+            # Check if a report for the current date already exists
+            existing_report = self.collection.find_one({"date_string": date_string})
+            
+            if existing_report:
+                # Skip the entire operation if a report already exists for today
+                logger.info(f"Crypto analysis report for date {date_string} already exists. Skipping to save API tokens.")
+                # Clean old reports to maintain only the latest 30 days
+                self.clean_old_reports()
+                return
+            
+            # Only proceed if no report exists for today
+            logger.info("Saving crypto analysis report to MongoDB...")
+
+            # Convert the final_state to a CryptoAnalysisAgentState object if necessary
+            if not isinstance(final_state, CryptoAnalysisAgentState):
+                final_state = CryptoAnalysisAgentState.model_validate(final_state)
+
+            # Prepare the report data
+            report = final_state.report.model_dump()
+            report_data = {
+                "portfolio_allocation": [allocation.model_dump() for allocation in final_state.portfolio_allocation],
+                "report": report,
+                "updates": final_state.updates,
+                "timestamp": current_date,
+                "date_string": date_string
+            }
+            
+            # Generate embeddings for the new report
+            logger.info(f"Generating embeddings for new crypto analysis report dated {date_string}")
+            report_data["report_embedding"] = self.generate_crypto_report_embeddings(report)
+            
+            # Insert a new report
+            self.collection.insert_one(report_data)
+            logger.info(f"New crypto analysis report for date {date_string} saved to MongoDB.")
+            
+            # Clean old reports to maintain only the latest 30 days
+            self.clean_old_reports()
+                
+        except Exception as e:
+            logger.error(f"Error saving crypto analysis report to MongoDB: {e}")

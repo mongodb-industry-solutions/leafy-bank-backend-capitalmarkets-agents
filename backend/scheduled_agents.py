@@ -4,6 +4,9 @@ from agents.tools.states.agent_market_analysis_state import MarketAnalysisAgentS
 from agents.agent_market_news_graph import create_workflow_graph as create_agent_market_news_graph
 from agents.tools.states.agent_market_news_state import MarketNewsAgentState
 
+from agents.agent_crypto_analysis_graph import create_workflow_graph as create_agent_crypto_analysis_graph
+from agents.tools.states.agent_crypto_analysis_state import CryptoAnalysisAgentState
+
 from agents.tools.persist_report import PersistReportInMongoDB
 
 import os
@@ -139,6 +142,52 @@ class ScheduledAgents:
         except Exception as e:
             logger.error(f"Error in run_agent_market_news_workflow: {e}")
             return {"status": "Error occurred during market news workflow."}
+        
+    def run_agent_crypto_analysis_ws(self) -> dict:
+        """
+        Runs the crypto analysis workflow using the CryptoAnalysisAgentState.
+        This function creates an initial state for the workflow, invokes the workflow graph,
+        and saves the final state to MongoDB.
+
+        Returns:
+            dict: A dictionary containing the status of the workflow execution.
+
+        Raises:
+            Exception: If an error occurs during the workflow execution.
+        """
+        try:
+            # Initial state for the workflow
+            initial_state = CryptoAnalysisAgentState(
+                portfolio_allocation=[],  # Initialize as an empty list
+                report={
+                    "crypto_analysis": [],  # Initialize as an empty list
+                    "overall_crypto_diagnosis": None  # No diagnosis at the start
+                },
+                next_step="portfolio_allocation_node",  # Start with the portfolio allocation node
+                updates=["Starting the crypto analysis workflow."]  # Initial update message
+            )
+            
+            # Create the workflow graph
+            graph = create_agent_crypto_analysis_graph()
+            final_state = graph.invoke(input=initial_state)
+
+            # Print the final state
+            logger.info("\nFinal State:")
+            logger.info(final_state)
+
+            # Get the collection name from environment variables
+            reports_crypto_analysis_coll = os.getenv("REPORTS_COLLECTION_CRYPTO_ANALYSIS", "reports_crypto_analysis")
+
+            # Persist the final state to MongoDB
+            # Initialize the PersistReportInMongoDB class
+            persist_data = PersistReportInMongoDB(collection_name=reports_crypto_analysis_coll)
+            # Save the crypto analysis report
+            persist_data.save_crypto_analysis_report(final_state)
+            # Return the status of the workflow execution
+            return {"status": "Crypto analysis workflow completed successfully."}
+        except Exception as e:
+            logger.error(f"Error in run_agent_crypto_analysis_ws: {e}")
+            return {"status": "Error occurred during crypto analysis workflow."}
 
     def schedule_jobs(self):
         """
@@ -150,6 +199,9 @@ class ScheduledAgents:
         # Define the schedule for the market news workflow
         agent_market_news_workflow_time = dt.time(hour=5, minute=10, tzinfo=timezone.utc)
         self.scheduler.daily(agent_market_news_workflow_time, self.run_agent_market_news_workflow)
+        # Define the schedule for the crypto analysis workflow
+        agent_crypto_analysis_workflow_time = dt.time(hour=7, minute=0, tzinfo=timezone.utc)
+        self.scheduler.daily(agent_crypto_analysis_workflow_time, self.run_agent_crypto_analysis_ws)
         
         logger.info("Scheduled jobs configured!")
 
