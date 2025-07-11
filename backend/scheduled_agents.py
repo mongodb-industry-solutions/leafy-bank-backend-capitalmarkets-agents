@@ -7,6 +7,9 @@ from agents.tools.states.agent_market_news_state import MarketNewsAgentState
 from agents.agent_crypto_analysis_graph import create_workflow_graph as create_agent_crypto_analysis_graph
 from agents.tools.states.agent_crypto_analysis_state import CryptoAnalysisAgentState
 
+from agents.agent_crypto_news_graph import create_workflow_graph as create_agent_crypto_news_graph
+from agents.tools.states.agent_crypto_news_state import CryptoNewsAgentState
+
 from agents.tools.persist_report import PersistReportInMongoDB
 
 import os
@@ -188,6 +191,43 @@ class ScheduledAgents:
         except Exception as e:
             logger.error(f"Error in run_agent_crypto_analysis_ws: {e}")
             return {"status": "Error occurred during crypto analysis workflow."}
+               
+    def run_agent_crypto_news_ws(self) -> dict:
+        """
+        Runs the crypto news workflow using the CryptoNewsAgentState.
+        This function creates an initial state for the workflow, invokes the workflow graph,
+        and saves the final state to MongoDB.
+
+        Returns:
+            dict: A dictionary containing the status of the workflow execution.
+
+        Raises:
+            Exception: If an error occurs during the workflow execution.
+        """
+        try:
+            # Initial state for the workflow
+            initial_state = CryptoNewsAgentState(
+                portfolio_allocation=[],  # Initialize as an empty list
+                report={
+                    "asset_subreddits": [],  # Initialize as an empty list
+                    "asset_sentiments": []  # Initialize as an empty list
+                },
+                next_step="portfolio_allocation_node",  # Start with the portfolio allocation node
+                updates=["Starting the crypto news workflow."]  # Initial update message
+            )
+            
+            # Create the workflow graph
+            graph = create_agent_crypto_news_graph()
+            final_state = graph.invoke(input=initial_state)
+
+            # Print the final state
+            logger.info("\nFinal State:")
+            logger.info(final_state)
+
+            return final_state
+        except Exception as e:
+            logger.error(f"Error in run_agent_crypto_news_ws: {e}")
+            return {"status": "Error occurred during crypto news workflow."}
 
     def schedule_jobs(self):
         """
