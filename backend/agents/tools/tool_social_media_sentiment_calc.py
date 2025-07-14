@@ -1,5 +1,5 @@
 import logging
-from agents.tools.states.agent_crypto_news_state import CryptoNewsAgentState, AssetSubreddits
+from agents.tools.states.agent_crypto_social_media_state import CryptoSocialMediaAgentState, AssetSubreddits
 from dotenv import load_dotenv
 from datetime import datetime, timezone
 import statistics
@@ -180,17 +180,17 @@ class SocialMediaSentimentCalcTool:
 # Initialize the SocialMediaSentimentCalcTool
 social_media_sentiment_calc_obj = SocialMediaSentimentCalcTool()
 
-def calculate_social_media_sentiment_tool(state: CryptoNewsAgentState) -> dict:
+def calculate_social_media_sentiment_tool(state: CryptoSocialMediaAgentState) -> dict:
     """
     Calculate aggregated sentiment scores from AssetSubreddits data in the state.
     
     Args:
-        state (CryptoNewsAgentState): The agent state containing AssetSubreddits objects
+        state (CryptoSocialMediaAgentState): The agent state containing AssetSubreddits objects
         
     Returns:
         dict: Updated state with sentiment analysis results
     """
-    from agents.tools.states.agent_crypto_news_state import AssetSentiment
+    from agents.tools.states.agent_crypto_social_media_state import AssetSentiment
     
     # Calculate aggregated sentiment scores
     sentiment_summary = social_media_sentiment_calc_obj.calculate_aggregated_sentiment(state.report.asset_subreddits)
@@ -242,7 +242,7 @@ def calculate_social_media_sentiment_tool(state: CryptoNewsAgentState) -> dict:
 
 # Example usage
 if __name__ == "__main__":
-    from states.agent_crypto_news_state import CryptoNewsAgentState, PortfolioAllocation, Report, AssetSubreddits, SentimentScore
+    from agents.tools.states.agent_crypto_social_media_state import CryptoSocialMediaAgentState, PortfolioAllocation, Report, AssetSubreddits, SentimentScore
 
     # Create mock AssetSubreddits data for testing
     mock_asset_subreddits = [
@@ -276,7 +276,7 @@ if __name__ == "__main__":
     ]
 
     # Initialize the state with mock data
-    state = CryptoNewsAgentState(
+    state = CryptoSocialMediaAgentState(
         portfolio_allocation=[
             PortfolioAllocation(asset="SPY", asset_type="ETF", description="S&P 500 ETF"),
             PortfolioAllocation(asset="QQQ", asset_type="ETF", description="Nasdaq ETF")

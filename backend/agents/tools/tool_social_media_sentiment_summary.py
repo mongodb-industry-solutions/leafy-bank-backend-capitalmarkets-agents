@@ -1,8 +1,9 @@
 import logging
 from agents.tools.db.mdb import MongoDBConnector
-from agents.tools.states.agent_crypto_news_state import CryptoNewsAgentState, AssetSentiment
+from agents.tools.states.agent_crypto_social_media_state import CryptoSocialMediaAgentState, AssetSentiment
 from agents.tools.bedrock.anthropic_chat_completions import BedrockAnthropicChatCompletions
 from agents.tools.agent_profiles import AgentProfiles
+from agents.tools.risk_profiles import RiskProfiles
 import os
 from dotenv import load_dotenv
 from typing import Optional, Dict, List
@@ -20,20 +21,20 @@ logger = logging.getLogger(__name__)
 
 
 class SocialMediaSentimentSummaryTool(MongoDBConnector):
-    def __init__(self, chat_completions_model_id: Optional[str] = os.getenv("CHAT_COMPLETIONS_MODEL_ID"), agent_id: Optional[str] = "CRYPTO_NEWS_AGENT"):
+    def __init__(self, chat_completions_model_id: Optional[str] = os.getenv("CHAT_COMPLETIONS_MODEL_ID"), agent_id: Optional[str] = "CRYPTO_SOCIAL_MEDIA_AGENT"):
         """
         SocialMediaSentimentSummaryTool class to generate summaries and calculate sentiment metrics for social media submissions.
         This class uses the BedrockAnthropicChatCompletions model to generate concise summaries.
         
         Args:
             chat_completions_model_id (str): Model ID for chat completions. Default is os.getenv("CHAT_COMPLETIONS_MODEL_ID").
-            agent_id (str): Agent ID. Default is "CRYPTO_NEWS_AGENT".
+            agent_id (str): Agent ID. Default is "CRYPTO_SOCIAL_MEDIA_AGENT".
         """
         self.chat_completions_model_id = chat_completions_model_id
         self.agent_id = agent_id
         logger.info("SocialMediaSentimentSummaryTool initialized")
     
-    def group_submissions_by_asset(self, state: CryptoNewsAgentState) -> Dict[str, List]:
+    def group_submissions_by_asset(self, state: CryptoSocialMediaAgentState) -> Dict[str, List]:
         """Group social media submissions by asset symbol."""
         asset_submissions_groups = defaultdict(list)
         
@@ -43,7 +44,7 @@ class SocialMediaSentimentSummaryTool(MongoDBConnector):
         
         return asset_submissions_groups
     
-    def get_asset_sentiment_by_asset(self, state: CryptoNewsAgentState) -> Dict[str, AssetSentiment]:
+    def get_asset_sentiment_by_asset(self, state: CryptoSocialMediaAgentState) -> Dict[str, AssetSentiment]:
         """Create a lookup dictionary for asset sentiments by asset symbol."""
         asset_sentiment_lookup = {}
         
@@ -82,7 +83,6 @@ class SocialMediaSentimentSummaryTool(MongoDBConnector):
         if asset_sentiment:
             sentiment_context = (
                 f"Overall Sentiment Analysis for {asset}:\n"
-                f"- Final Sentiment Score: {asset_sentiment.final_sentiment_score}\n"
                 f"- Sentiment Category: {asset_sentiment.sentiment_category}\n"
                 f"- Total Submissions: {asset_sentiment.total_submissions}\n"
                 f"- Confidence Level: {asset_sentiment.confidence_level}\n"
@@ -91,14 +91,14 @@ class SocialMediaSentimentSummaryTool(MongoDBConnector):
         
         # Generate the LLM prompt
         llm_prompt = (
-            f"You are an AI assistant for a crypto news agent. "
+            f"You are a {agent_profile['role']} "
             f"Your task is to provide a concise summary of recent social media sentiment about {asset} ({description}).\n\n"
-            f"Role: {agent_profile['role']}\n"
             f"Instructions: {agent_profile['instructions']}\n\n"
+            f"Rules: {agent_profile['rules']}\n\n"
             f"{sentiment_context}"
             f"Recent Social Media Submissions:\n{submissions_context}\n\n"
-            f"Generate a concise summary (maximum 80 words) of the social media sentiment for {asset} ({description}). "
-            f"Focus on key insights and implications for crypto investors based on community sentiment. Be objective and factual."
+            f"Generate a concise summary of the social media sentiment for {asset} ({description}). "
+            f"Focus on key insights and implications for investors based on community sentiment. Be objective and factual."
         )
 
         logger.info(f"LLM Prompt for {asset} social media sentiment summary:")
@@ -123,20 +123,27 @@ class SocialMediaSentimentSummaryTool(MongoDBConnector):
             else:
                 return f"Recent social media discussions about {asset} show mixed community sentiment."
     
-    def generate_social_media_sentiment_summary(self, state: CryptoNewsAgentState) -> dict:
+    def generate_social_media_sentiment_summary(self, state: CryptoSocialMediaAgentState) -> dict:
         """
         Generate summaries for social media submissions grouped by asset.
         
         Args:
-            state (CryptoNewsAgentState): The current state of the crypto news agent.
+            state (CryptoSocialMediaAgentState): The current state of the crypto news agent.
             
         Returns:
             dict: Updated state with enhanced asset sentiment summaries.
         """
         message = "[Tool] Generating social media sentiment summaries."
         logger.info(message)
+
+        # Retrieve the active risk profile (fallback is handled internally in RiskProfiles)
+        risk_profiles = RiskProfiles()
+        active_risk_profile = risk_profiles.get_active_risk_profile()
+        state.updates.append(
+            f"[Action] Using risk profile: {active_risk_profile['risk_id']} - {active_risk_profile.get('short_description', 'No description')}"
+        )
         
-        # Retrieve the CRYPTO_NEWS_AGENT profile
+        # Retrieve the CRYPTO_SOCIAL_MEDIA_AGENT profile
         profiler = AgentProfiles()
         agent_profile = profiler.get_agent_profile(self.agent_id)
         if not agent_profile:
@@ -155,8 +162,7 @@ class SocialMediaSentimentSummaryTool(MongoDBConnector):
         # Create asset description lookup
         asset_descriptions = {allocation.asset: allocation.description for allocation in state.portfolio_allocation}
         
-        # Process each asset group and enhance existing asset sentiments with summaries
-        enhanced_asset_sentiments = []
+        # Process each existing asset sentiment and add summary directly to the object
         for asset_sentiment in state.report.asset_sentiments:
             asset = asset_sentiment.asset
             submissions_group = asset_submissions_groups.get(asset, [])
@@ -165,55 +171,45 @@ class SocialMediaSentimentSummaryTool(MongoDBConnector):
             description = asset_descriptions.get(asset, "")
             
             # Generate summary using LLM if we have submissions
-            summary_text = ""
             if submissions_group:
                 summary_text = self.generate_asset_summary(asset, description, submissions_group, asset_sentiment, agent_profile)
-            
-            # Create enhanced AssetSentiment object with summary
-            enhanced_sentiment = AssetSentiment(
-                asset=asset_sentiment.asset,
-                final_sentiment_score=asset_sentiment.final_sentiment_score,
-                sentiment_category=asset_sentiment.sentiment_category,
-                total_submissions=asset_sentiment.total_submissions,
-                recent_submissions=asset_sentiment.recent_submissions,
-                average_positive=asset_sentiment.average_positive,
-                average_negative=asset_sentiment.average_negative,
-                average_neutral=asset_sentiment.average_neutral,
-                total_engagement_score=asset_sentiment.total_engagement_score,
-                total_comments=asset_sentiment.total_comments,
-                total_ups=asset_sentiment.total_ups,
-                confidence_level=asset_sentiment.confidence_level
-            )
-            
-            # Add summary as a field if needed (you might want to add this to the AssetSentiment model)
-            # For now, we'll store it in the updates
-            if summary_text:
-                state.updates.append(f"[Summary] {asset}: {summary_text}")
-            
-            enhanced_asset_sentiments.append(enhanced_sentiment)
+                # Set the sentiment_summary directly on the existing object
+                asset_sentiment.sentiment_summary = summary_text
+            else:
+                # Provide a fallback summary if no submissions
+                asset_sentiment.sentiment_summary = f"Limited social media activity for {asset}. Sentiment analysis based on available data shows {asset_sentiment.sentiment_category.lower()} indicators."
         
-        # Update the state with enhanced sentiments
-        state.report.asset_sentiments = enhanced_asset_sentiments
-        
-        # Enhance overall news diagnosis with LLM-generated insights
-        if state.report.overall_news_diagnosis:
+        # Generate comprehensive overall diagnosis using all asset summaries and risk profile
+        if state.report.asset_sentiments:
             try:
-                # Generate enhanced overall diagnosis
+                # Collect all asset summaries for context
+                asset_summaries_context = []
+                for sentiment in state.report.asset_sentiments:
+                    asset_summaries_context.append(
+                        f"- {sentiment.asset}: {sentiment.sentiment_category} sentiment (Score: {sentiment.final_sentiment_score:.2f}, "
+                        f"Confidence: {sentiment.confidence_level:.2f})\n"
+                        f"  Summary: {sentiment.sentiment_summary or 'No summary available'}"
+                    )
+                
                 overall_prompt = (
-                    f"You are an AI assistant for a crypto news agent. "
-                    f"Based on the following social media sentiment analysis, provide a comprehensive overall diagnosis.\n\n"
-                    f"Role: {agent_profile['role']}\n"
-                    f"Instructions: {agent_profile['instructions']}\n\n"
-                    f"Current Diagnosis: {state.report.overall_news_diagnosis}\n\n"
-                    f"Asset Sentiments:\n"
-                )
-                
-                for sentiment in enhanced_asset_sentiments:
-                    overall_prompt += f"- {sentiment.asset}: {sentiment.sentiment_category} sentiment (Score: {sentiment.final_sentiment_score}, Confidence: {sentiment.confidence_level})\n"
-                
-                overall_prompt += (
-                    f"\nGenerate an enhanced overall diagnosis (maximum 150 words) that provides actionable insights "
-                    f"for crypto portfolio optimization based on the social media sentiment analysis."
+                    f"===== INVESTOR RISK PROFILE =====\n"
+                    f"Risk Profile ID      : {active_risk_profile['risk_id']}\n"
+                    f"Description          : {active_risk_profile.get('short_description', 'No description')}\n"
+                    f"================================\n\n"
+                    f"You are a {agent_profile['role']}. "
+                    f"Based on the following comprehensive social media sentiment analysis for the entire portfolio, "
+                    f"provide a unified overall diagnosis that considers all assets collectively.\n\n"
+                    f"PORTFOLIO ASSET SENTIMENT ANALYSIS:\n"
+                    f"{'='*50}\n"
+                    f"{chr(10).join(asset_summaries_context)}\n"
+                    f"{'='*50}\n\n"
+                    f"Generate a comprehensive overall portfolio diagnosis (maximum 250 words) that:\n"
+                    f"1. Synthesizes the sentiment across all portfolio assets\n"
+                    f"2. Provides actionable insights aligned with the investor's risk profile\n"
+                    f"3. Considers portfolio-level implications and correlations\n"
+                    f"4. Offers strategic recommendations based on the social media sentiment landscape\n"
+                    f"5. Addresses how the overall sentiment aligns with the investor's objectives and risk tolerance\n"
+                    f"6. If possible, include relevant highlights from the most recent social media discussions that support the analysis."
                 )
                 
                 chat_completions = BedrockAnthropicChatCompletions(model_id=self.chat_completions_model_id)
@@ -221,14 +217,33 @@ class SocialMediaSentimentSummaryTool(MongoDBConnector):
                 
                 # Truncate if necessary
                 words = enhanced_diagnosis.split()
-                if len(words) > 150:
-                    enhanced_diagnosis = " ".join(words[:150]) + "..."
+                if len(words) > 250:
+                    enhanced_diagnosis = " ".join(words[:250]) + "..."
                 
                 state.report.overall_news_diagnosis = enhanced_diagnosis
                 
             except Exception as e:
                 logger.error(f"Error generating enhanced overall diagnosis: {e}")
-                # Keep the original diagnosis if enhancement fails
+                # Create a fallback diagnosis based on sentiment categories
+                sentiment_categories = [s.sentiment_category for s in state.report.asset_sentiments if s.sentiment_category]
+                if sentiment_categories:
+                    positive_count = sentiment_categories.count("Positive")
+                    negative_count = sentiment_categories.count("Negative") 
+                    neutral_count = sentiment_categories.count("Neutral")
+                    
+                    dominant_sentiment = "Mixed"
+                    if positive_count > negative_count and positive_count > neutral_count:
+                        dominant_sentiment = "Positive"
+                    elif negative_count > positive_count and negative_count > neutral_count:
+                        dominant_sentiment = "Negative"
+                    elif neutral_count > positive_count and neutral_count > negative_count:
+                        dominant_sentiment = "Neutral"
+                    
+                    state.report.overall_news_diagnosis = (
+                        f"Portfolio social media sentiment analysis shows {dominant_sentiment.lower()} overall trends. "
+                        f"Based on {len(state.report.asset_sentiments)} assets analyzed, consider adjusting positions "
+                        f"according to your {active_risk_profile['risk_id']} risk profile."
+                    )
         
         # Update state with message
         state.updates.append(message)
@@ -247,16 +262,16 @@ class SocialMediaSentimentSummaryTool(MongoDBConnector):
 social_media_sentiment_summary_obj = SocialMediaSentimentSummaryTool()
 
 # Define tools
-def generate_social_media_sentiment_summary_tool(state: CryptoNewsAgentState) -> dict:
+def generate_social_media_sentiment_summary_tool(state: CryptoSocialMediaAgentState) -> dict:
     """Generate summaries for social media submissions grouped by asset."""
     return social_media_sentiment_summary_obj.generate_social_media_sentiment_summary(state=state)
 
 # Example usage
 if __name__ == "__main__":
-    from agents.tools.states.agent_crypto_news_state import CryptoNewsAgentState, PortfolioAllocation, AssetSubreddits, AssetSentiment, Report, SentimentScore
+    from agents.tools.states.agent_crypto_social_media_state import CryptoSocialMediaAgentState, PortfolioAllocation, AssetSubreddits, AssetSentiment, Report, SentimentScore
     
     # Initialize the state with sample data
-    state = CryptoNewsAgentState(
+    state = CryptoSocialMediaAgentState(
         portfolio_allocation=[
             PortfolioAllocation(
                 asset="BTC", asset_type="Cryptocurrency", description="Bitcoin", allocation_percentage="40%"

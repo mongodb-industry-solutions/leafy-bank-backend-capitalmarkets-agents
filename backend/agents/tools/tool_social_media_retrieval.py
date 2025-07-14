@@ -1,7 +1,7 @@
 import logging
 from db.mdb import MongoDBConnector
 from vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
-from agents.tools.states.agent_crypto_news_state import CryptoNewsAgentState, AssetSubreddits, SentimentScore, Comment
+from agents.tools.states.agent_crypto_social_media_state import CryptoSocialMediaAgentState, AssetSubreddits, SentimentScore, Comment
 import os
 from dotenv import load_dotenv
 
@@ -192,13 +192,13 @@ class SocialMediaRetrievalTool(MongoDBConnector):
 social_media_retrieval_obj = SocialMediaRetrievalTool()
 
 
-def fetch_social_media_submissions_tool(state: CryptoNewsAgentState) -> dict:
+def fetch_social_media_submissions_tool(state: CryptoSocialMediaAgentState) -> dict:
     """
     Fetch social media submissions for assets in the portfolio allocation.
     Performs vector search on subreddit submissions and converts to AssetSubreddits objects.
     
     Args:
-        state (CryptoNewsAgentState): The agent state containing portfolio allocation
+        state (CryptoSocialMediaAgentState): The agent state containing portfolio allocation
         
     Returns:
         dict: Updated state with AssetSubreddits objects
@@ -239,10 +239,10 @@ def fetch_social_media_submissions_tool(state: CryptoNewsAgentState) -> dict:
 
 # Example usage
 if __name__ == "__main__":
-    from states.agent_crypto_news_state import CryptoNewsAgentState, PortfolioAllocation
+    from agents.tools.states.agent_crypto_social_media_state import CryptoSocialMediaAgentState, PortfolioAllocation
 
     # Initialize the state with traditional assets portfolio
-    state = CryptoNewsAgentState(
+    state = CryptoSocialMediaAgentState(
         portfolio_allocation=[
             PortfolioAllocation(
                 asset="SPY", 

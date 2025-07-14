@@ -7,8 +7,8 @@ from agents.tools.states.agent_market_news_state import MarketNewsAgentState
 from agents.agent_crypto_analysis_graph import create_workflow_graph as create_agent_crypto_analysis_graph
 from agents.tools.states.agent_crypto_analysis_state import CryptoAnalysisAgentState
 
-from agents.agent_crypto_news_graph import create_workflow_graph as create_agent_crypto_news_graph
-from agents.tools.states.agent_crypto_news_state import CryptoNewsAgentState
+from agents.agent_crypto_social_media_graph import create_workflow_graph as create_agent_crypto_news_graph
+from agents.tools.states.agent_crypto_social_media_state import CryptoSocialMediaAgentState
 
 from agents.tools.persist_report import PersistReportInMongoDB
 
@@ -24,7 +24,6 @@ import datetime as dt
 from datetime import timezone
 
 from scheduler import Scheduler
-import scheduler.trigger as trigger
 import pytz
 
 import os
@@ -192,9 +191,9 @@ class ScheduledAgents:
             logger.error(f"Error in run_agent_crypto_analysis_ws: {e}")
             return {"status": "Error occurred during crypto analysis workflow."}
                
-    def run_agent_crypto_news_ws(self) -> dict:
+    def run_agent_crypto_sm_ws(self) -> dict:
         """
-        Runs the crypto news workflow using the CryptoNewsAgentState.
+        Runs the crypto news workflow using the CryptoSocialMediaAgentState.
         This function creates an initial state for the workflow, invokes the workflow graph,
         and saves the final state to MongoDB.
 
@@ -206,14 +205,14 @@ class ScheduledAgents:
         """
         try:
             # Initial state for the workflow
-            initial_state = CryptoNewsAgentState(
+            initial_state = CryptoSocialMediaAgentState(
                 portfolio_allocation=[],  # Initialize as an empty list
                 report={
                     "asset_subreddits": [],  # Initialize as an empty list
                     "asset_sentiments": []  # Initialize as an empty list
                 },
                 next_step="portfolio_allocation_node",  # Start with the portfolio allocation node
-                updates=["Starting the crypto news workflow."]  # Initial update message
+                updates=["Starting the crypto social media workflow."]  # Initial update message
             )
             
             # Create the workflow graph
@@ -224,10 +223,19 @@ class ScheduledAgents:
             logger.info("\nFinal State:")
             logger.info(final_state)
 
-            return final_state
+            # Get the collection name from environment variables
+            reports_crypto_sm_coll = os.getenv("REPORTS_COLLECTION_CRYPTO_SM", "reports_crypto_sm")
+
+            # Persist the final state to MongoDB
+            # Initialize the PersistReportInMongoDB class
+            persist_data = PersistReportInMongoDB(collection_name=reports_crypto_sm_coll)
+            # Save the crypto social media sentiment report
+            persist_data.save_crypto_sm_report(final_state)
+            # Return the status of the workflow execution
+            return {"status": "Crypto analysis workflow completed successfully."}
         except Exception as e:
-            logger.error(f"Error in run_agent_crypto_news_ws: {e}")
-            return {"status": "Error occurred during crypto news workflow."}
+            logger.error(f"Error in run_agent_crypto_analysis_ws: {e}")
+            return {"status": "Error occurred during crypto analysis workflow."}
 
     def schedule_jobs(self):
         """

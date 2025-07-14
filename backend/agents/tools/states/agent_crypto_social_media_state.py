@@ -53,6 +53,7 @@ class AssetSentiment(BaseModel):
     total_comments: Optional[int] = Field(None, description="The total number of comments across all submissions.")
     total_ups: Optional[int] = Field(None, description="The total number of upvotes across all submissions.")
     confidence_level: Optional[float] = Field(None, description="The confidence level of the sentiment analysis for the asset.")
+    sentiment_summary: Optional[str] = Field(None, description="A summary of the sentiment analysis for the asset.")
 
 
 class Report(BaseModel):
@@ -61,7 +62,7 @@ class Report(BaseModel):
     overall_news_diagnosis: Optional[str] = Field(None, description="The overall news diagnosis for the portfolio.")
 
 
-class CryptoNewsAgentState(BaseModel):
+class CryptoSocialMediaAgentState(BaseModel):
     portfolio_allocation: List[PortfolioAllocation] = Field(default_factory=list, description="The portfolio allocation details.")
     report: Report = Field(default_factory=Report, description="The report containing news results.")
     next_step: Literal["__start__", "portfolio_allocation_node", "social_media_sentiment_node", "social_media_sentiment_calc_node", "social_media_sentiment_summary_node", "__end__"] = Field(None, description="The next step in the workflow (e.g., 'portfolio_allocation_node').")

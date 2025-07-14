@@ -7,8 +7,9 @@ from dotenv import load_dotenv
 # Import all state types
 from agents.tools.states.agent_market_analysis_state import MarketAnalysisAgentState
 from agents.tools.states.agent_market_news_state import MarketNewsAgentState
+from agents.tools.states.agent_market_social_media_state import MarketSocialMediaAgentState
 from agents.tools.states.agent_crypto_analysis_state import CryptoAnalysisAgentState
-from agents.tools.states.agent_crypto_news_state import CryptoNewsAgentState
+from agents.tools.states.agent_crypto_social_media_state import CryptoSocialMediaAgentState
 
 # Load environment variables from .env file
 load_dotenv()
@@ -20,8 +21,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Type variable for state - updated to include CryptoNewsAgentState
-StateType = TypeVar('StateType', MarketAnalysisAgentState, MarketNewsAgentState, CryptoAnalysisAgentState, CryptoNewsAgentState)
+# Type variable for state - updated to include CryptoSocialMediaAgentState
+StateType = TypeVar('StateType', MarketAnalysisAgentState, MarketNewsAgentState, MarketSocialMediaAgentState, CryptoAnalysisAgentState, CryptoSocialMediaAgentState)
 
 class PortfolioAllocationTool(MongoDBConnector):
     def __init__(self, uri=None, database_name=None):
@@ -37,11 +38,11 @@ class PortfolioAllocationTool(MongoDBConnector):
         
         logger.info(f"PortfolioAllocationTool initialized with collections: {self.traditional_assets_collection_name}, {self.cryptos_collection_name}")
 
-    def check_portfolio_allocation(self, state: Union[MarketAnalysisAgentState, MarketNewsAgentState, CryptoAnalysisAgentState, CryptoNewsAgentState]) -> dict:
+    def check_portfolio_allocation(self, state: Union[MarketAnalysisAgentState, MarketNewsAgentState, MarketSocialMediaAgentState, CryptoAnalysisAgentState, CryptoSocialMediaAgentState]) -> dict:
         """Query the appropriate portfolio allocation collection based on state type"""
         
         # Determine collection, message, and projection based on state type
-        if isinstance(state, (CryptoAnalysisAgentState, CryptoNewsAgentState)):
+        if isinstance(state, (CryptoAnalysisAgentState, CryptoSocialMediaAgentState)):
             message = "[Tool] Check crypto portfolio allocation."
             collection = self.cryptos_collection
             # Fields for crypto portfolio - matching CryptoAnalysisAgentState.PortfolioAllocation
@@ -69,7 +70,7 @@ class PortfolioAllocationTool(MongoDBConnector):
         results = list(collection.find({}, projection))
         
         # Transform the results into the required format based on state type
-        if isinstance(state, (CryptoAnalysisAgentState, CryptoNewsAgentState)):
+        if isinstance(state, (CryptoAnalysisAgentState, CryptoSocialMediaAgentState)):
             portfolio_allocation = [
                 {
                     "asset": result["symbol"],
@@ -97,8 +98,11 @@ class PortfolioAllocationTool(MongoDBConnector):
         elif isinstance(state, CryptoAnalysisAgentState):
             from agents.tools.states.agent_crypto_analysis_state import PortfolioAllocation
             next_node = "crypto_trends_node"
-        elif isinstance(state, CryptoNewsAgentState):
-            from agents.tools.states.agent_crypto_news_state import PortfolioAllocation
+        elif isinstance(state, CryptoSocialMediaAgentState):
+            from agents.tools.states.agent_crypto_social_media_state import PortfolioAllocation
+            next_node = "social_media_sentiment_node"
+        elif isinstance(state, MarketSocialMediaAgentState):
+            from agents.tools.states.agent_market_social_media_state import PortfolioAllocation
             next_node = "social_media_sentiment_node"
         else:  # MarketNewsAgentState
             from agents.tools.states.agent_market_news_state import PortfolioAllocation
@@ -122,7 +126,7 @@ class PortfolioAllocationTool(MongoDBConnector):
 portfolio_allocation_tool = PortfolioAllocationTool()
 
 # Define tools - this is the function used by all workflows
-def check_portfolio_allocation_tool(state: Union[MarketAnalysisAgentState, MarketNewsAgentState, CryptoAnalysisAgentState, CryptoNewsAgentState]) -> dict:
+def check_portfolio_allocation_tool(state: Union[MarketAnalysisAgentState, MarketNewsAgentState, MarketSocialMediaAgentState, CryptoAnalysisAgentState, CryptoSocialMediaAgentState]) -> dict:
     """Query the appropriate portfolio allocation collection for any supported state type"""
     return portfolio_allocation_tool.check_portfolio_allocation(state=state)
 
@@ -130,8 +134,9 @@ if __name__ == "__main__":
     # Example usage with all state types
     from agents.tools.states.agent_market_analysis_state import MarketAnalysisAgentState
     from agents.tools.states.agent_market_news_state import MarketNewsAgentState
+    from agents.tools.states.agent_market_social_media_state import MarketSocialMediaAgentState
     from agents.tools.states.agent_crypto_analysis_state import CryptoAnalysisAgentState
-    from agents.tools.states.agent_crypto_news_state import CryptoNewsAgentState
+    from agents.tools.states.agent_crypto_social_media_state import CryptoSocialMediaAgentState
     
     # Test with analysis state
     analysis_state = MarketAnalysisAgentState()
@@ -140,6 +145,13 @@ if __name__ == "__main__":
     print("Analysis Result:", analysis_result)
     print("Analysis State:", analysis_state)
     
+    # Test with news state
+    market_sm_state = MarketSocialMediaAgentState()
+    market_sm_result = check_portfolio_allocation_tool(market_sm_state)
+    print("\nNews State Next Step:", market_sm_state.next_step)
+    print("News Result:", market_sm_result)
+    print("News State:", market_sm_state)
+
     # Test with news state
     news_state = MarketNewsAgentState()
     news_result = check_portfolio_allocation_tool(news_state)
@@ -155,7 +167,7 @@ if __name__ == "__main__":
     print("Crypto State:", crypto_state)
     
     # Test with crypto news state
-    crypto_news_state = CryptoNewsAgentState()
+    crypto_news_state = CryptoSocialMediaAgentState()
     crypto_news_result = check_portfolio_allocation_tool(crypto_news_state)
     print("\nCrypto News State Next Step:", crypto_news_state.next_step)
     print("Crypto News Result:", crypto_news_result)
