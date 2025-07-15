@@ -1,7 +1,9 @@
 import logging
 from db.mdb import MongoDBConnector
 from vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
-from agents.tools.states.agent_crypto_social_media_state import CryptoSocialMediaAgentState, AssetSubreddits, SentimentScore, Comment
+from agents.tools.states.agent_crypto_social_media_state import CryptoSocialMediaAgentState, AssetSubreddits as CryptoAssetSubreddits, SentimentScore as CryptoSentimentScore, Comment as CryptoComment
+from agents.tools.states.agent_market_social_media_state import MarketSocialMediaAgentState, AssetSubreddits as MarketAssetSubreddits, SentimentScore as MarketSentimentScore, Comment as MarketComment
+from typing import Union
 import os
 from dotenv import load_dotenv
 
@@ -137,28 +139,41 @@ class SocialMediaRetrievalTool(MongoDBConnector):
             "subreddit_submissions": results[:n]  # Limit to requested number
         }
 
-    def convert_to_asset_subreddits(self, raw_submission: dict) -> AssetSubreddits:
+    def convert_to_asset_subreddits(self, raw_submission: dict, state_type: str) -> Union[CryptoAssetSubreddits, MarketAssetSubreddits]:
         """
         Convert a raw submission dictionary to an AssetSubreddits object.
         
         Args:
             raw_submission (dict): Raw submission data from MongoDB
+            state_type (str): The type of state ('crypto' or 'market')
             
         Returns:
-            AssetSubreddits: Structured submission object
+            Union[CryptoAssetSubreddits, MarketAssetSubreddits]: Structured submission object
         """
-        # Convert sentiment score
+        # Convert sentiment score based on state type
         sentiment_data = raw_submission.get('sentiment_score', {})
-        sentiment_score = SentimentScore(
-            neutral=sentiment_data.get('neutral'),
-            negative=sentiment_data.get('negative'),
-            positive=sentiment_data.get('positive')
-        )
+        
+        if state_type == 'crypto':
+            sentiment_score = CryptoSentimentScore(
+                neutral=sentiment_data.get('neutral'),
+                negative=sentiment_data.get('negative'),
+                positive=sentiment_data.get('positive')
+            )
+            CommentClass = CryptoComment
+            AssetSubredditsClass = CryptoAssetSubreddits
+        else:  # market
+            sentiment_score = MarketSentimentScore(
+                neutral=sentiment_data.get('neutral'),
+                negative=sentiment_data.get('negative'),
+                positive=sentiment_data.get('positive')
+            )
+            CommentClass = MarketComment
+            AssetSubredditsClass = MarketAssetSubreddits
         
         # Convert comments
         comments = []
         for comment_data in raw_submission.get('comments', []):
-            comment = Comment(
+            comment = CommentClass(
                 id=comment_data.get('id'),
                 author=comment_data.get('author'),
                 body=comment_data.get('body'),
@@ -168,7 +183,7 @@ class SocialMediaRetrievalTool(MongoDBConnector):
             comments.append(comment)
         
         # Convert main submission
-        asset_subreddit = AssetSubreddits(
+        asset_subreddit = AssetSubredditsClass(
             asset=raw_submission.get('asset'),
             subreddit=raw_submission.get('subreddit'),
             url=raw_submission.get('url'),
@@ -192,18 +207,21 @@ class SocialMediaRetrievalTool(MongoDBConnector):
 social_media_retrieval_obj = SocialMediaRetrievalTool()
 
 
-def fetch_social_media_submissions_tool(state: CryptoSocialMediaAgentState) -> dict:
+def fetch_social_media_submissions_tool(state: Union[CryptoSocialMediaAgentState, MarketSocialMediaAgentState]) -> dict:
     """
     Fetch social media submissions for assets in the portfolio allocation.
     Performs vector search on subreddit submissions and converts to AssetSubreddits objects.
     
     Args:
-        state (CryptoSocialMediaAgentState): The agent state containing portfolio allocation
+        state (Union[CryptoSocialMediaAgentState, MarketSocialMediaAgentState]): The agent state containing portfolio allocation
         
     Returns:
         dict: Updated state with AssetSubreddits objects
     """
     asset_subreddits = []
+    
+    # Determine state type for proper object creation
+    state_type = 'crypto' if isinstance(state, CryptoSocialMediaAgentState) else 'market'
     
     # Process each asset in the portfolio allocation
     for allocation in state.portfolio_allocation:
@@ -226,81 +244,139 @@ def fetch_social_media_submissions_tool(state: CryptoSocialMediaAgentState) -> d
             # Convert raw results to AssetSubreddits objects
             if search_results and "subreddit_submissions" in search_results:
                 for raw_submission in search_results["subreddit_submissions"]:
-                    asset_subreddit = social_media_retrieval_obj.convert_to_asset_subreddits(raw_submission)
+                    asset_subreddit = social_media_retrieval_obj.convert_to_asset_subreddits(raw_submission, state_type)
                     asset_subreddits.append(asset_subreddit)
     
     # Update the state with the fetched data
     updated_state = state.model_copy()
     updated_state.report.asset_subreddits = asset_subreddits
-    updated_state.next_step = "social_media_sentiment_summary_node"
+    updated_state.next_step = "social_media_sentiment_calc_node"
     
     return updated_state
 
 
 # Example usage
 if __name__ == "__main__":
-    from agents.tools.states.agent_crypto_social_media_state import CryptoSocialMediaAgentState, PortfolioAllocation
+    # Test with Crypto Social Media State
+    print("="*80)
+    print("TESTING CRYPTO SOCIAL MEDIA STATE")
+    print("="*80)
+    
+    from agents.tools.states.agent_crypto_social_media_state import CryptoSocialMediaAgentState, PortfolioAllocation as CryptoPortfolioAllocation
+
+    # Initialize the state with crypto assets portfolio
+    crypto_state = CryptoSocialMediaAgentState(
+        portfolio_allocation=[
+            CryptoPortfolioAllocation(
+                asset="BTC", 
+                asset_type="Cryptocurrency",
+                description="Bitcoin", 
+                allocation_percentage="40%"
+            ),
+            CryptoPortfolioAllocation(
+                asset="ETH", 
+                asset_type="Cryptocurrency",
+                description="Ethereum", 
+                allocation_percentage="30%"
+            ),
+            CryptoPortfolioAllocation(
+                asset="SOL", 
+                asset_type="Cryptocurrency",
+                description="Solana", 
+                allocation_percentage="20%"
+            ),
+            CryptoPortfolioAllocation(
+                asset="ADA", 
+                asset_type="Cryptocurrency",
+                description="Cardano", 
+                allocation_percentage="10%"
+            )
+        ],
+        next_step="social_media_sentiment_node",
+    )
+
+    # Use the tool to fetch social media submissions
+    updated_crypto_state = fetch_social_media_submissions_tool(crypto_state)
+
+    # Print summary
+    print(f"Total AssetSubreddits fetched: {len(updated_crypto_state.report.asset_subreddits)}")
+    print(f"Next step: {updated_crypto_state.next_step}")
+    
+    # Group by asset for summary
+    asset_counts = {}
+    for asset_subreddit in updated_crypto_state.report.asset_subreddits:
+        asset = asset_subreddit.asset
+        if asset not in asset_counts:
+            asset_counts[asset] = 0
+        asset_counts[asset] += 1
+    
+    print("\nCrypto submissions per asset:")
+    for asset, count in asset_counts.items():
+        print(f"  {asset}: {count} submissions")
+    
+    print("\nFirst few crypto submissions:")
+    for i, asset_subreddit in enumerate(updated_crypto_state.report.asset_subreddits[:3]):
+        print(f"  {i+1}. {asset_subreddit.asset}: {asset_subreddit.title}")
+        print(f"     Sentiment: P:{asset_subreddit.sentiment_score.positive:.3f} N:{asset_subreddit.sentiment_score.negative:.3f}")
+        print(f"     Date: {asset_subreddit.create_at_utc}")
+
+    # Test with Market Social Media State
+    print("\n" + "="*80)
+    print("TESTING MARKET SOCIAL MEDIA STATE")
+    print("="*80)
+    
+    from agents.tools.states.agent_market_social_media_state import MarketSocialMediaAgentState, PortfolioAllocation as MarketPortfolioAllocation
 
     # Initialize the state with traditional assets portfolio
-    state = CryptoSocialMediaAgentState(
+    market_state = MarketSocialMediaAgentState(
         portfolio_allocation=[
-            PortfolioAllocation(
+            MarketPortfolioAllocation(
                 asset="SPY", 
-                asset_type="ETF",
                 description="S&P 500 ETF", 
                 allocation_percentage="25%"
             ),
-            PortfolioAllocation(
+            MarketPortfolioAllocation(
                 asset="QQQ", 
-                asset_type="ETF",
                 description="Nasdaq ETF", 
                 allocation_percentage="20%"
             ),
-            PortfolioAllocation(
+            MarketPortfolioAllocation(
                 asset="EEM", 
-                asset_type="ETF",
                 description="Emerging Markets ETF", 
                 allocation_percentage="8%"
             ),
-            PortfolioAllocation(
+            MarketPortfolioAllocation(
                 asset="XLE", 
-                asset_type="ETF",
                 description="Energy Sector ETF", 
                 allocation_percentage="5%"
             ),
-            PortfolioAllocation(
+            MarketPortfolioAllocation(
                 asset="TLT", 
-                asset_type="ETF",
                 description="Long-Term Treasury Bonds", 
                 allocation_percentage="10%"
             ),
-            PortfolioAllocation(
+            MarketPortfolioAllocation(
                 asset="LQD", 
-                asset_type="ETF",
                 description="Investment-Grade Bonds", 
                 allocation_percentage="7%"
             ),
-            PortfolioAllocation(
+            MarketPortfolioAllocation(
                 asset="HYG", 
-                asset_type="ETF",
                 description="High-Yield Bonds", 
                 allocation_percentage="5%"
             ),
-            PortfolioAllocation(
+            MarketPortfolioAllocation(
                 asset="VNQ", 
-                asset_type="ETF",
                 description="Real Estate ETF", 
                 allocation_percentage="6%"
             ),
-            PortfolioAllocation(
+            MarketPortfolioAllocation(
                 asset="GLD", 
-                asset_type="ETF",
                 description="Gold ETF", 
                 allocation_percentage="8%"
             ),
-            PortfolioAllocation(
+            MarketPortfolioAllocation(
                 asset="USO", 
-                asset_type="ETF",
                 description="Oil ETF", 
                 allocation_percentage="6%"
             )
@@ -309,30 +385,26 @@ if __name__ == "__main__":
     )
 
     # Use the tool to fetch social media submissions
-    updated_state = fetch_social_media_submissions_tool(state)
+    updated_market_state = fetch_social_media_submissions_tool(market_state)
 
     # Print summary
-    print("\n" + "="*80)
-    print("SOCIAL MEDIA RETRIEVAL SUMMARY")
-    print("="*80)
-    
-    print(f"Total AssetSubreddits fetched: {len(updated_state.report.asset_subreddits)}")
-    print(f"Next step: {updated_state.next_step}")
+    print(f"Total AssetSubreddits fetched: {len(updated_market_state.report.asset_subreddits)}")
+    print(f"Next step: {updated_market_state.next_step}")
     
     # Group by asset for summary
     asset_counts = {}
-    for asset_subreddit in updated_state.report.asset_subreddits:
+    for asset_subreddit in updated_market_state.report.asset_subreddits:
         asset = asset_subreddit.asset
         if asset not in asset_counts:
             asset_counts[asset] = 0
         asset_counts[asset] += 1
     
-    print("\nSubmissions per asset:")
+    print("\nMarket submissions per asset:")
     for asset, count in asset_counts.items():
         print(f"  {asset}: {count} submissions")
     
-    print("\nFirst few submissions:")
-    for i, asset_subreddit in enumerate(updated_state.report.asset_subreddits[:5]):
+    print("\nFirst few market submissions:")
+    for i, asset_subreddit in enumerate(updated_market_state.report.asset_subreddits[:3]):
         print(f"  {i+1}. {asset_subreddit.asset}: {asset_subreddit.title}")
         print(f"     Sentiment: P:{asset_subreddit.sentiment_score.positive:.3f} N:{asset_subreddit.sentiment_score.negative:.3f}")
         print(f"     Date: {asset_subreddit.create_at_utc}")

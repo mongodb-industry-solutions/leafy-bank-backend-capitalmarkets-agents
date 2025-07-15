@@ -1,5 +1,10 @@
 from scheduled_agents import ScheduledAgents
 
-crypto_social_media_agent = ScheduledAgents()
+sched_agents = ScheduledAgents()
 
-crypto_social_media_agent.run_agent_crypto_sm_ws()
+print("Starting scheduled agents...")
+print("Running agent_crypto_sm_ws...")
+sched_agents.run_agent_crypto_sm_ws()
+
+print("Running agent_market_sm_ws...")
+sched_agents.run_agent_market_sm_ws()

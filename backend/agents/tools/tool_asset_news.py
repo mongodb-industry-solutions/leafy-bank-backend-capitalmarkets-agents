@@ -183,7 +183,7 @@ class AssetNewsTool(MongoDBConnector):
         state.updates.append(message)
 
         # Set the next step in the state
-        state.next_step = "asset_news_summary_node"
+        state.next_step = "asset_news_sentiments_node"
 
         return { "asset_news": state.report.asset_news, "updates": state.updates, "next_step": state.next_step }
     

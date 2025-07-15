@@ -10,7 +10,7 @@ from agents.tools.tool_social_media_sentiment_summary import generate_social_med
 # --- Create LangGraph StateGraph ---
 def create_workflow_graph(checkpointer=None):
     """
-    Create a workflow graph for the Crypto News Agent.
+    Create a workflow graph for the Market Social Media Agent.
     This graph defines the sequence of operations that the agent will perform to analyze social media sentiment.
     """
     # Define the state of the agent

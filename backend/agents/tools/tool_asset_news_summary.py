@@ -133,7 +133,7 @@ class AssetNewsSummaryTool(MongoDBConnector):
         if not agent_profile:
             logger.error(f"Agent profile not found for agent ID: {self.agent_id}")
             state.updates.append("Unable to generate news summaries due to missing agent profile.")
-            return {"asset_news_summary": [], "updates": state.updates, "next_step": state.next_step}
+            return {"asset_news_sentiments": [], "updates": state.updates, "next_step": state.next_step}
         
         state.updates.append(f"[Action] Using agent profile: {self.agent_id} - {agent_profile['role']}")
         
@@ -166,7 +166,7 @@ class AssetNewsSummaryTool(MongoDBConnector):
             asset_news_summaries.append(asset_summary)
         
         # Update the state with the summaries
-        state.report.asset_news_summary = asset_news_summaries
+        state.report.asset_news_sentiments = asset_news_summaries
         
         # Generate overall news diagnosis
         if asset_news_summaries:
@@ -190,19 +190,19 @@ class AssetNewsSummaryTool(MongoDBConnector):
         state.next_step = "__end__"
 
         return {
-            "asset_news_summary": state.report.asset_news_summary,
+            "asset_news_sentiments": state.report.asset_news_sentiments,
             "overall_news_diagnosis": state.report.overall_news_diagnosis,
             "updates": state.updates,
             "next_step": state.next_step
         }
 
 # Initialize the AssetNewsSummaryTool
-asset_news_summary_obj = AssetNewsSummaryTool()
+asset_news_sentiments_obj = AssetNewsSummaryTool()
 
 # Define tools
 def generate_news_summaries_tool(state: MarketNewsAgentState) -> dict:
     """Generate summaries for news articles grouped by asset."""
-    return asset_news_summary_obj.generate_news_summaries(state=state)
+    return asset_news_sentiments_obj.generate_news_summaries(state=state)
 
 # Example usage
 if __name__ == "__main__":

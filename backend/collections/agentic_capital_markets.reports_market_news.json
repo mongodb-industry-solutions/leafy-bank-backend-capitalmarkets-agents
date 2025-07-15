@@ -357,7 +357,7 @@
         "sentiment_category": "Positive"
       }
     ],
-    "asset_news_summary": [
+    "asset_news_sentiments": [
       {
         "asset": "SPY",
         "summary": "The S&P 500 ETF (SPY) has seen mixed investor sentiment, with both inflows and outflows reported. While the fund remains a popular investment option, market volatility has impacted its performance. Investors should closely monitor the fund's movements.",
@@ -1828,7 +1828,7 @@
         "sentiment_category": "Negative"
       }
     ],
-    "asset_news_summary": [
+    "asset_news_sentiments": [
       {
         "asset": "SPY",
         "summary": "The S&P 500 ETF (SPY) has seen mixed sentiment, with positive indicators suggesting potential upside, but also outflows amid the recent market selloff. Investors should monitor the fund's performance and consider portfolio adjustments accordingly.",
@@ -3299,7 +3299,7 @@
         "sentiment_category": "Neutral"
       }
     ],
-    "asset_news_summary": [
+    "asset_news_sentiments": [
       {
         "asset": "SPY",
         "summary": "The S&P 500 ETF (SPY) has experienced significant outflows and negative sentiment, indicating market volatility and investor uncertainty. Investors should closely monitor the fund's performance and consider portfolio adjustments accordingly.",
@@ -4770,7 +4770,7 @@
         "sentiment_category": "Negative"
       }
     ],
-    "asset_news_summary": [
+    "asset_news_sentiments": [
       {
         "asset": "SPY",
         "summary": "The recent news on the SPDR S&P 500 ETF (SPY) indicates a neutral sentiment, with the fund experiencing outflows amid market volatility. Investors are comparing SPY to other large U.S. equity ETFs like VOO and QQQ. Recommendation: Monitor SPY's performance and flows relative to the broader market. Consider diversifying exposure...",
@@ -6241,7 +6241,7 @@
         "sentiment_category": "Positive"
       }
     ],
-    "asset_news_summary": [
+    "asset_news_sentiments": [
       {
         "asset": "SPY",
         "summary": "The S&P 500 ETF (SPY) has experienced significant outflows and negative sentiment, indicating market volatility and investor uncertainty. Investors should closely monitor the fund's performance and consider portfolio adjustments accordingly.",
@@ -7712,7 +7712,7 @@
         "sentiment_category": "Positive"
       }
     ],
-    "asset_news_summary": [
+    "asset_news_sentiments": [
       {
         "asset": "SPY",
         "summary": "The recent news on the SPDR S&P 500 ETF (SPY) indicates a neutral sentiment, with the fund experiencing outflows amid market volatility. Investors are comparing SPY to other large U.S. equity ETFs like VOO and QQQ.",
@@ -9183,7 +9183,7 @@
         "sentiment_category": "Positive"
       }
     ],
-    "asset_news_summary": [
+    "asset_news_sentiments": [
       {
         "asset": "SPY",
         "summary": "The S&P 500 ETF (SPY) has seen mixed sentiment, with positive indicators suggesting potential upside, but also outflows during the recent market selloff. Investors should monitor the fund's performance and consider portfolio adjustments accordingly.",
@@ -10654,7 +10654,7 @@
         "sentiment_category": "Negative"
       }
     ],
-    "asset_news_summary": [
+    "asset_news_sentiments": [
       {
         "asset": "SPY",
         "summary": "The S&P 500 ETF (SPY) has experienced significant outflows and negative sentiment, with concerns over market selloffs and poor returns. Investors should closely monitor the fund's performance and consider portfolio adjustments accordingly.",
@@ -12125,7 +12125,7 @@
         "sentiment_category": "Neutral"
       }
     ],
-    "asset_news_summary": [
+    "asset_news_sentiments": [
       {
         "asset": "SPY",
         "summary": "The recent news on the SPDR S&P 500 ETF (SPY) indicates a neutral sentiment, with the fund experiencing outflows amid market volatility. Investors are comparing SPY to other large U.S. equity ETFs like VOO and QQQ. Recommendation: Monitor SPY's performance and flows relative to the broader market. Consider diversifying exposure...",

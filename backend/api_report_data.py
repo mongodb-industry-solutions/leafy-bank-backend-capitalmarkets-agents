@@ -64,7 +64,7 @@ class AssetNewsSummary(BaseModel):
 
 class MarketNewsReportContent(BaseModel):
     asset_news: List[AssetNews]
-    asset_news_summary: List[AssetNewsSummary]
+    asset_news_sentiments: List[AssetNewsSummary]
     overall_news_diagnosis: str
 
 class MarketAnalysisReport(BaseModel):

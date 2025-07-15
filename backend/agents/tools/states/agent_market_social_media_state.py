@@ -39,7 +39,7 @@ class AssetSubreddits(BaseModel):
     sentiment_score: Optional[SentimentScore] = Field(None, description="The sentiment score of the news article.")
 
 
-class AssetSentiment(BaseModel):
+class AssetSocialMediaSentiment(BaseModel):
     asset: Optional[str] = Field(None, description="The asset symbol (e.g., SPY, QQQ).")
     final_sentiment_score: Optional[float] = Field(None, description="The final calculated sentiment score (0.0 to 1.0).")
     sentiment_category: Optional[str] = Field(None, description="The sentiment category (Positive, Negative, Neutral).")
@@ -57,7 +57,7 @@ class AssetSentiment(BaseModel):
 
 class Report(BaseModel):
     asset_subreddits: List[AssetSubreddits] = Field(default_factory=list, description="A list of asset subreddits related to the portfolio.")
-    asset_sentiments: List[AssetSentiment] = Field(default_factory=list, description="A list of asset sentiments related to the portfolio.")
+    asset_news_sentiments: List[AssetSocialMediaSentiment] = Field(default_factory=list, description="A list of asset sentiments related to the portfolio.")
     overall_news_diagnosis: Optional[str] = Field(None, description="The overall news diagnosis for the portfolio.")
 
 

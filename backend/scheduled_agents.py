@@ -10,6 +10,9 @@ from agents.tools.states.agent_crypto_analysis_state import CryptoAnalysisAgentS
 from agents.agent_crypto_social_media_graph import create_workflow_graph as create_agent_crypto_news_graph
 from agents.tools.states.agent_crypto_social_media_state import CryptoSocialMediaAgentState
 
+from agents.agent_market_social_media_graph import create_workflow_graph as create_agent_market_social_media_graph
+from agents.tools.states.agent_market_social_media_state import MarketSocialMediaAgentState
+
 from agents.tools.persist_report import PersistReportInMongoDB
 
 import os
@@ -115,7 +118,7 @@ class ScheduledAgents:
                 portfolio_allocation=[],  # Initialize as an empty list
                 report={
                     "asset_news": [],  # Initialize as an empty list
-                    "asset_news_summary": [],  # Initialize as an empty list
+                    "asset_news_sentiments": [],  # Initialize as an empty list
                     "overall_news_diagnosis": None  # No diagnosis at the start
                 },
                 next_step="portfolio_allocation_node",  # Start with the portfolio allocation node
@@ -209,7 +212,7 @@ class ScheduledAgents:
                 portfolio_allocation=[],  # Initialize as an empty list
                 report={
                     "asset_subreddits": [],  # Initialize as an empty list
-                    "asset_sentiments": []  # Initialize as an empty list
+                    "asset_sm_sentiments": []  # Initialize as an empty list
                 },
                 next_step="portfolio_allocation_node",  # Start with the portfolio allocation node
                 updates=["Starting the crypto social media workflow."]  # Initial update message
@@ -236,6 +239,52 @@ class ScheduledAgents:
         except Exception as e:
             logger.error(f"Error in run_agent_crypto_analysis_ws: {e}")
             return {"status": "Error occurred during crypto analysis workflow."}
+                   
+    def run_agent_market_sm_ws(self) -> dict:
+        """
+        Runs the market social media workflow using the MarketSocialMediaAgentState.
+        This function creates an initial state for the workflow, invokes the workflow graph,
+        and saves the final state to MongoDB.
+
+        Returns:
+            dict: A dictionary containing the status of the workflow execution.
+
+        Raises:
+            Exception: If an error occurs during the workflow execution.
+        """
+        try:
+            # Initial state for the workflow
+            initial_state = MarketSocialMediaAgentState(
+                portfolio_allocation=[],  # Initialize as an empty list
+                report={
+                    "asset_subreddits": [],  # Initialize as an empty list
+                    "asset_sm_sentiments": []  # Initialize as an empty list
+                },
+                next_step="portfolio_allocation_node",  # Start with the portfolio allocation node
+                updates=["Starting the market social media workflow."]  # Initial update message
+            )
+
+            # Create the workflow graph
+            graph = create_agent_market_social_media_graph()
+            final_state = graph.invoke(input=initial_state)
+
+            # Print the final state
+            logger.info("\nFinal State:")
+            logger.info(final_state)
+
+            # Get the collection name from environment variables
+            reports_market_sm_coll = os.getenv("REPORTS_COLLECTION_MARKET_SM", "reports_market_sm")
+
+            # Persist the final state to MongoDB
+            # Initialize the PersistReportInMongoDB class
+            persist_data = PersistReportInMongoDB(collection_name=reports_market_sm_coll)
+            # Save the market social media sentiment report
+            persist_data.save_market_sm_report(final_state)
+            # Return the status of the workflow execution
+            return {"status": "Market social media workflow completed successfully."}
+        except Exception as e:
+            logger.error(f"Error in run_agent_market_sm_ws: {e}")
+            return {"status": "Error occurred during market social media workflow."}
 
     def schedule_jobs(self):
         """
