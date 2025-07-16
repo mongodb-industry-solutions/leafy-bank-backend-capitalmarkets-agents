@@ -54,7 +54,7 @@ class ScheduledAgents:
         self.scheduler = Scheduler(tzinfo=timezone.utc)
         logger.info("ScheduledAgents initialized")
 
-    def run_agent_market_analysis_workflow(self) -> dict:
+    def run_agent_market_analysis_wf(self) -> dict:
         """
         Runs the market analysis workflow using the MarketAnalysisAgentState.
         This function creates an initial state for the workflow, invokes the workflow graph,
@@ -100,10 +100,10 @@ class ScheduledAgents:
             # Return the status of the workflow execution
             return {"status": "Market analysis workflow completed successfully."}
         except Exception as e:
-            logger.error(f"Error in run_agent_market_analysis_workflow: {e}")
+            logger.error(f"Error in run_agent_market_analysis_wf: {e}")
             return {"status": "Error occurred during market analysis workflow."}
 
-    def run_agent_market_news_workflow(self) -> dict:
+    def run_agent_market_news_wf(self) -> dict:
         """
         Runs the financial news processing workflow.
         This function creates an initial state for the workflow, invokes the workflow graph,
@@ -147,10 +147,10 @@ class ScheduledAgents:
             # Return the status of the workflow execution
             return {"status": "Market news workflow completed successfully."}
         except Exception as e:
-            logger.error(f"Error in run_agent_market_news_workflow: {e}")
+            logger.error(f"Error in run_agent_market_news_wf: {e}")
             return {"status": "Error occurred during market news workflow."}
         
-    def run_agent_crypto_news_ws(self) -> dict:
+    def run_agent_crypto_news_wf(self) -> dict:
         """
         Runs the crypto news workflow using the CryptoNewsAgentState.
         This function creates an initial state for the workflow, invokes the workflow graph,
@@ -194,10 +194,10 @@ class ScheduledAgents:
             # Return the status of the workflow execution
             return {"status": "Crypto news workflow completed successfully."}
         except Exception as e:
-            logger.error(f"Error in run_agent_crypto_news_ws: {e}")
+            logger.error(f"Error in run_agent_crypto_news_wf: {e}")
             return {"status": "Error occurred during crypto news workflow."}
 
-    def run_agent_crypto_analysis_ws(self) -> dict:
+    def run_agent_crypto_analysis_wf(self) -> dict:
         """
         Runs the crypto analysis workflow using the CryptoAnalysisAgentState.
         This function creates an initial state for the workflow, invokes the workflow graph,
@@ -240,10 +240,10 @@ class ScheduledAgents:
             # Return the status of the workflow execution
             return {"status": "Crypto analysis workflow completed successfully."}
         except Exception as e:
-            logger.error(f"Error in run_agent_crypto_analysis_ws: {e}")
+            logger.error(f"Error in run_agent_crypto_analysis_wf: {e}")
             return {"status": "Error occurred during crypto analysis workflow."}
                
-    def run_agent_crypto_sm_ws(self) -> dict:
+    def run_agent_crypto_sm_wf(self) -> dict:
         """
         Runs the crypto news workflow using the CryptoSocialMediaAgentState.
         This function creates an initial state for the workflow, invokes the workflow graph,
@@ -286,10 +286,10 @@ class ScheduledAgents:
             # Return the status of the workflow execution
             return {"status": "Crypto analysis workflow completed successfully."}
         except Exception as e:
-            logger.error(f"Error in run_agent_crypto_analysis_ws: {e}")
+            logger.error(f"Error in run_agent_crypto_analysis_wf: {e}")
             return {"status": "Error occurred during crypto analysis workflow."}
                    
-    def run_agent_market_sm_ws(self) -> dict:
+    def run_agent_market_sm_wf(self) -> dict:
         """
         Runs the market social media workflow using the MarketSocialMediaAgentState.
         This function creates an initial state for the workflow, invokes the workflow graph,
@@ -332,7 +332,7 @@ class ScheduledAgents:
             # Return the status of the workflow execution
             return {"status": "Market social media workflow completed successfully."}
         except Exception as e:
-            logger.error(f"Error in run_agent_market_sm_ws: {e}")
+            logger.error(f"Error in run_agent_market_sm_wf: {e}")
             return {"status": "Error occurred during market social media workflow."}
 
     def schedule_jobs(self):
@@ -347,17 +347,17 @@ class ScheduledAgents:
         ### MARKET ANALYSIS WORKFLOW SCHEDULING ###
         # Define the schedule for the market analysis workflow
         agent_market_analysis_workflow_time = dt.time(hour=5, minute=0, tzinfo=timezone.utc)
-        self.scheduler.daily(agent_market_analysis_workflow_time, self.run_agent_market_analysis_workflow)
+        self.scheduler.daily(agent_market_analysis_workflow_time, self.run_agent_market_analysis_wf)
 
         ### MARKET NEWS WORKFLOW SCHEDULING ###
         # Define the schedule for the market news workflow
         agent_market_news_workflow_time = dt.time(hour=5, minute=10, tzinfo=timezone.utc)
-        self.scheduler.daily(agent_market_news_workflow_time, self.run_agent_market_news_workflow)
+        self.scheduler.daily(agent_market_news_workflow_time, self.run_agent_market_news_wf)
 
         ### MARKET SOCIAL MEDIA WORKFLOW SCHEDULING ###
         # Define the schedule for the market social media workflow
         agent_market_sm_workflow_time = dt.time(hour=5, minute=20, tzinfo=timezone.utc)
-        self.scheduler.daily(agent_market_sm_workflow_time, self.run_agent_market_sm_ws)
+        self.scheduler.daily(agent_market_sm_workflow_time, self.run_agent_market_sm_wf)
 
         ################
         #### CRYPTO ####
@@ -366,17 +366,23 @@ class ScheduledAgents:
         ### CRYPTO ANALYSIS WORKFLOW SCHEDULING ###
         # Define the schedule for the crypto analysis workflow
         agent_crypto_analysis_workflow_time = dt.time(hour=5, minute=30, tzinfo=timezone.utc)
-        self.scheduler.daily(agent_crypto_analysis_workflow_time, self.run_agent_crypto_analysis_ws)
+        self.scheduler.daily(agent_crypto_analysis_workflow_time, self.run_agent_crypto_analysis_wf)
 
         ### CRYPTO NEWS WORKFLOW SCHEDULING ###
         # Define the schedule for the crypto news workflow
         agent_crypto_news_workflow_time = dt.time(hour=5, minute=40, tzinfo=timezone.utc)
-        self.scheduler.daily(agent_crypto_news_workflow_time, self.run_agent_crypto_news_ws)
+        self.scheduler.daily(agent_crypto_news_workflow_time, self.run_agent_crypto_news_wf)
+
+        ## ONE TIME CRYPTO NEWS WORKFLOW SCHEDULING ##
+        # Define the schedule for the crypto news workflow
+        # This is a one-time execution, not daily
+        one_time_crypto_news_workflow_time = dt.time(hour=15, minute=56, tzinfo=timezone.utc)
+        self.scheduler.once(one_time_crypto_news_workflow_time, self.run_agent_crypto_news_wf)
 
         ### CRYPTO SOCIAL MEDIA WORKFLOW SCHEDULING ###
         # Define the schedule for the crypto social media workflow
         agent_crypto_sm_workflow_time = dt.time(hour=5, minute=50, tzinfo=timezone.utc)
-        self.scheduler.daily(agent_crypto_sm_workflow_time, self.run_agent_crypto_sm_ws)
+        self.scheduler.daily(agent_crypto_sm_workflow_time, self.run_agent_crypto_sm_wf)
         
         logger.info("Scheduled jobs configured!")
 

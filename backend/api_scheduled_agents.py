@@ -32,7 +32,7 @@ async def execute_market_analysis_workflow():
         dict: A dictionary containing the status of the workflow execution.
     """
     try:
-        return scheduled_agents_service.run_agent_market_analysis_workflow()
+        return scheduled_agents_service.run_agent_market_analysis_wf()
     except Exception as e:
         logging.error(f"Error executing market analysis workflow: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
@@ -47,9 +47,23 @@ async def execute_market_news_workflow():
         dict: A dictionary containing the status of the workflow execution.
     """
     try:
-        return scheduled_agents_service.run_agent_market_news_workflow()
+        return scheduled_agents_service.run_agent_market_news_wf()
     except Exception as e:
         logging.error(f"Error executing market news workflow: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/execute-market-social-media-workflow", response_model=MessageResponse)
+async def execute_market_social_media_workflow():
+    """
+    Execute the market social media workflow.
+
+    Returns:
+        dict: A dictionary containing the status of the workflow execution.
+    """
+    try:
+        return scheduled_agents_service.run_agent_market_sm_wf()
+    except Exception as e:
+        logging.error(f"Error executing market social media workflow: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
     
 @router.post("/execute-crypto-analysis-workflow", response_model=MessageResponse)
@@ -61,9 +75,37 @@ async def execute_crypto_analysis_workflow():
         dict: A dictionary containing the status of the workflow execution.
     """
     try:
-        return scheduled_agents_service.run_agent_crypto_analysis_ws()
+        return scheduled_agents_service.run_agent_crypto_analysis_wf()
     except Exception as e:
         logging.error(f"Error executing crypto analysis workflow: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+    
+@router.post("/execute-crypto-news-workflow", response_model=MessageResponse)
+async def execute_crypto_news_workflow():
+    """
+    Execute the crypto news workflow.
+
+    Returns:
+        dict: A dictionary containing the status of the workflow execution.
+    """
+    try:
+        return scheduled_agents_service.run_agent_crypto_news_wf()
+    except Exception as e:
+        logging.error(f"Error executing crypto news workflow: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+    
+@router.post("/execute-crypto-social-media-workflow", response_model=MessageResponse)
+async def execute_crypto_social_media_workflow():
+    """
+    Execute the crypto social media workflow.
+
+    Returns:
+        dict: A dictionary containing the status of the workflow execution.
+    """
+    try:
+        return scheduled_agents_service.run_agent_crypto_sm_wf()
+    except Exception as e:
+        logging.error(f"Error executing crypto social media workflow: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 ##############################
@@ -94,11 +136,17 @@ async def scheduler_overview():
                     }
                     # Replace function names
                     if job["function"] == "#is_workflow(..)":
-                        job["function"] = "run_agent_market_analysis_workflow"
+                        job["function"] = "run_agent_market_analysis_wf"
                     elif job["function"] == "#ws_workflow(..)":
-                        job["function"] = "run_agent_market_news_workflow"
+                        job["function"] = "run_agent_market_news_wf"
                     elif job["function"] == "#analysis_ws(..)":
-                        job["function"] = "run_agent_crypto_analysis_ws"
+                        job["function"] = "run_agent_crypto_analysis_wf"
+                    elif job["function"] == "#arket_sm_ws(..)":
+                        job["function"] = "run_agent_market_sm_wf"
+                    elif job["function"] == "#pto_news_ws(..)":
+                        job["function"] = "run_agent_crypto_news_wf"
+                    elif job["function"] == "#rypto_sm_ws(..)":
+                        job["function"] = "run_agent_crypto_sm_wf"
                     
                     # Add "d" to single digit due_in values
                     if job["due_in"].isdigit():
@@ -115,11 +163,17 @@ async def scheduler_overview():
                     }
                     # Replace function names
                     if job["function"] == "#is_workflow(..)":
-                        job["function"] = "run_agent_market_analysis_workflow"
+                        job["function"] = "run_agent_market_analysis_wf"
                     elif job["function"] == "#ws_workflow(..)":
-                        job["function"] = "run_agent_market_news_workflow"
+                        job["function"] = "run_agent_market_news_wf"
                     elif job["function"] == "#analysis_ws(..)":
-                        job["function"] = "run_agent_crypto_analysis_ws"
+                        job["function"] = "run_agent_crypto_analysis_wf"
+                    elif job["function"] == "#arket_sm_ws(..)":
+                        job["function"] = "run_agent_market_sm_wf"
+                    elif job["function"] == "#pto_news_ws(..)":
+                        job["function"] = "run_agent_crypto_news_wf"
+                    elif job["function"] == "#rypto_sm_ws(..)":
+                        job["function"] = "run_agent_crypto_sm_wf"
                     
                     # Add "d" to single digit due_in values
                     if job["due_in"].isdigit():
