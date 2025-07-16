@@ -5,10 +5,11 @@ from dotenv import load_dotenv
 
 from agents.tools.db.mdb import MongoDBConnector
 from agents.tools.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
-from agents.tools.states.agent_market_analysis_state import MarketAnalysisAgentState
-from agents.tools.states.agent_market_news_state import MarketNewsAgentState
 from agents.tools.states.agent_crypto_analysis_state import CryptoAnalysisAgentState
 from agents.tools.states.agent_crypto_social_media_state import CryptoSocialMediaAgentState
+from agents.tools.states.agent_crypto_news_state import CryptoNewsAgentState
+from agents.tools.states.agent_market_analysis_state import MarketAnalysisAgentState
+from agents.tools.states.agent_market_news_state import MarketNewsAgentState
 from agents.tools.states.agent_market_social_media_state import MarketSocialMediaAgentState
 
 # Load environment variables
@@ -38,6 +39,60 @@ class PersistReportInMongoDB(MongoDBConnector):
         self.embedding_model_id = os.getenv("EMBEDDINGS_MODEL_ID", "voyage-finance-2")
         self.ve = VogayeAIEmbeddings(api_key=os.getenv("VOYAGE_API_KEY"))
         logger.info(f"PersistReportInMongoDB initialized with collection: {self.collection_name}")
+
+    def generate_crypto_news_report_embeddings(self, report):
+        """
+        Generate embeddings for a crypto news report using VogayeAI.
+        
+        Args:
+            report (dict): The crypto news report data
+            
+        Returns:
+            list: The embeddings vector
+        """
+        try:
+            # Create a consolidated summary text for embedding
+            summary_texts = []
+            
+            # Add asset news summaries - these contain the condensed insights
+            if "asset_news_sentiments" in report:
+                for summary in report.get("asset_news_sentiments", []):
+                    asset = summary.get("asset", "")
+                    summary_text = summary.get("sentiment_summary", "")
+                    category = summary.get("sentiment_category", "")
+                    score = summary.get("final_sentiment_score", "")
+                    summary_texts.append(f"{asset} ({category}, score: {score}): {summary_text}")
+            
+            # Add individual news items from asset_news, including only the specified fields
+            if "asset_news" in report:
+                for news_item in report.get("asset_news", []):
+                    # Include only the requested fields (excluding posted, sentiment_score, and sentiment_category)
+                    asset = news_item.get("asset", "")
+                    headline = news_item.get("headline", "")
+                    description = news_item.get("description", "")
+                    source = news_item.get("source", "")
+                    link = news_item.get("link", "")
+                    
+                    # Format the news item text with emphasis on the link
+                    news_text = f"{asset} - {headline}: {description} (Source: {source}, Link: {link})"
+                    summary_texts.append(news_text)
+            
+            # Add overall news diagnosis - this provides the big picture assessment
+            if "overall_news_diagnosis" in report:
+                summary_texts.append(f"OVERALL: {report['overall_news_diagnosis']}")
+                    
+            # Join all summary texts
+            text_to_embed = " ".join(summary_texts)
+            
+            # Generate embeddings
+            logger.info(f"Generating crypto news embeddings using model: {self.embedding_model_id}")
+            logger.info(f"Embedding content length: {len(text_to_embed)} characters")
+            embeddings = self.ve.get_embeddings(model_id=self.embedding_model_id, text=text_to_embed)
+            return embeddings
+            
+        except Exception as e:
+            logger.error(f"Error generating crypto news embeddings: {e}")
+            return None
 
     def generate_market_sm_report_embeddings(self, report):
         """
@@ -622,3 +677,59 @@ class PersistReportInMongoDB(MongoDBConnector):
                 
         except Exception as e:
             logger.error(f"Error saving market social media sentiment report to MongoDB: {e}")
+
+    def save_crypto_news_report(self, final_state):
+        """
+        Save the crypto news report to the MongoDB collection.
+        This method takes the final state of the workflow, prepares the report data, and inserts it into the MongoDB collection.
+        If a report for the current date already exists, it will be skipped entirely to save API tokens.
+        After saving, maintains a rolling 30-day window of reports.
+
+        Args:
+            final_state: The final state of the workflow containing the crypto news report data.
+        """
+        try:
+            # Get current date in UTC
+            current_date = datetime.now(timezone.utc)
+            date_string = current_date.strftime("%Y%m%d")  # Date in "YYYYMMDD" format
+            
+            # Check if a report for the current date already exists
+            existing_report = self.collection.find_one({"date_string": date_string})
+            
+            if existing_report:
+                # Skip the entire operation if a report already exists for today
+                logger.info(f"Crypto news report for date {date_string} already exists. Skipping to save API tokens.")
+                # Clean old reports to maintain only the latest 30 days
+                self.clean_old_reports()
+                return
+            
+            # Only proceed if no report exists for today
+            logger.info("Saving crypto news report to MongoDB...")
+
+            # Convert the final_state to a CryptoNewsAgentState object if necessary
+            if not isinstance(final_state, CryptoNewsAgentState):
+                final_state = CryptoNewsAgentState.model_validate(final_state)
+
+            # Prepare the report data
+            report = final_state.report.model_dump()
+            report_data = {
+                "portfolio_allocation": [allocation.model_dump() for allocation in final_state.portfolio_allocation],
+                "report": report,
+                "updates": final_state.updates,
+                "timestamp": current_date,
+                "date_string": date_string
+            }
+            
+            # Generate embeddings for the new report
+            logger.info(f"Generating embeddings for new crypto news report dated {date_string}")
+            report_data["report_embedding"] = self.generate_crypto_news_report_embeddings(report)
+            
+            # Insert a new report
+            self.collection.insert_one(report_data)
+            logger.info(f"New crypto news report for date {date_string} saved to MongoDB.")
+            
+            # Clean old reports to maintain only the latest 30 days
+            self.clean_old_reports()
+                
+        except Exception as e:
+            logger.error(f"Error saving crypto news report to MongoDB: {e}")

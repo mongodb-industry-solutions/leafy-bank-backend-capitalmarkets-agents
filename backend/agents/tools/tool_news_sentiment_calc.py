@@ -1,6 +1,7 @@
 import logging
-from agents.tools.states.agent_market_news_state import MarketNewsAgentState, AssetNews, AssetNewsSentiment
-from typing import List
+from agents.tools.states.agent_market_news_state import MarketNewsAgentState, AssetNews as MarketAssetNews, AssetNewsSentiment as MarketAssetNewsSentiment
+from agents.tools.states.agent_crypto_news_state import CryptoNewsAgentState, AssetNews as CryptoAssetNews, AssetNewsSentiment as CryptoAssetNewsSentiment
+from typing import List, Union
 from dotenv import load_dotenv
 import statistics
 
@@ -23,12 +24,12 @@ class NewsSentimentCalcTool:
         self.sentiment_categories = ["Positive", "Negative", "Neutral"]
         logger.info("NewsSentimentCalcTool initialized")
 
-    def calculate_aggregated_sentiment(self, asset_news_list: List[AssetNews]) -> dict:
+    def calculate_aggregated_sentiment(self, asset_news_list: List[Union[MarketAssetNews, CryptoAssetNews]]) -> dict:
         """
         Calculate aggregated sentiment scores for each asset based on AssetNews objects.
         
         Args:
-            asset_news_list (List[AssetNews]): List of AssetNews objects
+            asset_news_list (List[Union[MarketAssetNews, CryptoAssetNews]]): List of AssetNews objects
             
         Returns:
             dict: Aggregated sentiment data by asset
@@ -144,17 +145,32 @@ class NewsSentimentCalcTool:
 # Initialize the NewsSentimentCalcTool
 news_sentiment_calc_obj = NewsSentimentCalcTool()
 
-def calculate_news_sentiment_tool(state: MarketNewsAgentState) -> MarketNewsAgentState:
+def calculate_news_sentiment_tool(state: Union[MarketNewsAgentState, CryptoNewsAgentState]) -> dict:
     """
     Calculate aggregated sentiment scores from AssetNews data in the state.
     
     Args:
-        state (MarketNewsAgentState): The agent state containing AssetNews objects
+        state (Union[MarketNewsAgentState, CryptoNewsAgentState]): The agent state containing AssetNews objects
         
     Returns:
-        MarketNewsAgentState: Updated state with sentiment analysis results
+        dict: Updated state with sentiment analysis results
     """
-    message = "[Tool] Calculating news sentiment analysis."
+    # Determine state type for proper object creation and messaging
+    state_type = 'crypto' if isinstance(state, CryptoNewsAgentState) else 'market'
+    
+    if state_type == 'crypto':
+        message = "[Tool] Calculating crypto news sentiment analysis."
+        AssetNewsSentimentClass = CryptoAssetNewsSentiment
+        market_name = "Crypto market"
+        optimistic_phrase = "bullish sentiment"
+        concern_phrase = "bearish sentiment"
+    else:
+        message = "[Tool] Calculating news sentiment analysis."
+        AssetNewsSentimentClass = MarketAssetNewsSentiment
+        market_name = "Market"
+        optimistic_phrase = "optimistic outlook"
+        concern_phrase = "concerning outlook"
+    
     logger.info(message)
     
     # Calculate aggregated sentiment scores
@@ -163,7 +179,7 @@ def calculate_news_sentiment_tool(state: MarketNewsAgentState) -> MarketNewsAgen
     # Convert sentiment_summary dict to AssetNewsSentiment objects
     asset_news_sentiments = []
     for asset, summary in sentiment_summary.items():
-        asset_sentiment = AssetNewsSentiment(
+        asset_sentiment = AssetNewsSentimentClass(
             asset=summary['asset'],
             final_sentiment_score=summary['final_sentiment_score'],
             sentiment_category=summary['sentiment_category'],
@@ -184,90 +200,91 @@ def calculate_news_sentiment_tool(state: MarketNewsAgentState) -> MarketNewsAgen
     
     # Create market-appropriate diagnosis
     if positive_count > negative_count and positive_count > neutral_count:
-        overall_diagnosis = f"Overall POSITIVE news sentiment across {positive_count}/{total_assets} assets. Traditional market shows optimistic outlook."
+        overall_diagnosis = f"Overall POSITIVE news sentiment across {positive_count}/{total_assets} assets. {market_name} shows {optimistic_phrase}."
     elif negative_count > positive_count and negative_count > neutral_count:
-        overall_diagnosis = f"Overall NEGATIVE news sentiment across {negative_count}/{total_assets} assets. Traditional market shows concerning outlook."
+        overall_diagnosis = f"Overall NEGATIVE news sentiment across {negative_count}/{total_assets} assets. {market_name} shows {concern_phrase}."
     else:
-        overall_diagnosis = f"MIXED news sentiment with {positive_count} positive, {negative_count} negative, {neutral_count} neutral assets. Traditional market sentiment is uncertain."
+        overall_diagnosis = f"MIXED news sentiment with {positive_count} positive, {negative_count} negative, {neutral_count} neutral assets. {market_name} sentiment is uncertain."
     
     # Update the state
     updated_state = state.model_copy()
     updated_state.report.asset_news_sentiments = asset_news_sentiments
     updated_state.report.overall_news_diagnosis = overall_diagnosis
     updated_state.updates.append(message)
-    updated_state.next_step = "asset_news_sentiments_node"
+    updated_state.next_step = "news_sentiment_summary_node"
     
     return updated_state
 
 
 # Example usage
 if __name__ == "__main__":
-    from agents.tools.states.agent_market_news_state import MarketNewsAgentState, PortfolioAllocation, AssetNews, SentimentScore, Report
-    
+    # Test with Market News State
     print("="*80)
     print("TESTING MARKET NEWS SENTIMENT CALCULATION")
     print("="*80)
     
-    # Create mock AssetNews data for testing
-    mock_asset_news = [
-        AssetNews(
+    from agents.tools.states.agent_market_news_state import MarketNewsAgentState, PortfolioAllocation as MarketPortfolioAllocation, AssetNews as MarketAssetNews, SentimentScore as MarketSentimentScore, Report as MarketReport
+    
+    # Create mock AssetNews data for testing market
+    mock_market_asset_news = [
+        MarketAssetNews(
             asset="SPY",
             headline="S&P 500 reaches record highs amid economic optimism",
             description="Strong earnings reports drive market gains",
             source="MarketWatch",
             posted="2 hours ago",
             link="https://example.com/spy-news-1",
-            sentiment_score=SentimentScore(positive=0.8, negative=0.1, neutral=0.1)
+            sentiment_score=MarketSentimentScore(positive=0.8, negative=0.1, neutral=0.1)
         ),
-        AssetNews(
+        MarketAssetNews(
             asset="SPY",
             headline="Concerns about market volatility emerge",
             description="Analysts warn of potential correction",
             source="Bloomberg",
             posted="4 hours ago",
             link="https://example.com/spy-news-2",
-            sentiment_score=SentimentScore(positive=0.2, negative=0.7, neutral=0.1)
+            sentiment_score=MarketSentimentScore(positive=0.2, negative=0.7, neutral=0.1)
         ),
-        AssetNews(
+        MarketAssetNews(
             asset="QQQ",
             headline="Tech stocks surge on AI innovation",
             description="Nasdaq leads market rally",
             source="CNBC",
             posted="1 hour ago",
             link="https://example.com/qqq-news-1",
-            sentiment_score=SentimentScore(positive=0.9, negative=0.05, neutral=0.05)
+            sentiment_score=MarketSentimentScore(positive=0.9, negative=0.05, neutral=0.05)
         ),
-        AssetNews(
+        MarketAssetNews(
             asset="GLD",
             headline="Gold prices stable amid market uncertainty",
             description="Safe haven demand supports precious metals",
             source="Reuters",
             posted="3 hours ago",
             link="https://example.com/gld-news-1",
-            sentiment_score=SentimentScore(positive=0.4, negative=0.3, neutral=0.3)
+            sentiment_score=MarketSentimentScore(positive=0.4, negative=0.3, neutral=0.3)
         )
     ]
     
-    # Initialize the state with mock data
-    state = MarketNewsAgentState(
+    # Initialize the market state with mock data
+    market_state = MarketNewsAgentState(
         portfolio_allocation=[
-            PortfolioAllocation(asset="SPY", description="S&P 500 ETF"),
-            PortfolioAllocation(asset="QQQ", description="Nasdaq ETF"),
-            PortfolioAllocation(asset="GLD", description="Gold ETF")
+            MarketPortfolioAllocation(asset="SPY", description="S&P 500 ETF"),
+            MarketPortfolioAllocation(asset="QQQ", description="Nasdaq ETF"),
+            MarketPortfolioAllocation(asset="GLD", description="Gold ETF")
         ],
-        report=Report(asset_news=mock_asset_news),
-        next_step="calculate_news_sentiment_node"
+        report=MarketReport(asset_news=mock_market_asset_news),
+        next_step="news_sentiment_summary_node"
     )
     
-    # Calculate sentiment
-    result = calculate_news_sentiment_tool(state)
+    # Calculate sentiment for market
+    market_result = calculate_news_sentiment_tool(market_state)
     
-    # Print results
-    print(f"Overall Diagnosis: {result.report.overall_news_diagnosis}")
-    print(f"Next step: {result.next_step}")
+    # Print market results
+    print(f"Overall Diagnosis: {market_result.report.overall_news_diagnosis}")
+    print(f"Next step: {market_result.next_step}")
     
-    print("\nNews Sentiment Summary by Asset:")
-    for asset_sentiment in result.report.asset_news_sentiments:
+    print("\nMarket News Sentiment Summary by Asset:")
+    for asset_sentiment in market_result.report.asset_news_sentiments:
         print(f"\n🔸 {asset_sentiment.asset}")
         print(f"   Final Sentiment Score: {asset_sentiment.final_sentiment_score:.4f}")
         print(f"   Sentiment Category: {asset_sentiment.sentiment_category}")
@@ -277,5 +294,84 @@ if __name__ == "__main__":
         print(f"   Average Neutral: {asset_sentiment.average_neutral:.4f}")
         print(f"   Confidence Level: {asset_sentiment.confidence_level:.2f}")
     
-    print(f"\nTotal assets analyzed: {len(result.report.asset_news_sentiments)}")
-    print(f"Total news articles processed: {len(result.report.asset_news)}")
+    print(f"\nTotal market assets analyzed: {len(market_result.report.asset_news_sentiments)}")
+    print(f"Total market news articles processed: {len(market_result.report.asset_news)}")
+
+    # Test with Crypto News State
+    print("\n" + "="*80)
+    print("TESTING CRYPTO NEWS SENTIMENT CALCULATION")
+    print("="*80)
+    
+    from agents.tools.states.agent_crypto_news_state import CryptoNewsAgentState, PortfolioAllocation as CryptoPortfolioAllocation, AssetNews as CryptoAssetNews, SentimentScore as CryptoSentimentScore, Report as CryptoReport
+    
+    # Create mock AssetNews data for testing crypto
+    mock_crypto_asset_news = [
+        CryptoAssetNews(
+            asset="BTC",
+            headline="Bitcoin reaches new all-time high amid institutional adoption",
+            description="Major corporations announce Bitcoin treasury holdings",
+            source="CoinDesk",
+            posted="2 hours ago",
+            link="https://example.com/btc-news-1",
+            sentiment_score=CryptoSentimentScore(positive=0.85, negative=0.08, neutral=0.07)
+        ),
+        CryptoAssetNews(
+            asset="BTC",
+            headline="Regulatory concerns weigh on Bitcoin price",
+            description="Government announces stricter crypto regulations",
+            source="CryptoNews",
+            posted="4 hours ago",
+            link="https://example.com/btc-news-2",
+            sentiment_score=CryptoSentimentScore(positive=0.15, negative=0.75, neutral=0.1)
+        ),
+        CryptoAssetNews(
+            asset="ETH",
+            headline="Ethereum upgrade shows promising scalability improvements",
+            description="Network congestion reduces significantly after latest update",
+            source="CoinTelegraph",
+            posted="1 hour ago",
+            link="https://example.com/eth-news-1",
+            sentiment_score=CryptoSentimentScore(positive=0.92, negative=0.03, neutral=0.05)
+        ),
+        CryptoAssetNews(
+            asset="FDUSD",
+            headline="Stablecoin market remains stable amid volatility",
+            description="FDUSD maintains peg during market turbulence",
+            source="CryptoDaily",
+            posted="3 hours ago",
+            link="https://example.com/fdusd-news-1",
+            sentiment_score=CryptoSentimentScore(positive=0.45, negative=0.25, neutral=0.3)
+        )
+    ]
+    
+    # Initialize the crypto state with mock data
+    crypto_state = CryptoNewsAgentState(
+        portfolio_allocation=[
+            CryptoPortfolioAllocation(asset="BTC", description="Bitcoin"),
+            CryptoPortfolioAllocation(asset="ETH", description="Ethereum"),
+            CryptoPortfolioAllocation(asset="FDUSD", description="First Digital USD")
+        ],
+        report=CryptoReport(asset_news=mock_crypto_asset_news),
+        next_step="news_sentiment_summary_node"
+    )
+    
+    # Calculate sentiment for crypto
+    crypto_result = calculate_news_sentiment_tool(crypto_state)
+    
+    # Print crypto results
+    print(f"Overall Diagnosis: {crypto_result.report.overall_news_diagnosis}")
+    print(f"Next step: {crypto_result.next_step}")
+    
+    print("\nCrypto News Sentiment Summary by Asset:")
+    for asset_sentiment in crypto_result.report.asset_news_sentiments:
+        print(f"\n🔸 {asset_sentiment.asset}")
+        print(f"   Final Sentiment Score: {asset_sentiment.final_sentiment_score:.4f}")
+        print(f"   Sentiment Category: {asset_sentiment.sentiment_category}")
+        print(f"   Total News Articles: {asset_sentiment.total_news}")
+        print(f"   Average Positive: {asset_sentiment.average_positive:.4f}")
+        print(f"   Average Negative: {asset_sentiment.average_negative:.4f}")
+        print(f"   Average Neutral: {asset_sentiment.average_neutral:.4f}")
+        print(f"   Confidence Level: {asset_sentiment.confidence_level:.2f}")
+    
+    print(f"\nTotal crypto assets analyzed: {len(crypto_result.report.asset_news_sentiments)}")
+    print(f"Total crypto news articles processed: {len(crypto_result.report.asset_news)}")

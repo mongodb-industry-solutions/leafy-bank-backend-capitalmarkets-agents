@@ -2,9 +2,9 @@ import logging
 from agents.tools.db.mdb import MongoDBConnector
 from agents.tools.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
 from agents.tools.states.agent_market_news_state import MarketNewsAgentState, AssetNews, SentimentScore
+from agents.tools.states.agent_crypto_news_state import CryptoNewsAgentState, AssetNews, SentimentScore
 import os
 from dotenv import load_dotenv
-from typing import List
 
 # Load environment variables from .env file
 load_dotenv()
@@ -34,8 +34,8 @@ class NewsRetrievalTool(MongoDBConnector):
         self.collection_name = collection_name
         self.collection = self.get_collection(collection_name)
         self.embedding_model_id = os.getenv("EMBEDDINGS_MODEL_ID", "voyage-finance-2")
-        self.vector_index_name = os.getenv("VECTOR_INDEX_NAME", "financial_news_VS_IDX")
-        self.vector_field = os.getenv("VECTOR_FIELD", "article_embedding")
+        self.vector_index_name = os.getenv("NEWS_VECTOR_INDEX_NAME", "finance_news_VS_IDX")
+        self.vector_field = os.getenv("NEWS_COLLECTION_VECTOR_FIELD", "article_embedding")
         logger.info("NewsRetrievalTool initialized")
 
     def vector_search_news_articles(self, query: str, n: int, asset_symbol: str = None) -> dict:
@@ -208,7 +208,7 @@ class NewsRetrievalTool(MongoDBConnector):
         updated_state = state.model_copy()
         updated_state.report.asset_news = asset_news_list
         updated_state.updates.append(message)
-        updated_state.next_step = "asset_news_sentiments_node"
+        updated_state.next_step = "news_sentiment_calc_node"
         
         return updated_state
 
@@ -252,7 +252,7 @@ if __name__ == "__main__":
                 allocation_percentage="8%"
             )
         ],
-        next_step="fetch_market_news_node",
+        next_step="news_sentiment_calc_node",
     )
 
     # Use the tool to fetch news articles
