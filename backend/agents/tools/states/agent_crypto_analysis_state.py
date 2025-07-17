@@ -16,7 +16,7 @@ class CryptoAssetTrend(BaseModel):
 
 
 class MomentumIndicator(BaseModel):
-    indicator_name: Optional[str] = Field(None, description="The momentum indicator name (e.g., RSI, Volume).")
+    indicator_name: Optional[str] = Field(None, description="The momentum indicator name (e.g., RSI, Volume, VWAP).")
     fluctuation_answer: Optional[str] = Field(None, description="A description of the momentum indicator's current state.")
     diagnosis: Optional[str] = Field(None, description="A diagnosis or recommendation based on the momentum indicator.")
 

@@ -16,7 +16,8 @@ logger = logging.getLogger(__name__)
 
 # Constants for crypto momentum analysis
 CRYPTO_RSI_PERIOD = int(os.getenv("CRYPTO_RSI_PERIOD", 14))    # 14-day RSI
-CRYPTO_VOLUME_PERIOD = int(os.getenv("CRYPTO_VOLUME_PERIOD", 20))  # 20-day volume average
+CRYPTO_VOLUME_PERIOD = int(os.getenv("CRYPTO_VOLUME_PERIOD", 21))  # 21-day volume average
+CRYPTO_VWAP_PERIOD = int(os.getenv("CRYPTO_VWAP_PERIOD", 14))    # 14-day VWAP
 
 class CryptoMomentumTool(MongoDBConnector):
     def __init__(self, uri=None, database_name=None, collection_name=None):
@@ -104,9 +105,46 @@ class CryptoMomentumTool(MongoDBConnector):
         
         return current_volume, avg_volume, round(volume_ratio, 2), price_date
 
+    def calculate_vwap(self, symbol: str, period: int = CRYPTO_VWAP_PERIOD) -> tuple:
+        """
+        Calculate VWAP (Volume Weighted Average Price) for a crypto symbol.
+        VWAP = Calculate VWAP using typical price (HLC/3) and volume
+        Returns tuple of (vwap_value, current_price, price_date)
+        """
+        pipeline = [
+            {"$match": {"symbol": symbol}},
+            {"$sort": {"timestamp": -1}},
+            {"$limit": period}
+        ]
+        
+        data = list(self.collection.aggregate(pipeline))
+        if len(data) < period:
+            return None, None, None
+            
+        # Calculate VWAP using typical price (HLC/3) and volume
+        total_pv = 0  # Price × Volume
+        total_volume = 0
+        
+        for record in data:
+            # Use typical price (High + Low + Close) / 3
+            typical_price = (record["high"] + record["low"] + record["close"]) / 3
+            volume = record["volume"]
+            
+            total_pv += typical_price * volume
+            total_volume += volume
+        
+        if total_volume == 0:
+            return None, None, None
+            
+        vwap = total_pv / total_volume
+        current_price = data[0]["close"]  # Most recent closing price
+        price_date = data[0]["timestamp"].strftime("%Y-%m-%d")
+        
+        return round(vwap, 6), current_price, price_date
+
     def analyze_momentum_indicator(self, indicator_type: str, value: float, asset_type: str, symbol: str = "", **kwargs) -> str:
         """
-        Analysis focusing on RSI and Volume only with enhanced volume ratio display.
+        Analysis focusing on RSI, Volume, and VWAP with enhanced insights.
         """
         if indicator_type == "RSI":
             # Special handling for stablecoins
@@ -142,11 +180,37 @@ class CryptoMomentumTool(MongoDBConnector):
             else:
                 return f"Normal volume levels ({volume_ratio:.1f}x average). Standard trading activity."
                 
+        elif indicator_type == "VWAP":
+            current_price = kwargs.get("current_price", 0)
+            vwap_value = value
+            
+            # Special handling for stablecoins
+            if asset_type == "Stablecoin":
+                deviation_from_vwap = abs((current_price - vwap_value) / vwap_value) * 100
+                if deviation_from_vwap > 0.5:
+                    return f"Price {current_price:.4f} vs VWAP {vwap_value:.4f}. Stablecoin showing {deviation_from_vwap:.2f}% deviation from volume-weighted average."
+                else:
+                    return f"Price {current_price:.4f} vs VWAP {vwap_value:.4f}. Stablecoin trading close to volume-weighted average, maintaining stability."
+            
+            # Cryptocurrency VWAP analysis
+            price_vs_vwap = ((current_price - vwap_value) / vwap_value) * 100
+            
+            if price_vs_vwap > 5:
+                return f"Price {current_price:.2f} is {price_vs_vwap:.1f}% above VWAP {vwap_value:.2f}. Strong bullish sentiment with institutional buying pressure."
+            elif price_vs_vwap > 2:
+                return f"Price {current_price:.2f} is {price_vs_vwap:.1f}% above VWAP {vwap_value:.2f}. Moderate bullish momentum with volume support."
+            elif price_vs_vwap < -5:
+                return f"Price {current_price:.2f} is {abs(price_vs_vwap):.1f}% below VWAP {vwap_value:.2f}. Strong bearish pressure, potential value opportunity."
+            elif price_vs_vwap < -2:
+                return f"Price {current_price:.2f} is {abs(price_vs_vwap):.1f}% below VWAP {vwap_value:.2f}. Moderate bearish sentiment, watch for reversal."
+            else:
+                return f"Price {current_price:.2f} trading near VWAP {vwap_value:.2f} ({price_vs_vwap:+.1f}%). Balanced market with neutral sentiment."
+                
         return "Insufficient data for analysis."
 
     def calculate_crypto_momentum_indicators(self, state: CryptoAnalysisAgentState) -> dict:
         """
-        Calculate momentum indicators focusing on RSI and Volume analysis.
+        Calculate momentum indicators focusing on RSI, Volume, and VWAP analysis.
         Each asset gets one CryptoMomentumIndicator with nested MomentumIndicator objects.
         """
         message = "[Tool] Calculate crypto momentum indicators."
@@ -194,7 +258,27 @@ class CryptoMomentumTool(MongoDBConnector):
                 )
                 momentum_indicators.append(vol_momentum_indicator)
 
-            # Create CryptoMomentumIndicator with RSI + Volume only
+            # VWAP analysis
+            vwap_value, current_price, vwap_date = self.calculate_vwap(symbol)
+            if vwap_value is not None:
+                vwap_diagnosis = self.analyze_momentum_indicator("VWAP", vwap_value, asset_type, symbol, current_price=current_price)
+                
+                # Format VWAP and price appropriately
+                if vwap_value >= 1:
+                    vwap_formatted = f"${vwap_value:,.2f}"
+                    price_formatted = f"${current_price:,.2f}"
+                else:
+                    vwap_formatted = f"${vwap_value:.6f}"
+                    price_formatted = f"${current_price:.6f}"
+                
+                vwap_momentum_indicator = MomentumIndicator(
+                    indicator_name="VWAP",
+                    fluctuation_answer=f"{symbol} VWAP ({CRYPTO_VWAP_PERIOD}-day) is {vwap_formatted} vs current price {price_formatted} on {vwap_date}.",
+                    diagnosis=vwap_diagnosis
+                )
+                momentum_indicators.append(vwap_momentum_indicator)
+
+            # Create CryptoMomentumIndicator with RSI + Volume + VWAP
             if momentum_indicators:
                 crypto_momentum_indicator = CryptoMomentumIndicator(
                     asset=symbol,
@@ -216,7 +300,7 @@ crypto_momentum_indicators_tool = CryptoMomentumTool()
 # Define tools
 def calculate_crypto_momentum_indicators_tool(state: CryptoAnalysisAgentState) -> dict:
     """
-    Calculate crypto momentum indicators (RSI and Volume analysis) for portfolio assets.
+    Calculate crypto momentum indicators (RSI, Volume, and VWAP analysis) for portfolio assets.
     """
     return crypto_momentum_indicators_tool.calculate_crypto_momentum_indicators(state=state)
 
