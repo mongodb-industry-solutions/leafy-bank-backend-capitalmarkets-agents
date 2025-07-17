@@ -57,7 +57,7 @@ class AssetSocialMediaSentiment(BaseModel):
 
 class Report(BaseModel):
     asset_subreddits: List[AssetSubreddits] = Field(default_factory=list, description="A list of asset subreddits related to the portfolio.")
-    asset_news_sentiments: List[AssetSocialMediaSentiment] = Field(default_factory=list, description="A list of asset sentiments related to the portfolio.")
+    asset_sm_sentiments: List[AssetSocialMediaSentiment] = Field(default_factory=list, description="A list of asset sentiments related to the portfolio.")
     overall_news_diagnosis: Optional[str] = Field(None, description="The overall news diagnosis for the portfolio.")
 
 

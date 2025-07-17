@@ -75,7 +75,7 @@ async def execute_crypto_analysis_workflow():
         dict: A dictionary containing the status of the workflow execution.
     """
     try:
-        return scheduled_agents_service.run_agent_market_sm_wf()
+        return scheduled_agents_service.run_agent_crypto_an_wf()
     except Exception as e:
         logging.error(f"Error executing crypto analysis workflow: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
