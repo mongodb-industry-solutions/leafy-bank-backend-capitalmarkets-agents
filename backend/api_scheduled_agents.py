@@ -32,7 +32,7 @@ async def execute_market_analysis_workflow():
         dict: A dictionary containing the status of the workflow execution.
     """
     try:
-        return scheduled_agents_service.run_agent_market_analysis_wf()
+        return scheduled_agents_service.run_agent_market_an_wf()
     except Exception as e:
         logging.error(f"Error executing market analysis workflow: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
@@ -75,7 +75,7 @@ async def execute_crypto_analysis_workflow():
         dict: A dictionary containing the status of the workflow execution.
     """
     try:
-        return scheduled_agents_service.run_agent_crypto_analysis_wf()
+        return scheduled_agents_service.run_agent_market_sm_wf()
     except Exception as e:
         logging.error(f"Error executing crypto analysis workflow: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
@@ -135,17 +135,17 @@ async def scheduler_overview():
                         "due_in": parts[5]
                     }
                     # Replace function names
-                    if job["function"] == "#is_workflow(..)":
-                        job["function"] = "run_agent_market_analysis_wf"
-                    elif job["function"] == "#ws_workflow(..)":
+                    if job["function"] == "#arket_an_wf(..)":
+                        job["function"] = "run_agent_market_an_wf"
+                    elif job["function"] == "#ket_news_wf(..)":
                         job["function"] = "run_agent_market_news_wf"
-                    elif job["function"] == "#analysis_ws(..)":
-                        job["function"] = "run_agent_crypto_analysis_wf"
-                    elif job["function"] == "#arket_sm_ws(..)":
+                    elif job["function"] == "#arket_sm_wf(..)":
                         job["function"] = "run_agent_market_sm_wf"
-                    elif job["function"] == "#pto_news_ws(..)":
+                    elif job["function"] == "#rypto_an_wf(..)":
+                        job["function"] = "run_agent_crypto_an_wf"
+                    elif job["function"] == "#pto_news_wf(..)":
                         job["function"] = "run_agent_crypto_news_wf"
-                    elif job["function"] == "#rypto_sm_ws(..)":
+                    elif job["function"] == "#rypto_sm_wf(..)":
                         job["function"] = "run_agent_crypto_sm_wf"
                     
                     # Add "d" to single digit due_in values
@@ -162,17 +162,17 @@ async def scheduler_overview():
                         "due_in": parts[5] if len(parts) > 5 else ""
                     }
                     # Replace function names
-                    if job["function"] == "#is_workflow(..)":
-                        job["function"] = "run_agent_market_analysis_wf"
-                    elif job["function"] == "#ws_workflow(..)":
+                    if job["function"] == "#arket_an_wf(..)":
+                        job["function"] = "run_agent_market_an_wf"
+                    elif job["function"] == "#ket_news_wf(..)":
                         job["function"] = "run_agent_market_news_wf"
-                    elif job["function"] == "#analysis_ws(..)":
-                        job["function"] = "run_agent_crypto_analysis_wf"
-                    elif job["function"] == "#arket_sm_ws(..)":
+                    elif job["function"] == "#arket_sm_wf(..)":
                         job["function"] = "run_agent_market_sm_wf"
-                    elif job["function"] == "#pto_news_ws(..)":
+                    elif job["function"] == "#rypto_an_wf(..)":
+                        job["function"] = "run_agent_crypto_an_wf"
+                    elif job["function"] == "#pto_news_wf(..)":
                         job["function"] = "run_agent_crypto_news_wf"
-                    elif job["function"] == "#rypto_sm_ws(..)":
+                    elif job["function"] == "#rypto_sm_wf(..)":
                         job["function"] = "run_agent_crypto_sm_wf"
                     
                     # Add "d" to single digit due_in values

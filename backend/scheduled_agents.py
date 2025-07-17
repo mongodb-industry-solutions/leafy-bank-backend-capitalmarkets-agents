@@ -54,7 +54,7 @@ class ScheduledAgents:
         self.scheduler = Scheduler(tzinfo=timezone.utc)
         logger.info("ScheduledAgents initialized")
 
-    def run_agent_market_analysis_wf(self) -> dict:
+    def run_agent_market_an_wf(self) -> dict:
         """
         Runs the market analysis workflow using the MarketAnalysisAgentState.
         This function creates an initial state for the workflow, invokes the workflow graph,
@@ -100,7 +100,7 @@ class ScheduledAgents:
             # Return the status of the workflow execution
             return {"status": "Market analysis workflow completed successfully."}
         except Exception as e:
-            logger.error(f"Error in run_agent_market_analysis_wf: {e}")
+            logger.error(f"Error in run_agent_market_an_wf: {e}")
             return {"status": "Error occurred during market analysis workflow."}
 
     def run_agent_market_news_wf(self) -> dict:
@@ -197,7 +197,7 @@ class ScheduledAgents:
             logger.error(f"Error in run_agent_crypto_news_wf: {e}")
             return {"status": "Error occurred during crypto news workflow."}
 
-    def run_agent_crypto_analysis_wf(self) -> dict:
+    def run_agent_crypto_an_wf(self) -> dict:
         """
         Runs the crypto analysis workflow using the CryptoAnalysisAgentState.
         This function creates an initial state for the workflow, invokes the workflow graph,
@@ -240,12 +240,12 @@ class ScheduledAgents:
             # Return the status of the workflow execution
             return {"status": "Crypto analysis workflow completed successfully."}
         except Exception as e:
-            logger.error(f"Error in run_agent_crypto_analysis_wf: {e}")
+            logger.error(f"Error in run_agent_crypto_an_wf: {e}")
             return {"status": "Error occurred during crypto analysis workflow."}
                
     def run_agent_crypto_sm_wf(self) -> dict:
         """
-        Runs the crypto news workflow using the CryptoSocialMediaAgentState.
+        Runs the crypto social media workflow using the CryptoSocialMediaAgentState.
         This function creates an initial state for the workflow, invokes the workflow graph,
         and saves the final state to MongoDB.
 
@@ -284,11 +284,11 @@ class ScheduledAgents:
             # Save the crypto social media sentiment report
             persist_data.save_crypto_sm_report(final_state)
             # Return the status of the workflow execution
-            return {"status": "Crypto analysis workflow completed successfully."}
+            return {"status": "Crypto social media workflow completed successfully."}
         except Exception as e:
-            logger.error(f"Error in run_agent_crypto_analysis_wf: {e}")
-            return {"status": "Error occurred during crypto analysis workflow."}
-                   
+            logger.error(f"Error in run_agent_crypto_sm_wf: {e}")
+            return {"status": "Error occurred during crypto social media workflow."}
+
     def run_agent_market_sm_wf(self) -> dict:
         """
         Runs the market social media workflow using the MarketSocialMediaAgentState.
@@ -347,7 +347,7 @@ class ScheduledAgents:
         ### MARKET ANALYSIS WORKFLOW SCHEDULING ###
         # Define the schedule for the market analysis workflow
         agent_market_analysis_workflow_time = dt.time(hour=5, minute=0, tzinfo=timezone.utc)
-        self.scheduler.daily(agent_market_analysis_workflow_time, self.run_agent_market_analysis_wf)
+        self.scheduler.daily(agent_market_analysis_workflow_time, self.run_agent_market_an_wf)
 
         ### MARKET NEWS WORKFLOW SCHEDULING ###
         # Define the schedule for the market news workflow
@@ -366,18 +366,12 @@ class ScheduledAgents:
         ### CRYPTO ANALYSIS WORKFLOW SCHEDULING ###
         # Define the schedule for the crypto analysis workflow
         agent_crypto_analysis_workflow_time = dt.time(hour=5, minute=30, tzinfo=timezone.utc)
-        self.scheduler.daily(agent_crypto_analysis_workflow_time, self.run_agent_crypto_analysis_wf)
+        self.scheduler.daily(agent_crypto_analysis_workflow_time, self.run_agent_crypto_an_wf)
 
         ### CRYPTO NEWS WORKFLOW SCHEDULING ###
         # Define the schedule for the crypto news workflow
         agent_crypto_news_workflow_time = dt.time(hour=5, minute=40, tzinfo=timezone.utc)
         self.scheduler.daily(agent_crypto_news_workflow_time, self.run_agent_crypto_news_wf)
-
-        ## ONE TIME CRYPTO NEWS WORKFLOW SCHEDULING ##
-        # Define the schedule for the crypto news workflow
-        # This is a one-time execution, not daily
-        one_time_crypto_news_workflow_time = dt.time(hour=15, minute=56, tzinfo=timezone.utc)
-        self.scheduler.once(one_time_crypto_news_workflow_time, self.run_agent_crypto_news_wf)
 
         ### CRYPTO SOCIAL MEDIA WORKFLOW SCHEDULING ###
         # Define the schedule for the crypto social media workflow

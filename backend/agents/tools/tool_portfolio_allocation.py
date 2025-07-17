@@ -46,7 +46,7 @@ class PortfolioAllocationTool(MongoDBConnector):
         if isinstance(state, (CryptoAnalysisAgentState, CryptoSocialMediaAgentState, CryptoNewsAgentState)):
             message = "[Tool] Check crypto portfolio allocation."
             collection = self.cryptos_collection
-            # Fields for crypto portfolio - matching CryptoAnalysisAgentState.PortfolioAllocation
+            # Fields for crypto portfolio - matching CryptoAnalysisAgentState.CryptoPortfolioAllocation
             projection = {
                 "symbol": 1, 
                 "asset_type": 1, 
@@ -97,16 +97,16 @@ class PortfolioAllocationTool(MongoDBConnector):
             from agents.tools.states.agent_market_analysis_state import PortfolioAllocation
             next_node = "asset_trends_node"
         elif isinstance(state, CryptoAnalysisAgentState):
-            from agents.tools.states.agent_crypto_analysis_state import PortfolioAllocation
+            from agents.tools.states.agent_crypto_analysis_state import CryptoPortfolioAllocation as PortfolioAllocation
             next_node = "crypto_trends_node"
         elif isinstance(state, CryptoSocialMediaAgentState):
-            from agents.tools.states.agent_crypto_social_media_state import PortfolioAllocation
+            from agents.tools.states.agent_crypto_social_media_state import CryptoPortfolioAllocation as PortfolioAllocation
             next_node = "social_media_sentiment_node"
         elif isinstance(state, MarketSocialMediaAgentState):
             from agents.tools.states.agent_market_social_media_state import PortfolioAllocation
             next_node = "social_media_sentiment_node"
         elif isinstance(state, CryptoNewsAgentState):
-            from agents.tools.states.agent_crypto_news_state import PortfolioAllocation
+            from agents.tools.states.agent_crypto_news_state import CryptoPortfolioAllocation as PortfolioAllocation
             next_node = "fetch_market_news_node"
         else:  # MarketNewsAgentState
             from agents.tools.states.agent_market_news_state import PortfolioAllocation
@@ -124,7 +124,6 @@ class PortfolioAllocationTool(MongoDBConnector):
         state.next_step = next_node
 
         return {"portfolio_allocation": portfolio_allocation, "updates": state.updates, "next_step": state.next_step}
-
 
 # Initialize the PortfolioAllocationTool
 portfolio_allocation_tool = PortfolioAllocationTool()

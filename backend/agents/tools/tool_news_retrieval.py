@@ -1,10 +1,11 @@
 import logging
 from agents.tools.db.mdb import MongoDBConnector
 from agents.tools.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
-from agents.tools.states.agent_market_news_state import MarketNewsAgentState, AssetNews, SentimentScore
-from agents.tools.states.agent_crypto_news_state import CryptoNewsAgentState, AssetNews, SentimentScore
+from agents.tools.states.agent_market_news_state import MarketNewsAgentState, AssetNews as MarketAssetNews, SentimentScore as MarketSentimentScore
+from agents.tools.states.agent_crypto_news_state import CryptoNewsAgentState, AssetNews as CryptoAssetNews, SentimentScore as CryptoSentimentScore
 import os
 from dotenv import load_dotenv
+from typing import Union
 
 # Load environment variables from .env file
 load_dotenv()
@@ -132,50 +133,76 @@ class NewsRetrievalTool(MongoDBConnector):
             "articles": results[:n]  # Limit to requested number
         }
 
-    def convert_to_asset_news(self, raw_article: dict) -> AssetNews:
+    def convert_to_asset_news(self, raw_article: dict, state_type: str) -> Union[MarketAssetNews, CryptoAssetNews]:
         """
         Convert a raw article dictionary to an AssetNews object.
         
         Args:
             raw_article (dict): Raw article data from MongoDB
+            state_type (str): Either 'market' or 'crypto' to determine which class to use
             
         Returns:
-            AssetNews: Structured article object
+            Union[MarketAssetNews, CryptoAssetNews]: Structured article object
         """
         sentiment_score_dict = raw_article.get('sentiment_score', {})
         
-        # Create SentimentScore object from raw sentiment data
-        sentiment_score = SentimentScore(
-            neutral=sentiment_score_dict.get('neutral'),
-            negative=sentiment_score_dict.get('negative'),
-            positive=sentiment_score_dict.get('positive')
-        )
-        
-        # Create AssetNews object (simplified structure)
-        asset_news = AssetNews(
-            asset=raw_article.get('asset'),
-            headline=raw_article.get('headline'),
-            description=raw_article.get('description'),
-            source=raw_article.get('source'),
-            posted=raw_article.get('posted'),
-            link=raw_article.get('link'),
-            sentiment_score=sentiment_score
-        )
+        # Create the appropriate SentimentScore object based on state type
+        if state_type == 'crypto':
+            sentiment_score = CryptoSentimentScore(
+                neutral=sentiment_score_dict.get('neutral'),
+                negative=sentiment_score_dict.get('negative'),
+                positive=sentiment_score_dict.get('positive')
+            )
+            
+            # Create CryptoAssetNews object
+            asset_news = CryptoAssetNews(
+                asset=raw_article.get('asset'),
+                headline=raw_article.get('headline'),
+                description=raw_article.get('description'),
+                source=raw_article.get('source'),
+                posted=raw_article.get('posted'),
+                link=raw_article.get('link'),
+                sentiment_score=sentiment_score
+            )
+        else:
+            sentiment_score = MarketSentimentScore(
+                neutral=sentiment_score_dict.get('neutral'),
+                negative=sentiment_score_dict.get('negative'),
+                positive=sentiment_score_dict.get('positive')
+            )
+            
+            # Create MarketAssetNews object
+            asset_news = MarketAssetNews(
+                asset=raw_article.get('asset'),
+                headline=raw_article.get('headline'),
+                description=raw_article.get('description'),
+                source=raw_article.get('source'),
+                posted=raw_article.get('posted'),
+                link=raw_article.get('link'),
+                sentiment_score=sentiment_score
+            )
         
         return asset_news
 
-    def fetch_market_news(self, state: MarketNewsAgentState) -> dict:
+    def fetch_market_news(self, state: Union[MarketNewsAgentState, CryptoNewsAgentState]) -> dict:
         """
         Fetches financial news articles related to the assets in the portfolio allocation.
         Performs vector search on news articles and converts to AssetNews objects.
         
         Args:
-            state (MarketNewsAgentState): The agent state containing portfolio allocation
+            state (Union[MarketNewsAgentState, CryptoNewsAgentState]): The agent state containing portfolio allocation
             
         Returns:
             dict: Updated state with AssetNews objects
         """
-        message = "[Tool] Fetching market news articles."
+        # Determine state type
+        if isinstance(state, CryptoNewsAgentState):
+            state_type = 'crypto'
+            message = "[Tool] Fetching crypto news articles."
+        else:
+            state_type = 'market'
+            message = "[Tool] Fetching market news articles."
+            
         logger.info(message)
 
         asset_news_list = []
@@ -198,10 +225,10 @@ class NewsRetrievalTool(MongoDBConnector):
                     asset_symbol=asset_symbol
                 )
                 
-                # Convert raw results to AssetNews objects
+                # Convert raw results to AssetNews objects with the correct type
                 if search_results and "articles" in search_results:
                     for raw_article in search_results["articles"]:
-                        asset_news = self.convert_to_asset_news(raw_article)
+                        asset_news = self.convert_to_asset_news(raw_article, state_type)
                         asset_news_list.append(asset_news)
         
         # Update the state with the fetched data
@@ -217,68 +244,9 @@ class NewsRetrievalTool(MongoDBConnector):
 news_retrieval_obj = NewsRetrievalTool()
 
 # Define tools
-def fetch_market_news_tool(state: MarketNewsAgentState) -> dict:
+def fetch_market_news_tool(state: Union[MarketNewsAgentState, CryptoNewsAgentState]) -> dict:
     """
     Fetch market news articles for assets in the portfolio allocation.
     Performs vector search on news articles and converts to AssetNews objects.
     """
     return news_retrieval_obj.fetch_market_news(state=state)
-
-# Example usage
-if __name__ == "__main__":
-    from agents.tools.states.agent_market_news_state import MarketNewsAgentState, PortfolioAllocation
-
-    # Initialize the state with traditional assets portfolio
-    state = MarketNewsAgentState(
-        portfolio_allocation=[
-            PortfolioAllocation(
-                asset="SPY", 
-                description="S&P 500 ETF", 
-                allocation_percentage="25%"
-            ),
-            PortfolioAllocation(
-                asset="QQQ", 
-                description="Nasdaq ETF", 
-                allocation_percentage="20%"
-            ),
-            PortfolioAllocation(
-                asset="EEM", 
-                description="Emerging Markets ETF", 
-                allocation_percentage="8%"
-            ),
-            PortfolioAllocation(
-                asset="GLD", 
-                description="Gold ETF", 
-                allocation_percentage="8%"
-            )
-        ],
-        next_step="news_sentiment_calc_node",
-    )
-
-    # Use the tool to fetch news articles
-    updated_state = fetch_market_news_tool(state)
-
-    # Print summary
-    print(f"Total AssetNews fetched: {len(updated_state.report.asset_news)}")
-    print(f"Next step: {updated_state.next_step}")
-    
-    # Group by asset for summary
-    asset_counts = {}
-    for asset_news in updated_state.report.asset_news:
-        asset = asset_news.asset
-        if asset not in asset_counts:
-            asset_counts[asset] = 0
-        asset_counts[asset] += 1
-    
-    print("\nNews articles per asset:")
-    for asset, count in asset_counts.items():
-        print(f"  {asset}: {count} articles")
-    
-    print("\nFirst few news articles:")
-    for i, asset_news in enumerate(updated_state.report.asset_news[:5]):
-        print(f"  {i+1}. {asset_news.asset}: {asset_news.headline[:60]}...")
-        if asset_news.sentiment_score:
-            print(f"     Sentiment: P:{asset_news.sentiment_score.positive:.3f} N:{asset_news.sentiment_score.negative:.3f} Neu:{asset_news.sentiment_score.neutral:.3f}")
-        print(f"     Source: {asset_news.source}")
-        print(f"     Posted: {asset_news.posted}")
-        print("")

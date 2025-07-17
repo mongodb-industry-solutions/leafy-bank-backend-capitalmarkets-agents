@@ -708,7 +708,36 @@ class PersistReportInMongoDB(MongoDBConnector):
 
             # Convert the final_state to a CryptoNewsAgentState object if necessary
             if not isinstance(final_state, CryptoNewsAgentState):
-                final_state = CryptoNewsAgentState.model_validate(final_state)
+                # Convert AddableValuesDict to regular dict first
+                if hasattr(final_state, '__dict__'):
+                    state_dict = dict(final_state)
+                else:
+                    state_dict = final_state
+                
+                # Convert portfolio_allocation items to CryptoPortfolioAllocation format
+                if 'portfolio_allocation' in state_dict:
+                    converted_portfolio = []
+                    for item in state_dict['portfolio_allocation']:
+                        if isinstance(item, dict):
+                            # It's already a dict, use as-is but ensure it has the right fields
+                            portfolio_item = {
+                                "asset": item.get("asset"),
+                                "asset_type": item.get("asset_type"),
+                                "description": item.get("description"),
+                                "allocation_percentage": item.get("allocation_percentage")
+                            }
+                        else:
+                            # It's a PortfolioAllocation object, convert to CryptoPortfolioAllocation format
+                            portfolio_item = {
+                                "asset": getattr(item, "asset", None),
+                                "asset_type": getattr(item, "asset_type", None),
+                                "description": getattr(item, "description", None),
+                                "allocation_percentage": getattr(item, "allocation_percentage", None)
+                            }
+                        converted_portfolio.append(portfolio_item)
+                    state_dict['portfolio_allocation'] = converted_portfolio
+                
+                final_state = CryptoNewsAgentState.model_validate(state_dict)
 
             # Prepare the report data
             report = final_state.report.model_dump()

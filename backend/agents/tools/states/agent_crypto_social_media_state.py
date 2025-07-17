@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from typing import List, Literal, Optional
 
 
-class PortfolioAllocation(BaseModel):
+class CryptoPortfolioAllocation(BaseModel):
     asset: Optional[str] = Field(None, description="The digital asset symbol (e.g., BTC, ETH, FDUSD).")
     asset_type: Optional[str] = Field(None, description="The asset type (e.g. Cryptocurrency, Stablecoin).")
     description: Optional[str] = Field(None, description="A description of the asset.")
@@ -63,7 +63,7 @@ class Report(BaseModel):
 
 
 class CryptoSocialMediaAgentState(BaseModel):
-    portfolio_allocation: List[PortfolioAllocation] = Field(default_factory=list, description="The portfolio allocation details.")
+    portfolio_allocation: List[CryptoPortfolioAllocation] = Field(default_factory=list, description="The portfolio allocation details.")
     report: Report = Field(default_factory=Report, description="The report containing news results.")
     next_step: Literal["__start__", "portfolio_allocation_node", "social_media_sentiment_node", "social_media_sentiment_calc_node", "social_media_sentiment_summary_node", "__end__"] = Field(None, description="The next step in the workflow (e.g., 'portfolio_allocation_node').")
     updates: List[str] = Field(default_factory=list, description="A list of updates or messages for the workflow.")
