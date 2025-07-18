@@ -27,7 +27,7 @@ class MessageResponse(BaseModel):
 
 ### Charts Data Endpoints ###
 
-@router.post("/fetch-chart-mappings", response_model=MessageResponse)
+@router.get("/fetch-chart-mappings", response_model=MessageResponse)
 async def fetch_chart_mappings():
     """
     Fetch chart mappings from the database.

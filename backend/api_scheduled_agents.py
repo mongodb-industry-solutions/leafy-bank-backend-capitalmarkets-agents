@@ -112,7 +112,7 @@ async def execute_crypto_social_media_workflow():
 ## -- SCHEDULER OVERVIEW -- ##
 ##############################
 
-@router.post("/scheduler-overview")
+@router.get("/scheduler-overview")
 async def scheduler_overview():
     try:
         overview = str(scheduler.scheduler)

@@ -4,7 +4,7 @@
   },
   "risk_id": "HIGH_RISK",
   "short_description": "Aggressive growth, high volatility, high return",
-  "active": false
+  "active": true
 },
 {
   "_id": {
@@ -12,7 +12,7 @@
   },
   "risk_id": "BALANCE",
   "short_description": "Mix of growth and stability, moderate risk",
-  "active": true
+  "active": false
 },
 {
   "_id": {

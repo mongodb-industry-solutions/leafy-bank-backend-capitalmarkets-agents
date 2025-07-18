@@ -53,7 +53,7 @@ class TrendMessageResponse(BaseModel):
 
 ### Macro Indicators Data Endpoints ###
 
-@router.post("/fetch-most-recent-macro-indicators", response_model=MessageResponse)
+@router.get("/fetch-most-recent-macro-indicators", response_model=MessageResponse)
 async def fetch_most_recent_macro_indicators():
     """
     Fetch the most recent macroeconomic indicators.
@@ -68,7 +68,7 @@ async def fetch_most_recent_macro_indicators():
         logging.error(f"Error fetching most recent macro indicators: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
     
-@router.post("/fetch-macro-indicators-trend", response_model=TrendMessageResponse)
+@router.get("/fetch-macro-indicators-trend", response_model=TrendMessageResponse)
 async def get_macro_indicators_trend():
     """
     Get the trend direction for each macroeconomic indicator by comparing the two most recent values.

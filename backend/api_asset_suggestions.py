@@ -117,7 +117,7 @@ class CryptoMessageResponse(BaseModel):
 
 ### Asset Suggestions Endpoints ###
 
-@router.post("/fetch-asset-suggestions-macro-indicators-based", response_model=MessageResponse)
+@router.get("/fetch-asset-suggestions-macro-indicators-based", response_model=MessageResponse)
 async def fetch_asset_suggestions_macro_indicators_based():
     """
     Fetch asset suggestions based on the current portfolio and market conditions.
@@ -158,7 +158,7 @@ async def fetch_asset_suggestions_macro_indicators_based():
         logger.error(f"Error fetching asset suggestions: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.post("/fetch-asset-suggestions-market-volatility-based", response_model=MessageResponse)
+@router.get("/fetch-asset-suggestions-market-volatility-based", response_model=MessageResponse)
 async def fetch_asset_suggestions_market_volatility_based():
     """
     Fetch asset suggestions based on the current portfolio and market volatility (VIX).
@@ -204,7 +204,7 @@ async def fetch_asset_suggestions_market_volatility_based():
 
 ### Crypto Asset Suggestions Endpoints ###
 
-@router.post("/fetch-crypto-suggestions-trend-based", response_model=CryptoMessageResponse)
+@router.get("/fetch-crypto-suggestions-trend-based", response_model=CryptoMessageResponse)
 async def fetch_crypto_suggestions_trend_based():
     """
     Fetch crypto asset suggestions based on detailed moving average trend analysis.
@@ -226,7 +226,7 @@ async def fetch_crypto_suggestions_trend_based():
         logger.error(f"Error fetching crypto trend-based suggestions: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.post("/fetch-crypto-suggestions-momentum-based", response_model=CryptoMessageResponse)
+@router.get("/fetch-crypto-suggestions-momentum-based", response_model=CryptoMessageResponse)
 async def fetch_crypto_suggestions_momentum_based():
     """
     Fetch crypto asset suggestions based on detailed momentum indicators analysis.
@@ -248,7 +248,7 @@ async def fetch_crypto_suggestions_momentum_based():
         logger.error(f"Error fetching crypto momentum-based suggestions: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.post("/fetch-crypto-suggestions-comprehensive", response_model=CryptoMessageResponse)
+@router.get("/fetch-crypto-suggestions-comprehensive", response_model=CryptoMessageResponse)
 async def fetch_crypto_suggestions_comprehensive():
     """
     Fetch comprehensive crypto asset suggestions with all indicator details combined.

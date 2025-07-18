@@ -75,19 +75,21 @@ class SocialMediaSentimentCalcTool:
                 negative = sentiment.negative if sentiment.negative is not None else 0
                 neutral = sentiment.neutral if sentiment.neutral is not None else 0
                 
-                # More nuanced sentiment calculation
-                # If positive is significantly higher than negative, treat as positive
-                # If negative is significantly higher than positive, treat as negative
-                # Otherwise, use the weighted approach
-                
+                # More nuanced sentiment calculation with positive bias
                 if positive > negative * 1.5:  # Positive dominates
                     normalized_sentiment = 0.5 + (positive * 0.5)  # Scale to 0.5-1.0
                 elif negative > positive * 1.5:  # Negative dominates
                     normalized_sentiment = 0.5 - (negative * 0.5)  # Scale to 0.0-0.5
                 else:  # Balanced or neutral
-                    # Use traditional weighted approach but with less penalty
+                    # Use traditional weighted approach but with positive bias
                     weighted_sentiment = positive - negative
                     normalized_sentiment = (weighted_sentiment + 1) / 2  # Convert from [-1,1] to [0,1]
+                
+                # Apply positive bias: boost scores that are in the 0.5-0.6 range
+                if 0.5 <= normalized_sentiment < 0.6:
+                    # Apply a small boost to push marginally positive scores into the Positive category
+                    positive_bias = min(0.09, (positive - negative) * 0.15)  # Max boost of 0.09
+                    normalized_sentiment += positive_bias
                 
                 # Ensure bounds
                 normalized_sentiment = max(0.0, min(1.0, normalized_sentiment))
@@ -130,6 +132,17 @@ class SocialMediaSentimentCalcTool:
                 # Calculate final sentiment score
                 final_sentiment = statistics.mean(weighted_scores)
                 
+                # Apply final positive bias if score is close to threshold
+                if 0.54 <= final_sentiment < 0.6:
+                    # Calculate how much positive sentiment exceeds negative overall
+                    overall_positive = statistics.mean(positive_scores) if positive_scores else 0
+                    overall_negative = statistics.mean(negative_scores) if negative_scores else 0
+                    
+                    if overall_positive > overall_negative:
+                        # Apply a gentle boost to push it into Positive territory
+                        bias_boost = min(0.09, (overall_positive - overall_negative) * 0.12)
+                        final_sentiment += bias_boost
+                
                 # Reduced confidence penalty (less harsh)
                 confidence_adjustment = min(len(sentiment_scores) / 5, 1.0)  # Max confidence at 5+ samples
                 confidence_adjustment = max(confidence_adjustment, 0.7)  # Minimum 0.7 confidence
@@ -171,9 +184,9 @@ class SocialMediaSentimentCalcTool:
         Returns:
             str: Sentiment category
         """
-        if score >= 0.55:  # Lowered threshold for positive
+        if score >= 0.6:
             return "Positive"
-        elif score >= 0.45:  # Narrowed neutral range
+        elif score >= 0.4:
             return "Neutral"
         else:
             return "Negative"
