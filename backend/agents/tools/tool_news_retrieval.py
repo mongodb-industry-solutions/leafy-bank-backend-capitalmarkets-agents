@@ -216,7 +216,7 @@ class NewsRetrievalTool(MongoDBConnector):
                 logger.info(f"Fetching news articles for asset: {asset_symbol} ({asset_description})")
                 
                 # Generate a search query for the asset
-                query = f"financial news analysis about {asset_symbol} ({asset_description})"
+                query = f"financial news about {asset_symbol} ({asset_description})"
                 
                 # Perform vector search for this specific asset
                 search_results = self.vector_search_news_articles(
