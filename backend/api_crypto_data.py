@@ -33,7 +33,7 @@ class AssetDataPoint(BaseModel):
     high: Optional[float] = None
     low: Optional[float] = None
     close: Optional[float] = None
-    volume: Optional[int] = None
+    volume: Optional[float] = None  # Changed from int to float to handle fractional volume values
     date_load_iso_utc: Optional[str] = None
     
 class RecentDataResponse(BaseModel):
