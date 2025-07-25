@@ -1,6 +1,5 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from datetime import datetime
 import logging
 from typing import List, Optional, Dict, Any
 from service_stablecoins_market_cap_data import StablecoinsMarketCapDataService
