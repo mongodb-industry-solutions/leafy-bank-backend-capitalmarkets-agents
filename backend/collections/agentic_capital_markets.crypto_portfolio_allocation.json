@@ -4,9 +4,9 @@
   },
   "symbol": "BTC",
   "binance_symbol": "BTCUSDT",
-  "allocation_percentage": "45%",
-  "allocation_number": 45,
-  "allocation_decimal": 0.45,
+  "allocation_percentage": "60%",
+  "allocation_number": 60,
+  "allocation_decimal": 0.6,
   "description": "Bitcoin",
   "asset_type": "Cryptocurrency"
 },
@@ -21,30 +21,6 @@
   "allocation_decimal": 0.2,
   "description": "Ethereum",
   "asset_type": "Cryptocurrency"
-},
-{
-  "_id": {
-    "$oid": "68665424987ef380558a1911"
-  },
-  "symbol": "FDUSD",
-  "binance_symbol": "FDUSDUSDT",
-  "allocation_percentage": "10%",
-  "allocation_number": 10,
-  "allocation_decimal": 0.1,
-  "description": "First Digital USD",
-  "asset_type": "Stablecoin"
-},
-{
-  "_id": {
-    "$oid": "68665424987ef380558a1912"
-  },
-  "symbol": "USDC",
-  "binance_symbol": "USDCUSDT",
-  "allocation_percentage": "5%",
-  "allocation_number": 5,
-  "allocation_decimal": 0.05,
-  "description": "USD Coin",
-  "asset_type": "Stablecoin"
 },
 {
   "_id": {
