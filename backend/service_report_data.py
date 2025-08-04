@@ -172,32 +172,131 @@ class ReportDataService(MongoDBConnector):
         """
         return self._fetch_most_recent_report("crypto_sm", "crypto social media")
 
+    def get_consolidated_risk_profile(self):
+        """
+        Determine the consolidated risk profile across all report types by analyzing
+        the most recent report from each collection.
+        
+        Looks for "[Action] Using risk profile: " in the updates field of each report
+        and counts occurrences of each risk profile (BALANCE, HIGH_RISK, CONSERVATIVE, LOW_RISK).
+        
+        Returns:
+            dict: A dictionary containing:
+                - "counts": dict with counts for each risk profile
+                - "result": str with the most common risk profile. In case of a tie, returns "BALANCE" if present,
+                           otherwise "CONSERVATIVE". Default is "BALANCE" if no risk profile is found.
+        """
+        # Define valid risk profiles
+        valid_risk_profiles = ["BALANCE", "HIGH_RISK", "CONSERVATIVE", "LOW_RISK"]
+        
+        # Initialize accumulator for risk profile counts
+        risk_profile_counts = {profile: 0 for profile in valid_risk_profiles}
+        
+        # List of all report fetch methods
+        report_methods = [
+            self.fetch_most_recent_market_analysis_report,
+            self.fetch_most_recent_market_news_report,
+            self.fetch_most_recent_market_sm_report,
+            self.fetch_most_recent_crypto_analysis_report,
+            self.fetch_most_recent_crypto_news_report,
+            self.fetch_most_recent_crypto_sm_report
+        ]
+        
+        # Process each report
+        for method in report_methods:
+            try:
+                report = method()
+                
+                # Skip if report is empty
+                if not report:
+                    # Default to BALANCE if no report found
+                    risk_profile_counts["BALANCE"] += 1
+                    continue
+                
+                # Get updates field
+                updates = report.get("updates", [])
+                
+                # Look for risk profile in updates
+                risk_profile_found = False
+                for update in updates:
+                    if "[Action] Using risk profile: " in update:
+                        # Extract the risk profile
+                        for profile in valid_risk_profiles:
+                            if profile in update:
+                                risk_profile_counts[profile] += 1
+                                risk_profile_found = True
+                                logger.info(f"Found risk profile {profile} in {method.__name__}")
+                                break
+                        
+                        if risk_profile_found:
+                            break
+                
+                # If no risk profile found, default to BALANCE
+                if not risk_profile_found:
+                    risk_profile_counts["BALANCE"] += 1
+                    logger.info(f"No risk profile found in {method.__name__}, defaulting to BALANCE")
+                    
+            except Exception as e:
+                logger.error(f"Error processing report from {method.__name__}: {e}")
+                # Default to BALANCE on error
+                risk_profile_counts["BALANCE"] += 1
+        
+        # Find the risk profile with the most occurrences
+        max_count = max(risk_profile_counts.values())
+        
+        # Get all profiles with the max count (to handle ties)
+        top_profiles = [profile for profile, count in risk_profile_counts.items() if count == max_count]
+        
+        # Apply tiebreaker rules
+        if len(top_profiles) == 1:
+            result = top_profiles[0]
+        elif "BALANCE" in top_profiles:
+            result = "BALANCE"
+        elif "CONSERVATIVE" in top_profiles:
+            result = "CONSERVATIVE"
+        else:
+            # Fallback to first in the tie (should not happen with our rules)
+            result = top_profiles[0]
+        
+        logger.info(f"Risk profile counts: {risk_profile_counts}")
+        logger.info(f"Consolidated risk profile: {result}")
+        
+        return {
+            "counts": risk_profile_counts,
+            "result": result
+        }
+
 
 if __name__ == "__main__":
     # Example usage
     report_service = ReportDataService()
     
-    # Test all report types
-    print("Testing Market Analysis Report:")
-    market_analysis = report_service.fetch_most_recent_market_analysis_report()
-    print(f"Market Analysis Report: {bool(market_analysis)}")
+    # # Test all report types
+    # print("Testing Market Analysis Report:")
+    # market_analysis = report_service.fetch_most_recent_market_analysis_report()
+    # print(f"Market Analysis Report: {bool(market_analysis)}")
     
-    print("\nTesting Market News Report:")
-    market_news = report_service.fetch_most_recent_market_news_report()
-    print(f"Market News Report: {bool(market_news)}")
+    # print("\nTesting Market News Report:")
+    # market_news = report_service.fetch_most_recent_market_news_report()
+    # print(f"Market News Report: {bool(market_news)}")
     
-    print("\nTesting Market Social Media Report:")
-    market_sm = report_service.fetch_most_recent_market_sm_report()
-    print(f"Market SM Report: {bool(market_sm)}")
+    # print("\nTesting Market Social Media Report:")
+    # market_sm = report_service.fetch_most_recent_market_sm_report()
+    # print(f"Market SM Report: {bool(market_sm)}")
     
-    print("\nTesting Crypto Analysis Report:")
-    crypto_analysis = report_service.fetch_most_recent_crypto_analysis_report()
-    print(f"Crypto Analysis Report: {bool(crypto_analysis)}")
+    # print("\nTesting Crypto Analysis Report:")
+    # crypto_analysis = report_service.fetch_most_recent_crypto_analysis_report()
+    # print(f"Crypto Analysis Report: {bool(crypto_analysis)}")
     
-    print("\nTesting Crypto News Report:")
-    crypto_news = report_service.fetch_most_recent_crypto_news_report()
-    print(f"Crypto News Report: {bool(crypto_news)}")
+    # print("\nTesting Crypto News Report:")
+    # crypto_news = report_service.fetch_most_recent_crypto_news_report()
+    # print(f"Crypto News Report: {bool(crypto_news)}")
     
-    print("\nTesting Crypto Social Media Report:")
-    crypto_sm = report_service.fetch_most_recent_crypto_sm_report()
-    print(f"Crypto SM Report: {bool(crypto_sm)}")
+    # print("\nTesting Crypto Social Media Report:")
+    # crypto_sm = report_service.fetch_most_recent_crypto_sm_report()
+    # print(f"Crypto SM Report: {bool(crypto_sm)}")
+    
+    print("\nTesting Consolidated Risk Profile:")
+    risk_profile_data = report_service.get_consolidated_risk_profile()
+    print(f"Risk Profile Counts: {risk_profile_data['counts']}")
+    print(f"Consolidated Risk Profile Result: {risk_profile_data['result']}")

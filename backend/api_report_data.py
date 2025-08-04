@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 import logging
-from typing import List, Optional
+from typing import List, Optional, Dict
 from datetime import datetime
 from service_report_data import ReportDataService
 
@@ -285,6 +285,10 @@ class CryptoNewsResponse(BaseModel):
 class CryptoSocialMediaResponse(BaseModel):
     crypto_sm_report: Optional[CryptoSocialMediaReport] = None
 
+class ConsolidatedRiskProfileResponse(BaseModel):
+    counts: Dict[str, int]
+    result: str
+
 ### Report Data Endpoints ###
 
 @router.get("/fetch-most-recent-market-analysis-report", response_model=MarketAnalysisResponse)
@@ -387,4 +391,25 @@ async def fetch_most_recent_crypto_sm_report():
         return CryptoSocialMediaResponse(crypto_sm_report=report)
     except Exception as e:
         logging.error(f"Error fetching crypto social media report: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/consolidated-risk-profile", response_model=ConsolidatedRiskProfileResponse)
+async def get_consolidated_risk_profile():
+    """
+    Get the consolidated risk profile based on the most recent reports across all collections.
+    
+    This endpoint analyzes the most recent report from each collection (market analysis, 
+    market news, market social media, crypto analysis, crypto news, crypto social media)
+    and determines the most commonly used risk profile.
+    
+    Returns:
+        ConsolidatedRiskProfileResponse: A dictionary containing:
+            - counts: The count of each risk profile found across all reports
+            - result: The determined risk profile based on the counts and tiebreaker rules
+    """
+    try:
+        consolidated_profile = report_data_service.get_consolidated_risk_profile()
+        return ConsolidatedRiskProfileResponse(**consolidated_profile)
+    except Exception as e:
+        logging.error(f"Error fetching consolidated risk profile: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
