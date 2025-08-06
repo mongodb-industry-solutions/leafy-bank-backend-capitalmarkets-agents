@@ -178,16 +178,16 @@ class ReportDataService(MongoDBConnector):
         the most recent report from each collection.
         
         Looks for "[Action] Using risk profile: " in the updates field of each report
-        and counts occurrences of each risk profile (BALANCE, HIGH_RISK, CONSERVATIVE, LOW_RISK).
+        and counts occurrences of each risk profile (BALANCED, HIGH_RISK, CONSERVATIVE, LOW_RISK).
         
         Returns:
             dict: A dictionary containing:
                 - "counts": dict with counts for each risk profile
-                - "result": str with the most common risk profile. In case of a tie, returns "BALANCE" if present,
-                           otherwise "CONSERVATIVE". Default is "BALANCE" if no risk profile is found.
+                - "result": str with the most common risk profile. In case of a tie, returns "BALANCED" if present,
+                           otherwise "CONSERVATIVE". Default is "BALANCED" if no risk profile is found.
         """
         # Define valid risk profiles
-        valid_risk_profiles = ["BALANCE", "HIGH_RISK", "CONSERVATIVE", "LOW_RISK"]
+        valid_risk_profiles = ["BALANCED", "HIGH_RISK", "CONSERVATIVE", "LOW_RISK"]
         
         # Initialize accumulator for risk profile counts
         risk_profile_counts = {profile: 0 for profile in valid_risk_profiles}
@@ -209,8 +209,8 @@ class ReportDataService(MongoDBConnector):
                 
                 # Skip if report is empty
                 if not report:
-                    # Default to BALANCE if no report found
-                    risk_profile_counts["BALANCE"] += 1
+                    # Default to BALANCED if no report found
+                    risk_profile_counts["BALANCED"] += 1
                     continue
                 
                 # Get updates field
@@ -231,15 +231,15 @@ class ReportDataService(MongoDBConnector):
                         if risk_profile_found:
                             break
                 
-                # If no risk profile found, default to BALANCE
+                # If no risk profile found, default to BALANCED
                 if not risk_profile_found:
-                    risk_profile_counts["BALANCE"] += 1
-                    logger.info(f"No risk profile found in {method.__name__}, defaulting to BALANCE")
+                    risk_profile_counts["BALANCED"] += 1
+                    logger.info(f"No risk profile found in {method.__name__}, defaulting to BALANCED")
                     
             except Exception as e:
                 logger.error(f"Error processing report from {method.__name__}: {e}")
-                # Default to BALANCE on error
-                risk_profile_counts["BALANCE"] += 1
+                # Default to BALANCED on error
+                risk_profile_counts["BALANCED"] += 1
         
         # Find the risk profile with the most occurrences
         max_count = max(risk_profile_counts.values())
@@ -250,8 +250,8 @@ class ReportDataService(MongoDBConnector):
         # Apply tiebreaker rules
         if len(top_profiles) == 1:
             result = top_profiles[0]
-        elif "BALANCE" in top_profiles:
-            result = "BALANCE"
+        elif "BALANCED" in top_profiles:
+            result = "BALANCED"
         elif "CONSERVATIVE" in top_profiles:
             result = "CONSERVATIVE"
         else:
