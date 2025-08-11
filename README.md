@@ -238,8 +238,6 @@ E.g. `http://localhost:8005/docs`
 
 - Check that you've created an `.env` file that contains the required environment variables.
 
-## Future tasks
+## 📄 **License**
 
-- [ ] Add tests
-- [ ] Evaluate SonarQube for code quality
-- [ ] Automate the deployment process using GitHub Actions or CodePipeline
+This project is for educational and demonstration purposes. 
