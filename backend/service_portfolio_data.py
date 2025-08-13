@@ -28,7 +28,8 @@ class PortfolioDataService(MongoDBConnector):
         super().__init__(uri, database_name, appname)
         self.collections = {
             "allocation": os.getenv("PORTFOLIO_COLLECTION"),
-            "performance": os.getenv("PORTFOLIO_PERFORMANCE_COLLECTION")
+            "performance": os.getenv("PORTFOLIO_PERFORMANCE_COLLECTION"),
+            "crypto_allocation": os.getenv("CRYPTO_PORTFOLIO_COLLECTION")
         }
         logger.info("PortfolioDataService initialized")
 
@@ -61,6 +62,38 @@ class PortfolioDataService(MongoDBConnector):
             return portfolio_allocation
         except Exception as e:
             logger.error(f"Error retrieving portfolio allocation: {e}")
+            return {}
+
+    def fetch_crypto_portfolio_allocation(self):
+        """
+        Get crypto portfolio allocation data.
+
+        Returns:
+            dict: A dictionary containing the crypto portfolio allocation data.
+        """
+        try:
+            collection_name = self.collections["crypto_allocation"]
+            # Query to get all crypto portfolio allocation data
+            result = self.db[collection_name].find()
+
+            # Process the result and construct the crypto_portfolio_allocation dictionary
+            crypto_portfolio_allocation = {}
+            for doc in result:
+                symbol = doc["symbol"]
+                allocation_data = {
+                    "binance_symbol": doc.get("binance_symbol"),
+                    "allocation_percentage": doc["allocation_percentage"],
+                    "allocation_number": doc["allocation_number"],
+                    "allocation_decimal": doc["allocation_decimal"],
+                    "description": doc["description"],
+                    "asset_type": doc["asset_type"]
+                }
+                crypto_portfolio_allocation[symbol] = allocation_data
+
+            logger.info(f"Retrieved crypto portfolio allocation for {len(crypto_portfolio_allocation)} assets")
+            return crypto_portfolio_allocation
+        except Exception as e:
+            logger.error(f"Error retrieving crypto portfolio allocation: {e}")
             return {}
             
     def fetch_most_recent_portfolio_performance(self, days=30):
@@ -116,6 +149,12 @@ if __name__ == "__main__":
     portfolio_allocation = portfolio_data_service.fetch_portfolio_allocation()
     for symbol, data in portfolio_allocation.items():
         print(f"Symbol: {symbol}, Allocation: {data['allocation_percentage']}, Description: {data['description']}")
+    
+    # Test fetch_crypto_portfolio_allocation
+    print("\nCrypto Portfolio Allocation:")
+    crypto_portfolio_allocation = portfolio_data_service.fetch_crypto_portfolio_allocation()
+    for symbol, data in crypto_portfolio_allocation.items():
+        print(f"Symbol: {symbol}, Binance Symbol: {data['binance_symbol']}, Allocation: {data['allocation_percentage']}, Description: {data['description']}, Asset Type: {data['asset_type']}")
     
     # Test fetch_most_recent_portfolio_performance
     print("\nPortfolio Performance (last 30 days):")

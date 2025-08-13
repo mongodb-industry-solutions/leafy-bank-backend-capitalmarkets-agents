@@ -19077,4 +19077,784 @@
     "$date": "2025-05-05T00:00:00.000Z"
   },
   "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "681c2d6d26288e8bfe62421f"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-06T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "681d7eed26288e8bfe625461"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-07T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "681ed06c26288e8bfe6266a0"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-08T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "6822c4ed26288e8bfe6278c7"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-09T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "6824166c26288e8bfe628ade"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-12T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "682567ed26288e8bfe629d18"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-13T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "6826b96c26288e8bfe62af58"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-14T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "68280aec26288e8bfe62c195"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-15T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "682bff6d26288e8bfe62d3c7"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-16T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "682d50ec26288e8bfe62e607"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-19T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "682ea26d26288e8bfe62f849"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-20T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "682ff3ec26288e8bfe630a81"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-21T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "6831456c26288e8bfe631cbc"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-22T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "68368b6d26288e8bfe6330de"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-26T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "6837dcec26288e8bfe63430e"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-27T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "68392e6d26288e8bfe63553e"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-28T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "683a7fec26288e8bfe636780"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-29T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "683e746d26288e8bfe6379b5"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-30T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "683fc5ec26288e8bfe638bd7"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-02T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "6841176c26288e8bfe639de5"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-03T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "684268ec26288e8bfe63aff2"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-04T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "68450bec26288e8bfe63c1ff"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-05T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "6847aeed26288e8bfe63d411"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-06T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "6847d95ecb4e4bd0477a0181"
+  },
+  "title": "Unemployment Rate",
+  "series_id": "UNRATE",
+  "frequency": "Monthly",
+  "frequency_short": "M",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-05-01T00:00:00.000Z"
+  },
+  "value": 4.2
+},
+{
+  "_id": {
+    "$oid": "6849006d26288e8bfe63e5bf"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-09T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "684a51ec26288e8bfe63f75b"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-10T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "684ba36c26288e8bfe640963"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-11T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "684cf4ec26288e8bfe641b9c"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-12T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "6850e96c26288e8bfe642da7"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-13T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "68523aec26288e8bfe643fc1"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-16T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "68538c6d26288e8bfe645119"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-17T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "68562f6c26288e8bfe6464bf"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-19T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "685a23ed26288e8bfe647654"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-20T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "685b756c26288e8bfe648826"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-23T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "685cc6ec26288e8bfe6499f8"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-24T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "685e186c26288e8bfe64abc9"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-25T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "685f69ec26288e8bfe64bdec"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-26T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "68635e6c26288e8bfe64d011"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-27T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "6863b79181f5695f447d426a"
+  },
+  "title": "Gross Domestic Product",
+  "series_id": "GDP",
+  "frequency": "Quarterly",
+  "frequency_short": "Q",
+  "units": "Billions of Dollars",
+  "units_short": "Bil. of $",
+  "date": {
+    "$date": "2025-06-26T00:00:00.000Z"
+  },
+  "value": 29962.047
+},
+{
+  "_id": {
+    "$oid": "6864afec26288e8bfe64e223"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-30T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "686602993de24bdf9c62f7e5"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "686754183de24bdf9c6301df"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-07-02T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "686754183de24bdf9c6301e0"
+  },
+  "title": "Unemployment Rate",
+  "series_id": "UNRATE",
+  "frequency": "Monthly",
+  "frequency_short": "M",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-06-01T00:00:00.000Z"
+  },
+  "value": 4.1
+},
+{
+  "_id": {
+    "$oid": "686c98ed1dcf63278e3bb91b"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-07-04T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "686dea6cf6860b450966c401"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-07-07T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "686f3bed0058ddb88084602f"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-07-08T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "68708d6d0058ddb880849f3c"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-07-09T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "6871deed0058ddb88084de67"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-07-10T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "6875d36d0058ddb88085783d"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-07-11T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "687724ec0058ddb88085b763"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-07-14T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "6878766c0058ddb88085f695"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-07-15T00:00:00.000Z"
+  },
+  "value": 4.33
+},
+{
+  "_id": {
+    "$oid": "6879c7ed7395e04c9d26d5de"
+  },
+  "title": "Federal Funds Effective Rate",
+  "series_id": "DFF",
+  "frequency": "Daily",
+  "frequency_short": "D",
+  "units": "Percent",
+  "units_short": "%",
+  "date": {
+    "$date": "2025-07-16T00:00:00.000Z"
+  },
+  "value": 4.33
 }]

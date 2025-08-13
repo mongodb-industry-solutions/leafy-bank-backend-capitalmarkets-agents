@@ -1,0 +1,2898 @@
+[{
+  "_id": {
+    "$oid": "686f3e62d66babf8cd957fa5"
+  },
+  "url": "https://www.reddit.com/r/investing/comments/1lw3bgp/how_is_my_financial_advisor_doing/",
+  "asset_id": "SPY",
+  "asset_yfinance": "SPY",
+  "author": "Ill_Ratio8895",
+  "author_fullname": "t2_8019bypx",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [],
+  "created_at": {
+    "$date": "2025-07-10T04:06:55.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T04:06:55.000Z"
+  },
+  "domain": "self.investing",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:30.033Z"
+  },
+  "name": "t3_1lw3bgp",
+  "num_comments": 0,
+  "query": "SPY OR S&P 500",
+  "score": 2,
+  "selftext": "I’ve made 10.81% over almost 4 years since starting my Roth IRA and I feel like I’ve missed a lot of gains. I’m looking at s&p 500 numbers and It’s out performing my investments by a lot. I’m kind of annoyed I haven’t payed more attention to it but when I started I didn’t know much about it and trusted the recommendation from family. I’m young so I’m not worried about it too much but I want to know how other people would think of this situation. I’m planning on doing a meeting with him soon so I’ll be able to talk about it. After doing research I want to gain 8% yearly which I don’t think is too hard to achieve or is that number unrealistic? Any help would be greatly appreciated. I feel like I’ve lost a good amount of buying power with the investments he has made due to inflation. ",
+  "submission_dict": {
+    "title": "How is my financial advisor doing",
+    "selftext": "I’ve made 10.81% over almost 4 years since starting my Roth IRA and I feel like I’ve missed a lot of gains. I’m looking at s&p 500 numbers and It’s out performing my investments by a lot. I’m kind of annoyed I haven’t payed more attention to it but when I started I didn’t know much about it and trusted the recommendation from family. I’m young so I’m not worried about it too much but I want to know how other people would think of this situation. I’m planning on doing a meeting with him soon so I’ll be able to talk about it. After doing research I want to gain 8% yearly which I don’t think is too hard to achieve or is that number unrealistic? Any help would be greatly appreciated. I feel like I’ve lost a good amount of buying power with the investments he has made due to inflation. ",
+    "subreddit": "r/investing",
+    "url": "https://www.reddit.com/r/investing/comments/1lw3bgp/how_is_my_financial_advisor_doing/",
+    "asset_id": "SPY",
+    "query": "SPY OR S&P 500",
+    "comments": []
+  },
+  "subreddit": "investing",
+  "title": "How is my financial advisor doing",
+  "ups": 2,
+  "sentiment_score": {
+    "neutral": 0.8399160504341125,
+    "negative": 0.1180289015173912,
+    "positive": 0.04205503687262535
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e73d66babf8cd957fdf"
+  },
+  "asset_id": "GLD",
+  "url": "https://i.redd.it/f61lpjvh1zbf1.jpeg",
+  "asset_yfinance": "GLD",
+  "author": "goldfrk",
+  "author_fullname": "t2_19e8ykt2y5",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [],
+  "created_at": {
+    "$date": "2025-07-10T04:06:34.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T04:06:34.000Z"
+  },
+  "domain": "i.redd.it",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:46.723Z"
+  },
+  "name": "t3_1lw3b8n",
+  "num_comments": 0,
+  "query": "GLD OR Gold",
+  "score": 0,
+  "selftext": "",
+  "submission_dict": {
+    "title": "Making this into a pendant so i can wear everyday",
+    "selftext": "",
+    "subreddit": "r/Gold",
+    "url": "https://i.redd.it/f61lpjvh1zbf1.jpeg",
+    "asset_id": "GLD",
+    "query": "GLD OR Gold",
+    "comments": []
+  },
+  "subreddit": "Gold",
+  "title": "Making this into a pendant so i can wear everyday",
+  "ups": 0,
+  "sentiment_score": {
+    "neutral": 0.9379905462265015,
+    "positive": 0.042849279940128326,
+    "negative": 0.019160158932209015
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e4bd66babf8cd957f3c"
+  },
+  "asset_id": "BTC",
+  "url": "https://www.reddit.com/r/Bitcoin/comments/1lw3aio/i_have_15k_i_can_allocate_towards_btc_at_the/",
+  "author": "Willing-Ability6821",
+  "author_fullname": "t2_u37o59zd9",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "BTCUSDT",
+  "comments": [
+    {
+      "id": "n2b1e5k",
+      "author": "ContributionGold5928",
+      "body": "Lump sum",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:13:11.000Z"
+      }
+    },
+    {
+      "id": "n2b0zaz",
+      "author": "Dopest_Trip",
+      "body": "If the price goes up after your purchase it will we better to lump sum with one purchase. If it goes down after your initial purchase it will be better to DCA. Hope that helps!",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:10:15.000Z"
+      }
+    },
+    {
+      "id": "n2b0u9o",
+      "author": "bigocreddit",
+      "body": "Lump sum, check back in 2030",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:09:17.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T04:05:29.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T04:05:29.000Z"
+  },
+  "domain": "self.Bitcoin",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:05.589Z"
+  },
+  "name": "t3_1lw3aio",
+  "num_comments": 4,
+  "query": "bitcoin OR btc",
+  "score": 2,
+  "selftext": "I am a quarter coiner but looking to add more. I made the mistake of thinking it would drop below $100k (like it did to $98k a couple weeks back) but I’m willing to buy now. What’s best?",
+  "submission_dict": {
+    "title": "I have $15k I can allocate towards BTC at the moment. Is it best to purchase a lump sum of $15k or $10k and DCA the remaining?",
+    "selftext": "I am a quarter coiner but looking to add more. I made the mistake of thinking it would drop below $100k (like it did to $98k a couple weeks back) but I’m willing to buy now. What’s best?",
+    "subreddit": "r/Bitcoin",
+    "url": "https://www.reddit.com/r/Bitcoin/comments/1lw3aio/i_have_15k_i_can_allocate_towards_btc_at_the/",
+    "asset_id": "BTC",
+    "query": "bitcoin OR btc",
+    "comments": [
+      {
+        "author": "ContributionGold5928",
+        "body": "Lump sum",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:13:11.000Z"
+        }
+      },
+      {
+        "author": "Dopest_Trip",
+        "body": "If the price goes up after your purchase it will we better to lump sum with one purchase. If it goes down after your initial purchase it will be better to DCA. Hope that helps!",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:10:15.000Z"
+        }
+      },
+      {
+        "author": "bigocreddit",
+        "body": "Lump sum, check back in 2030",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:09:17.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "Bitcoin",
+  "title": "I have $15k I can allocate towards BTC at the moment. Is it best to purchase a lump sum of $15k or $10k and DCA the remaining?",
+  "ups": 2,
+  "sentiment_score": {
+    "neutral": 0.91390061378479,
+    "negative": 0.05545668676495552,
+    "positive": 0.030642710626125336
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e5ed66babf8cd957f8e"
+  },
+  "url": "https://i.redd.it/i2buwwro0zbf1.jpeg",
+  "asset_id": "DOGE",
+  "author": "Trojan110",
+  "author_fullname": "t2_99vv1kw",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "DOGEUSDT",
+  "comments": [],
+  "created_at": {
+    "$date": "2025-07-10T04:02:02.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T04:02:02.000Z"
+  },
+  "domain": "i.redd.it",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:25.493Z"
+  },
+  "name": "t3_1lw387e",
+  "num_comments": 0,
+  "query": "dogecoin OR doge",
+  "score": 2,
+  "selftext": "Hodling this bag till we hit $5.32!!",
+  "submission_dict": {
+    "title": "Veteran bag hodlr",
+    "selftext": "Hodling this bag till we hit $5.32!!",
+    "subreddit": "r/dogecoin",
+    "url": "https://i.redd.it/i2buwwro0zbf1.jpeg",
+    "asset_id": "DOGE",
+    "query": "dogecoin OR doge",
+    "comments": []
+  },
+  "subreddit": "dogecoin",
+  "title": "Veteran bag hodlr",
+  "ups": 2,
+  "sentiment_score": {
+    "neutral": 0.9353544116020203,
+    "positive": 0.034038275480270386,
+    "negative": 0.030607275664806366
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e5cd66babf8cd957f80"
+  },
+  "url": "https://i.redd.it/avqbedawxybf1.png",
+  "asset_id": "SOL",
+  "author": "kateha_sheep94",
+  "author_fullname": "t2_rdudakam",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "SOLUSDT",
+  "comments": [
+    {
+      "id": "n2azuhx",
+      "author": "6M66",
+      "body": "I think Sol is the best option for them right now. I don't see anything else come close.\n\nWe just need to make sure fire dancer works well",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:02:13.000Z"
+      }
+    },
+    {
+      "id": "n2azfax",
+      "author": "AutoModerator",
+      "body": "WARNING:\n1) IMPORTANT, Read This Post To Keep Your Crypto Safe From Scammers: https://www.reddit.com/r/solana/comments/18er2c8/how_to_avoid_the_biggest_crypto_scams_and/\n2) Do not trust DMs from anyone offering to help/support you with your funds (Sc",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:59:17.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T03:59:15.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:59:15.000Z"
+  },
+  "domain": "i.redd.it",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:22.972Z"
+  },
+  "name": "t3_1lw3676",
+  "num_comments": 2,
+  "query": "solana OR sol",
+  "score": 1,
+  "selftext": "Just checked out the [Stocks Tab ](https://birdeye.so/insights?sector=rwas&chain=solana)for tokenized stocks on Solana. You can track and trade assets like NVDAx, TSLAx, etc. Pretty slick, but it seems like adoption is still pretty early.\n\nDo you think this space will take off once bigger players like **Ondo Finance** enter?  \nOr is it still too soon for tokenized equities to get real traction?\n\nCurious what others think.",
+  "submission_dict": {
+    "title": "How do you see tokenized stocks performing on Solana long-term?",
+    "selftext": "Just checked out the [Stocks Tab ](https://birdeye.so/insights?sector=rwas&chain=solana)for tokenized stocks on Solana. You can track and trade assets like NVDAx, TSLAx, etc. Pretty slick, but it seems like adoption is still pretty early.\n\nDo you think this space will take off once bigger players like **Ondo Finance** enter?  \nOr is it still too soon for tokenized equities to get real traction?\n\nCurious what others think.",
+    "subreddit": "r/Solana",
+    "url": "https://i.redd.it/avqbedawxybf1.png",
+    "asset_id": "SOL",
+    "query": "solana OR sol",
+    "comments": [
+      {
+        "author": "6M66",
+        "body": "I think Sol is the best option for them right now. I don't see anything else come close.\n\nWe just need to make sure fire dancer works well",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:02:13.000Z"
+        }
+      },
+      {
+        "author": "AutoModerator",
+        "body": "WARNING:\n1) IMPORTANT, Read This Post To Keep Your Crypto Safe From Scammers: https://www.reddit.com/r/solana/comments/18er2c8/how_to_avoid_the_biggest_crypto_scams_and/\n2) Do not trust DMs from anyone offering to help/support you with your funds (Sc",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:59:17.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "solana",
+  "title": "How do you see tokenized stocks performing on Solana long-term?",
+  "ups": 1,
+  "sentiment_score": {
+    "neutral": 0.9141220450401306,
+    "positive": 0.07024063169956207,
+    "negative": 0.01563732884824276
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e5ed66babf8cd957f8f"
+  },
+  "asset_id": "DOGE",
+  "url": "https://i.redd.it/rlv1ch8hzybf1.jpeg",
+  "author": "reditpost1",
+  "author_fullname": "t2_klt6kjuaz",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "DOGEUSDT",
+  "comments": [],
+  "created_at": {
+    "$date": "2025-07-10T03:55:15.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:55:15.000Z"
+  },
+  "domain": "i.redd.it",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:25.493Z"
+  },
+  "name": "t3_1lw33kx",
+  "num_comments": 0,
+  "query": "dogecoin OR doge",
+  "score": 5,
+  "selftext": "",
+  "submission_dict": {
+    "title": "We know what to do. Together strong.",
+    "selftext": "",
+    "subreddit": "r/dogecoin",
+    "url": "https://i.redd.it/rlv1ch8hzybf1.jpeg",
+    "asset_id": "DOGE",
+    "query": "dogecoin OR doge",
+    "comments": []
+  },
+  "subreddit": "dogecoin",
+  "title": "We know what to do. Together strong.",
+  "ups": 5,
+  "sentiment_score": {
+    "neutral": 0.9308360815048218,
+    "positive": 0.0557590089738369,
+    "negative": 0.01340492069721222
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e6fd66babf8cd957fd7"
+  },
+  "asset_id": "VNQ",
+  "url": "https://www.reddit.com/r/investing/comments/1lw31xt/inherited_350k_estate_am_i_crazy_for_wanting_to/",
+  "asset_yfinance": "VNQ",
+  "author": "duckhunter5556",
+  "author_fullname": "t2_g42lh8rwq",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [
+    {
+      "id": "n2b1epf",
+      "author": "4ever_Romeo",
+      "body": "This is YOUR money. Do not mingle it with any of your accounts. Set up a separate account, as you NEVER know what the future holds. PLEASE trust me on this.",
+      "score": 0,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:13:17.000Z"
+      }
+    },
+    {
+      "id": "n2b1b1n",
+      "author": "Classic-Routine2669",
+      "body": "Im not a financial advisor, nor do I have a ton of money. So this is nothing more than ramblings of a person that just gets by. Use advice at you own risk. \n\nThat being said, there are also medical savings accounts. With that amount of money, I would",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:12:34.000Z"
+      }
+    },
+    {
+      "id": "n2b0qds",
+      "author": "adkosmos",
+      "body": "Putting money in a taxable brokerage is really not called put money in retirement. You are just investing your extra cash that you can use any time.. and sure.. if you dont use it now, then you use it later. Why do you think it crazy to save for the ",
+      "score": -1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:08:31.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T03:52:41.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:52:41.000Z"
+  },
+  "domain": "self.investing",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:43.657Z"
+  },
+  "name": "t3_1lw31xt",
+  "num_comments": 5,
+  "query": "VNQ OR Real Estate",
+  "score": 3,
+  "selftext": "Hey everyone,\nUnfortunately, my mother passed away last year. My wife and I have spent the last year going through her estate. We are getting close to selling her condo and come the fall. Will be at about 350K liquid from the estate and 61k liquid from our own savings. \nOff the top, we have to spend 25,000 of the estate to the IRS and a Medicaid lien because she owed money/the state wants some money back. Then after that, I’d like to spend another 25K on our student loans to pay them off. Then we would effectively have no debt and no assets besides our two inexpensive vehicles. \nI currently have a retirement between my company, match 401(k), Roth and individual brokerage account worth 96K. My wife has a 401(k) and a Roth totaling 40k. We additionally have $1100 worth of etherium I bought in college. We both just turned 26 so I believe we are in pretty good shape for our retirement already.\nAfter paying off our debts, we will have roughly 310K to our names. I would like to put 150k aside for our down payment for a house. Then I would like to take 80 to 120k into our retirement. I guess I would have to put it in our individual brokerage account besides the 14k to max out our roths for the year. Is that the best way to do it? Have any of you put large lump sums in your retirement at once. That would put us at over 200K in our retirement before 27 and we would obviously continue dumping money into it like we are now. ",
+  "submission_dict": {
+    "title": "Inherited 350k estate. Am I crazy for wanting to put 80- 120k in my retirement?",
+    "selftext": "Hey everyone,\nUnfortunately, my mother passed away last year. My wife and I have spent the last year going through her estate. We are getting close to selling her condo and come the fall. Will be at about 350K liquid from the estate and 61k liquid from our own savings. \nOff the top, we have to spend 25,000 of the estate to the IRS and a Medicaid lien because she owed money/the state wants some money back. Then after that, I’d like to spend another 25K on our student loans to pay them off. Then we would effectively have no debt and no assets besides our two inexpensive vehicles. \nI currently have a retirement between my company, match 401(k), Roth and individual brokerage account worth 96K. My wife has a 401(k) and a Roth totaling 40k. We additionally have $1100 worth of etherium I bought in college. We both just turned 26 so I believe we are in pretty good shape for our retirement already.\nAfter paying off our debts, we will have roughly 310K to our names. I would like to put 150k asid",
+    "subreddit": "r/investing",
+    "url": "https://www.reddit.com/r/investing/comments/1lw31xt/inherited_350k_estate_am_i_crazy_for_wanting_to/",
+    "asset_id": "VNQ",
+    "query": "VNQ OR Real Estate",
+    "comments": [
+      {
+        "author": "4ever_Romeo",
+        "body": "This is YOUR money. Do not mingle it with any of your accounts. Set up a separate account, as you NEVER know what the future holds. PLEASE trust me on this.",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:13:17.000Z"
+        }
+      },
+      {
+        "author": "Classic-Routine2669",
+        "body": "Im not a financial advisor, nor do I have a ton of money. So this is nothing more than ramblings of a person that just gets by. Use advice at you own risk. \n\nThat being said, there are also medical savings accounts. With that amount of money, I would",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:12:34.000Z"
+        }
+      },
+      {
+        "author": "adkosmos",
+        "body": "Putting money in a taxable brokerage is really not called put money in retirement. You are just investing your extra cash that you can use any time.. and sure.. if you dont use it now, then you use it later. Why do you think it crazy to save for the ",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:08:31.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "investing",
+  "title": "Inherited 350k estate. Am I crazy for wanting to put 80- 120k in my retirement?",
+  "ups": 3,
+  "sentiment_score": {
+    "neutral": 0.9082938432693481,
+    "negative": 0.0655607208609581,
+    "positive": 0.02614540047943592
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e4bd66babf8cd957f3d"
+  },
+  "asset_id": "BTC",
+  "url": "https://www.reddit.com/r/Bitcoin/comments/1lw2y4q/can_realistically_010203_btc_make_you_a/",
+  "author": "OnlyBTC2035",
+  "author_fullname": "t2_1qbfqujiz0",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "BTCUSDT",
+  "comments": [
+    {
+      "id": "n2b1iog",
+      "author": "Live-Wrap-4592",
+      "body": "If you can buy 0.1 you can probably buy more. Ideally you are earning enough for today and tomorrow, and we choose to save tomorrows effort in bitcoin, because it’s finite. And some other fun reasons.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:14:04.000Z"
+      }
+    },
+    {
+      "id": "n2b1hgc",
+      "author": "biophysicsguy",
+      "body": "Exactly. Someone spent 10,000 BTC ($1.1 billion today) on 2 Papa Johns pizzas. So yes, It’s realistic that O.1 Bitcoin could make you rich someday",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:13:50.000Z"
+      }
+    },
+    {
+      "id": "n2b1aqp",
+      "author": "vinylectric",
+      "body": "I think you’re missing the point.\n\nSo you’re buying bitcoin with USD now to eventually turn it back into USD?",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:12:30.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T03:47:05.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:47:05.000Z"
+  },
+  "domain": "self.Bitcoin",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:05.723Z"
+  },
+  "name": "t3_1lw2y4q",
+  "num_comments": 14,
+  "query": "bitcoin OR btc",
+  "score": 2,
+  "selftext": "Hello,\nYou see every where retire with 0,1 BTC which is around $10k on a $100k BTC price.\nSo even a x10 BTC at 1 million it would be $100k from your initial investment.\nIt really depend on Bitcoin price in 10/20 years i guess.\n\nWhat do you guys think ?",
+  "submission_dict": {
+    "title": "Can realistically 0,1/0,2/0,3 BTC make you a millionaire over time ?",
+    "selftext": "Hello,\nYou see every where retire with 0,1 BTC which is around $10k on a $100k BTC price.\nSo even a x10 BTC at 1 million it would be $100k from your initial investment.\nIt really depend on Bitcoin price in 10/20 years i guess.\n\nWhat do you guys think ?",
+    "subreddit": "r/Bitcoin",
+    "url": "https://www.reddit.com/r/Bitcoin/comments/1lw2y4q/can_realistically_010203_btc_make_you_a/",
+    "asset_id": "BTC",
+    "query": "bitcoin OR btc",
+    "comments": [
+      {
+        "author": "Live-Wrap-4592",
+        "body": "If you can buy 0.1 you can probably buy more. Ideally you are earning enough for today and tomorrow, and we choose to save tomorrows effort in bitcoin, because it’s finite. And some other fun reasons.",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:14:04.000Z"
+        }
+      },
+      {
+        "author": "biophysicsguy",
+        "body": "Exactly. Someone spent 10,000 BTC ($1.1 billion today) on 2 Papa Johns pizzas. So yes, It’s realistic that O.1 Bitcoin could make you rich someday",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:13:50.000Z"
+        }
+      },
+      {
+        "author": "vinylectric",
+        "body": "I think you’re missing the point.\n\nSo you’re buying bitcoin with USD now to eventually turn it back into USD?",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:12:30.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "Bitcoin",
+  "title": "Can realistically 0,1/0,2/0,3 BTC make you a millionaire over time ?",
+  "ups": 2,
+  "sentiment_score": {
+    "neutral": 0.9150264263153076,
+    "positive": 0.05914868414402008,
+    "negative": 0.02582494728267193
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e69d66babf8cd957fbb"
+  },
+  "url": "https://www.reddit.com/r/stocks/comments/1lw2wg8/ive_been_saying_that_the_switch_2_was_gonna_flop/",
+  "asset_id": "EEM",
+  "asset_yfinance": "EEM",
+  "author": "Connect_Dream_2632",
+  "author_fullname": "t2_avbn8xpe",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [
+    {
+      "id": "n2b1lrp",
+      "author": "EnlightenedPotato69",
+      "body": "I mean your post kind of sounds like you want to short lol\n\nWhat did Nintendo do to you? Is the real question",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:14:41.000Z"
+      }
+    },
+    {
+      "id": "n2b1777",
+      "author": "WinningWatchlist",
+      "body": "I genuinely can't decide if Reddit was better pre-ChatGPT or after.\n\nBefore it we got a LOT of dumb questions and opinions like \"Why isn't my market order triggering after the close?\", most of those questions are replaced by AI slop content.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:11:49.000Z"
+      }
+    },
+    {
+      "id": "n2b0jk6",
+      "author": "casual_browsittor",
+      "body": "Being a dick doesn't help. People need to learn things before they know them. Just pass on knowledge if you feel the need. No need to be so pompous.\n\nButt munch.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:07:11.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T03:44:36.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:44:36.000Z"
+  },
+  "domain": "self.stocks",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:34.633Z"
+  },
+  "name": "t3_1lw2wg8",
+  "num_comments": 19,
+  "query": "EEM OR Emerging Markets",
+  "score": 0,
+  "selftext": "If you look at the market cap of Nintendo, the market cap is 100 billion which seems pretty low for a company that’s been manufacturing consoles and games that sell really well for decades at this point. Sony is 50 billion higher than them and sells less so something is going on there.\n\nOn top of that, Nintendo is down 1.87% according to this website https://companiesmarketcap.com/nintendo/marketcap/  so I’m assuming the switch 2 isn’t actually doing as good as analysts thought. Am I right here? ",
+  "submission_dict": {
+    "title": "I’ve been saying that the switch 2 was gonna flop and no one believed me, is this proof enough?",
+    "selftext": "If you look at the market cap of Nintendo, the market cap is 100 billion which seems pretty low for a company that’s been manufacturing consoles and games that sell really well for decades at this point. Sony is 50 billion higher than them and sells less so something is going on there.\n\nOn top of that, Nintendo is down 1.87% according to this website https://companiesmarketcap.com/nintendo/marketcap/  so I’m assuming the switch 2 isn’t actually doing as good as analysts thought. Am I right here? ",
+    "subreddit": "r/stocks",
+    "url": "https://www.reddit.com/r/stocks/comments/1lw2wg8/ive_been_saying_that_the_switch_2_was_gonna_flop/",
+    "asset_id": "EEM",
+    "query": "EEM OR Emerging Markets",
+    "comments": [
+      {
+        "author": "EnlightenedPotato69",
+        "body": "I mean your post kind of sounds like you want to short lol\n\nWhat did Nintendo do to you? Is the real question",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:14:41.000Z"
+        }
+      },
+      {
+        "author": "WinningWatchlist",
+        "body": "I genuinely can't decide if Reddit was better pre-ChatGPT or after.\n\nBefore it we got a LOT of dumb questions and opinions like \"Why isn't my market order triggering after the close?\", most of those questions are replaced by AI slop content.",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:11:49.000Z"
+        }
+      },
+      {
+        "author": "casual_browsittor",
+        "body": "Being a dick doesn't help. People need to learn things before they know them. Just pass on knowledge if you feel the need. No need to be so pompous.\n\nButt munch.",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:07:11.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "stocks",
+  "title": "I’ve been saying that the switch 2 was gonna flop and no one believed me, is this proof enough?",
+  "ups": 0,
+  "sentiment_score": {
+    "negative": 0.9447566866874695,
+    "neutral": 0.04603706672787666,
+    "positive": 0.009206166490912437
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e47d66babf8cd957f31"
+  },
+  "url": "https://www.reddit.com/r/CryptoMarkets/comments/1lw2scs/xeggex_is_shutting_down/",
+  "asset_id": "FDUSD",
+  "author": "razzeri",
+  "author_fullname": "t2_3bn10uw5",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "FDUSDUSDT",
+  "comments": [],
+  "created_at": {
+    "$date": "2025-07-10T03:38:20.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:38:20.000Z"
+  },
+  "domain": "self.CryptoMarkets",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:02.777Z"
+  },
+  "name": "t3_1lw2scs",
+  "num_comments": 1,
+  "query": "stablecoin OR stable coin",
+  "score": 1,
+  "selftext": "Hi   \nXeggex Exhnage is shutting down. Anyone know a replacement for these kind of coins  and where to store them?",
+  "submission_dict": {
+    "title": "Xeggex is shutting down",
+    "selftext": "Hi   \nXeggex Exhnage is shutting down. Anyone know a replacement for these kind of coins  and where to store them?",
+    "subreddit": "r/CryptoMarkets",
+    "url": "https://www.reddit.com/r/CryptoMarkets/comments/1lw2scs/xeggex_is_shutting_down/",
+    "asset_id": "FDUSD",
+    "query": "stablecoin OR stable coin",
+    "comments": []
+  },
+  "subreddit": "CryptoMarkets",
+  "title": "Xeggex is shutting down",
+  "ups": 1,
+  "sentiment_score": {
+    "neutral": 0.8581278920173645,
+    "negative": 0.12450189143419266,
+    "positive": 0.017370231449604034
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e56d66babf8cd957f6e"
+  },
+  "asset_id": "USDC",
+  "url": "https://www.reddit.com/r/CryptoMarkets/comments/1lw2scs/xeggex_is_shutting_down/",
+  "author": "razzeri",
+  "author_fullname": "t2_3bn10uw5",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "USDCUSDT",
+  "comments": [],
+  "created_at": {
+    "$date": "2025-07-10T03:38:20.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:38:20.000Z"
+  },
+  "domain": "self.CryptoMarkets",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:17.974Z"
+  },
+  "name": "t3_1lw2scs",
+  "num_comments": 1,
+  "query": "stablecoin OR stable coin",
+  "score": 1,
+  "selftext": "Hi   \nXeggex Exhnage is shutting down. Anyone know a replacement for these kind of coins  and where to store them?",
+  "submission_dict": {
+    "title": "Xeggex is shutting down",
+    "selftext": "Hi   \nXeggex Exhnage is shutting down. Anyone know a replacement for these kind of coins  and where to store them?",
+    "subreddit": "r/CryptoMarkets",
+    "url": "https://www.reddit.com/r/CryptoMarkets/comments/1lw2scs/xeggex_is_shutting_down/",
+    "asset_id": "USDC",
+    "query": "stablecoin OR stable coin",
+    "comments": []
+  },
+  "subreddit": "CryptoMarkets",
+  "title": "Xeggex is shutting down",
+  "ups": 1,
+  "sentiment_score": {
+    "neutral": 0.8558637499809265,
+    "negative": 0.12658783793449402,
+    "positive": 0.017548400908708572
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e4fd66babf8cd957f50"
+  },
+  "asset_id": "BTC",
+  "url": "https://www.reddit.com/r/CryptoMarkets/comments/1lw2qem/slt_crypto_coin_surges_in_popularity_emerging_as/",
+  "author": "Avalonsex",
+  "author_fullname": "t2_9ikg8yde",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "BTCUSDT",
+  "comments": [],
+  "created_at": {
+    "$date": "2025-07-10T03:35:28.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:35:28.000Z"
+  },
+  "domain": "self.CryptoMarkets",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:10.578Z"
+  },
+  "name": "t3_1lw2qem",
+  "num_comments": 0,
+  "query": "bitcoin OR btc",
+  "score": 1,
+  "selftext": "July 10, 2025 – Financial Tribune\n\n\n\nBy Sarah Milton – Senior Crypto Analyst\n\n\n\nIn a rapidly evolving digital economy, SLT Crypto Coin is making headlines as it climbs to the top ranks of global digital currencies. Analysts across the financial sector are now eyeing SLT as a potential leader in international transactions and cross-border remittances, with some experts suggesting it could soon rival even stalwarts like Bitcoin and Ripple in the money transfer space.\n\n\n\nOver the past quarter, SLT Coin has seen a staggering 300% increase in daily trading volume, according to data from CoinMarketPulse. Its growing popularity is being driven by a combination of fast transaction speeds, near-zero fees, and robust blockchain security features.\n\n\n\n“SLT is not just another altcoin,” said Amanda Reyes, Director of Digital Finance at Zurich Capital. “It’s becoming the go-to solution for people sending money abroad—especially in regions where traditional banking systems are inefficient or prohibitively expensive.”\n\n\n\nAdoption on the Rise\n\n\n\nEmerging markets in Africa, Southeast Asia, and South America are seeing a notable uptick in SLT wallet downloads. Many users cite its simplicity and speed compared to banks and other cryptocurrency options. The SLT development team also recently announced partnerships with two major remittance platforms in the Philippines and Nigeria, enabling direct crypto-to-cash withdrawals at thousands of physical locations.\n\n\n\nInstitutional Support Grows\n\n\n\nInstitutional backing is also building momentum for SLT Coin. Earlier this week, fintech giant NovaPay integrated SLT into its mobile banking app, allowing over 30 million users to trade and send SLT globally. Meanwhile, a consortium of Swiss banks is reportedly in talks to include SLT in their new digital asset investment portfolios.\n\n\n\n“The infrastructure around SLT is developing fast,” noted Max Caldwell, senior strategist at BlockFund Analytics. “What we’re seeing is a textbook case of utility driving adoption.”\n\n\n\nLooking Ahead\n\n\n\nIf the current trajectory holds, SLT Crypto Coin could soon position itself as the preferred digital currency for global financial interaction—especially among migrant workers, freelancers, and small businesses that depend on fast, affordable international payments.\n\n\n\nWhile volatility remains a concern for some investors, the sentiment around SLT is largely bullish, with projections suggesting continued upward momentum throughout Q3 2025.\n\n\n\nDisclaimer: This article is a fictional creation for entertainment and illustrative purposes only. SLT Coin is not a real cryptocurrency, and the events described herein did not actually occur.\n\n\n\nLet me know if you'd like it styled for a specific outlet (e.g., Bloomberg, CNBC, etc.) or turned into a visual news post.",
+  "submission_dict": {
+    "title": "SLT Crypto Coin Surges in Popularity, Emerging as Top Choice for Global Transfers",
+    "selftext": "July 10, 2025 – Financial Tribune\n\n\n\nBy Sarah Milton – Senior Crypto Analyst\n\n\n\nIn a rapidly evolving digital economy, SLT Crypto Coin is making headlines as it climbs to the top ranks of global digital currencies. Analysts across the financial sector are now eyeing SLT as a potential leader in international transactions and cross-border remittances, with some experts suggesting it could soon rival even stalwarts like Bitcoin and Ripple in the money transfer space.\n\n\n\nOver the past quarter, SLT Coin has seen a staggering 300% increase in daily trading volume, according to data from CoinMarketPulse. Its growing popularity is being driven by a combination of fast transaction speeds, near-zero fees, and robust blockchain security features.\n\n\n\n“SLT is not just another altcoin,” said Amanda Reyes, Director of Digital Finance at Zurich Capital. “It’s becoming the go-to solution for people sending money abroad—especially in regions where traditional banking systems are inefficient or prohibit",
+    "subreddit": "r/CryptoMarkets",
+    "url": "https://www.reddit.com/r/CryptoMarkets/comments/1lw2qem/slt_crypto_coin_surges_in_popularity_emerging_as/",
+    "asset_id": "BTC",
+    "query": "bitcoin OR btc",
+    "comments": []
+  },
+  "subreddit": "CryptoMarkets",
+  "title": "SLT Crypto Coin Surges in Popularity, Emerging as Top Choice for Global Transfers",
+  "ups": 1,
+  "sentiment_score": {
+    "positive": 0.8520679473876953,
+    "neutral": 0.13911178708076477,
+    "negative": 0.008820357732474804
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e56d66babf8cd957f6f"
+  },
+  "asset_id": "USDC",
+  "url": "https://www.reddit.com/r/CryptoMarkets/comments/1lw2qem/slt_crypto_coin_surges_in_popularity_emerging_as/",
+  "author": "Avalonsex",
+  "author_fullname": "t2_9ikg8yde",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "USDCUSDT",
+  "comments": [],
+  "created_at": {
+    "$date": "2025-07-10T03:35:28.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:35:28.000Z"
+  },
+  "domain": "self.CryptoMarkets",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:18.072Z"
+  },
+  "name": "t3_1lw2qem",
+  "num_comments": 0,
+  "query": "stablecoin OR stable coin",
+  "score": 1,
+  "selftext": "July 10, 2025 – Financial Tribune\n\n\n\nBy Sarah Milton – Senior Crypto Analyst\n\n\n\nIn a rapidly evolving digital economy, SLT Crypto Coin is making headlines as it climbs to the top ranks of global digital currencies. Analysts across the financial sector are now eyeing SLT as a potential leader in international transactions and cross-border remittances, with some experts suggesting it could soon rival even stalwarts like Bitcoin and Ripple in the money transfer space.\n\n\n\nOver the past quarter, SLT Coin has seen a staggering 300% increase in daily trading volume, according to data from CoinMarketPulse. Its growing popularity is being driven by a combination of fast transaction speeds, near-zero fees, and robust blockchain security features.\n\n\n\n“SLT is not just another altcoin,” said Amanda Reyes, Director of Digital Finance at Zurich Capital. “It’s becoming the go-to solution for people sending money abroad—especially in regions where traditional banking systems are inefficient or prohibitively expensive.”\n\n\n\nAdoption on the Rise\n\n\n\nEmerging markets in Africa, Southeast Asia, and South America are seeing a notable uptick in SLT wallet downloads. Many users cite its simplicity and speed compared to banks and other cryptocurrency options. The SLT development team also recently announced partnerships with two major remittance platforms in the Philippines and Nigeria, enabling direct crypto-to-cash withdrawals at thousands of physical locations.\n\n\n\nInstitutional Support Grows\n\n\n\nInstitutional backing is also building momentum for SLT Coin. Earlier this week, fintech giant NovaPay integrated SLT into its mobile banking app, allowing over 30 million users to trade and send SLT globally. Meanwhile, a consortium of Swiss banks is reportedly in talks to include SLT in their new digital asset investment portfolios.\n\n\n\n“The infrastructure around SLT is developing fast,” noted Max Caldwell, senior strategist at BlockFund Analytics. “What we’re seeing is a textbook case of utility driving adoption.”\n\n\n\nLooking Ahead\n\n\n\nIf the current trajectory holds, SLT Crypto Coin could soon position itself as the preferred digital currency for global financial interaction—especially among migrant workers, freelancers, and small businesses that depend on fast, affordable international payments.\n\n\n\nWhile volatility remains a concern for some investors, the sentiment around SLT is largely bullish, with projections suggesting continued upward momentum throughout Q3 2025.\n\n\n\nDisclaimer: This article is a fictional creation for entertainment and illustrative purposes only. SLT Coin is not a real cryptocurrency, and the events described herein did not actually occur.\n\n\n\nLet me know if you'd like it styled for a specific outlet (e.g., Bloomberg, CNBC, etc.) or turned into a visual news post.",
+  "submission_dict": {
+    "title": "SLT Crypto Coin Surges in Popularity, Emerging as Top Choice for Global Transfers",
+    "selftext": "July 10, 2025 – Financial Tribune\n\n\n\nBy Sarah Milton – Senior Crypto Analyst\n\n\n\nIn a rapidly evolving digital economy, SLT Crypto Coin is making headlines as it climbs to the top ranks of global digital currencies. Analysts across the financial sector are now eyeing SLT as a potential leader in international transactions and cross-border remittances, with some experts suggesting it could soon rival even stalwarts like Bitcoin and Ripple in the money transfer space.\n\n\n\nOver the past quarter, SLT Coin has seen a staggering 300% increase in daily trading volume, according to data from CoinMarketPulse. Its growing popularity is being driven by a combination of fast transaction speeds, near-zero fees, and robust blockchain security features.\n\n\n\n“SLT is not just another altcoin,” said Amanda Reyes, Director of Digital Finance at Zurich Capital. “It’s becoming the go-to solution for people sending money abroad—especially in regions where traditional banking systems are inefficient or prohibit",
+    "subreddit": "r/CryptoMarkets",
+    "url": "https://www.reddit.com/r/CryptoMarkets/comments/1lw2qem/slt_crypto_coin_surges_in_popularity_emerging_as/",
+    "asset_id": "USDC",
+    "query": "stablecoin OR stable coin",
+    "comments": []
+  },
+  "subreddit": "CryptoMarkets",
+  "title": "SLT Crypto Coin Surges in Popularity, Emerging as Top Choice for Global Transfers",
+  "ups": 1,
+  "sentiment_score": {
+    "positive": 0.8653174638748169,
+    "neutral": 0.12570342421531677,
+    "negative": 0.008979147300124168
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e47d66babf8cd957f32"
+  },
+  "url": "https://www.reddit.com/r/CryptoMarkets/comments/1lw2qem/slt_crypto_coin_surges_in_popularity_emerging_as/",
+  "asset_id": "FDUSD",
+  "author": "Avalonsex",
+  "author_fullname": "t2_9ikg8yde",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "FDUSDUSDT",
+  "comments": [],
+  "created_at": {
+    "$date": "2025-07-10T03:35:28.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:35:28.000Z"
+  },
+  "domain": "self.CryptoMarkets",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:02.866Z"
+  },
+  "name": "t3_1lw2qem",
+  "num_comments": 0,
+  "query": "stablecoin OR stable coin",
+  "score": 1,
+  "selftext": "July 10, 2025 – Financial Tribune\n\n\n\nBy Sarah Milton – Senior Crypto Analyst\n\n\n\nIn a rapidly evolving digital economy, SLT Crypto Coin is making headlines as it climbs to the top ranks of global digital currencies. Analysts across the financial sector are now eyeing SLT as a potential leader in international transactions and cross-border remittances, with some experts suggesting it could soon rival even stalwarts like Bitcoin and Ripple in the money transfer space.\n\n\n\nOver the past quarter, SLT Coin has seen a staggering 300% increase in daily trading volume, according to data from CoinMarketPulse. Its growing popularity is being driven by a combination of fast transaction speeds, near-zero fees, and robust blockchain security features.\n\n\n\n“SLT is not just another altcoin,” said Amanda Reyes, Director of Digital Finance at Zurich Capital. “It’s becoming the go-to solution for people sending money abroad—especially in regions where traditional banking systems are inefficient or prohibitively expensive.”\n\n\n\nAdoption on the Rise\n\n\n\nEmerging markets in Africa, Southeast Asia, and South America are seeing a notable uptick in SLT wallet downloads. Many users cite its simplicity and speed compared to banks and other cryptocurrency options. The SLT development team also recently announced partnerships with two major remittance platforms in the Philippines and Nigeria, enabling direct crypto-to-cash withdrawals at thousands of physical locations.\n\n\n\nInstitutional Support Grows\n\n\n\nInstitutional backing is also building momentum for SLT Coin. Earlier this week, fintech giant NovaPay integrated SLT into its mobile banking app, allowing over 30 million users to trade and send SLT globally. Meanwhile, a consortium of Swiss banks is reportedly in talks to include SLT in their new digital asset investment portfolios.\n\n\n\n“The infrastructure around SLT is developing fast,” noted Max Caldwell, senior strategist at BlockFund Analytics. “What we’re seeing is a textbook case of utility driving adoption.”\n\n\n\nLooking Ahead\n\n\n\nIf the current trajectory holds, SLT Crypto Coin could soon position itself as the preferred digital currency for global financial interaction—especially among migrant workers, freelancers, and small businesses that depend on fast, affordable international payments.\n\n\n\nWhile volatility remains a concern for some investors, the sentiment around SLT is largely bullish, with projections suggesting continued upward momentum throughout Q3 2025.\n\n\n\nDisclaimer: This article is a fictional creation for entertainment and illustrative purposes only. SLT Coin is not a real cryptocurrency, and the events described herein did not actually occur.\n\n\n\nLet me know if you'd like it styled for a specific outlet (e.g., Bloomberg, CNBC, etc.) or turned into a visual news post.",
+  "submission_dict": {
+    "title": "SLT Crypto Coin Surges in Popularity, Emerging as Top Choice for Global Transfers",
+    "selftext": "July 10, 2025 – Financial Tribune\n\n\n\nBy Sarah Milton – Senior Crypto Analyst\n\n\n\nIn a rapidly evolving digital economy, SLT Crypto Coin is making headlines as it climbs to the top ranks of global digital currencies. Analysts across the financial sector are now eyeing SLT as a potential leader in international transactions and cross-border remittances, with some experts suggesting it could soon rival even stalwarts like Bitcoin and Ripple in the money transfer space.\n\n\n\nOver the past quarter, SLT Coin has seen a staggering 300% increase in daily trading volume, according to data from CoinMarketPulse. Its growing popularity is being driven by a combination of fast transaction speeds, near-zero fees, and robust blockchain security features.\n\n\n\n“SLT is not just another altcoin,” said Amanda Reyes, Director of Digital Finance at Zurich Capital. “It’s becoming the go-to solution for people sending money abroad—especially in regions where traditional banking systems are inefficient or prohibit",
+    "subreddit": "r/CryptoMarkets",
+    "url": "https://www.reddit.com/r/CryptoMarkets/comments/1lw2qem/slt_crypto_coin_surges_in_popularity_emerging_as/",
+    "asset_id": "FDUSD",
+    "query": "stablecoin OR stable coin",
+    "comments": []
+  },
+  "subreddit": "CryptoMarkets",
+  "title": "SLT Crypto Coin Surges in Popularity, Emerging as Top Choice for Global Transfers",
+  "ups": 1,
+  "sentiment_score": {
+    "positive": 0.8562122583389282,
+    "neutral": 0.13523352146148682,
+    "negative": 0.008554176427423954
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e75d66babf8cd957fec"
+  },
+  "asset_id": "USO",
+  "url": "https://www.reddit.com/r/oilandgasworkers/comments/1lw2piq/offshore_advice/",
+  "asset_yfinance": "USO",
+  "author": "Alone-Rhubarb5871",
+  "author_fullname": "t2_un5w9ifv",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [
+    {
+      "id": "n2azs2g",
+      "author": "38183142",
+      "body": "I don’t think getting a job offshore is as easy as you think, along with the many other Reddit user posting the same thing. \nAs a EU citizen you will not be getting hired as a green hat anywhere else in the world. UAE or whoever would hire their own ",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:01:44.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T03:34:08.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:34:08.000Z"
+  },
+  "domain": "self.oilandgasworkers",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:49.352Z"
+  },
+  "name": "t3_1lw2piq",
+  "num_comments": 1,
+  "query": "USO OR Oil",
+  "score": 1,
+  "selftext": "Hi everyone 👋\n\nI’m looking to get into offshore oil/gas or FIFO work. I’m 34 Irish and looking at completing my tickets and medical such as H2 and bosiet in Miri Malaysia. Then take a few weeks to apply for work worldwide from there whilst I live cheap. Just wondering if anyone could guide me or let me know what tickets I definitely need before I start applying also what extras would be good to get to help get me a start ie rigging/slinging. I’ve worked in construction for over ten years have a few tickets for machines etc. just don’t want to waste all my cash if some aren’t needed or maybe apply for jobs first and the company puts you through anyways? Not sure how it works so would be great to know. Also because I’m Irish and have EU citizenship am I better off just applying to say UK and Norway or is it possible to get on in UAE or Africa with work rights etc. and being a greenhorn. I’m willing to work anywhere so that’s not an issue just wondering where is it easiest to get on. Any advice is much appreciated thanks. ",
+  "submission_dict": {
+    "title": "Offshore advice",
+    "selftext": "Hi everyone 👋\n\nI’m looking to get into offshore oil/gas or FIFO work. I’m 34 Irish and looking at completing my tickets and medical such as H2 and bosiet in Miri Malaysia. Then take a few weeks to apply for work worldwide from there whilst I live cheap. Just wondering if anyone could guide me or let me know what tickets I definitely need before I start applying also what extras would be good to get to help get me a start ie rigging/slinging. I’ve worked in construction for over ten years have a few tickets for machines etc. just don’t want to waste all my cash if some aren’t needed or maybe apply for jobs first and the company puts you through anyways? Not sure how it works so would be great to know. Also because I’m Irish and have EU citizenship am I better off just applying to say UK and Norway or is it possible to get on in UAE or Africa with work rights etc. and being a greenhorn. I’m willing to work anywhere so that’s not an issue just wondering where is it easiest to get on. Any ",
+    "subreddit": "r/oilandgasworkers",
+    "url": "https://www.reddit.com/r/oilandgasworkers/comments/1lw2piq/offshore_advice/",
+    "asset_id": "USO",
+    "query": "USO OR Oil",
+    "comments": [
+      {
+        "author": "38183142",
+        "body": "I don’t think getting a job offshore is as easy as you think, along with the many other Reddit user posting the same thing. \nAs a EU citizen you will not be getting hired as a green hat anywhere else in the world. UAE or whoever would hire their own ",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:01:44.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "oilandgasworkers",
+  "title": "Offshore advice",
+  "ups": 1,
+  "sentiment_score": {
+    "neutral": 0.8941764235496521,
+    "positive": 0.08785941451787949,
+    "negative": 0.01796412281692028
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e4fd66babf8cd957f51"
+  },
+  "asset_id": "BTC",
+  "url": "https://www.reddit.com/r/CryptoMarkets/comments/1lw2l4l/first_time_buyer_should_i_buy_btc_now_or_wait_for/",
+  "author": "Admirable-Box1514",
+  "author_fullname": "t2_1plzv8qb32",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "BTCUSDT",
+  "comments": [
+    {
+      "id": "n2b18bw",
+      "author": "Funny-Smoke-6422",
+      "body": "Yes. Just DCA. \nONLY BTC. Nothing else. \n\nEvery other coin can print.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:12:02.000Z"
+      }
+    },
+    {
+      "id": "n2b0rh4",
+      "author": "Malaka654",
+      "body": "Just DCA, $50 a week or something. You aren’t going to get rich quick buying BTC, you’ll be holding for 10 years at least anyway.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:08:44.000Z"
+      }
+    },
+    {
+      "id": "n2b0mbk",
+      "author": "IcyDragonFire",
+      "body": "Is the bull run in the room with us?",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:07:43.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T03:27:34.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:27:34.000Z"
+  },
+  "domain": "self.CryptoMarkets",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:10.578Z"
+  },
+  "name": "t3_1lw2l4l",
+  "num_comments": 9,
+  "query": "bitcoin OR btc",
+  "score": 4,
+  "selftext": "I am new to investing and crypto. I am expecting some money from my tax return and want to devote $1000 towards BTC. Since we are at an all time high it feels wrong to buy high. Part of me wants to join in on the bull run but part of me feels like i should wait for a drop in the market and then enter.\n\nany advice would be valuable. Thanks.",
+  "submission_dict": {
+    "title": "First time buyer - should I buy BTC now or wait for a drop in price?",
+    "selftext": "I am new to investing and crypto. I am expecting some money from my tax return and want to devote $1000 towards BTC. Since we are at an all time high it feels wrong to buy high. Part of me wants to join in on the bull run but part of me feels like i should wait for a drop in the market and then enter.\n\nany advice would be valuable. Thanks.",
+    "subreddit": "r/CryptoMarkets",
+    "url": "https://www.reddit.com/r/CryptoMarkets/comments/1lw2l4l/first_time_buyer_should_i_buy_btc_now_or_wait_for/",
+    "asset_id": "BTC",
+    "query": "bitcoin OR btc",
+    "comments": [
+      {
+        "author": "Funny-Smoke-6422",
+        "body": "Yes. Just DCA. \nONLY BTC. Nothing else. \n\nEvery other coin can print.",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:12:02.000Z"
+        }
+      },
+      {
+        "author": "Malaka654",
+        "body": "Just DCA, $50 a week or something. You aren’t going to get rich quick buying BTC, you’ll be holding for 10 years at least anyway.",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:08:44.000Z"
+        }
+      },
+      {
+        "author": "IcyDragonFire",
+        "body": "Is the bull run in the room with us?",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:07:43.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "CryptoMarkets",
+  "title": "First time buyer - should I buy BTC now or wait for a drop in price?",
+  "ups": 4,
+  "sentiment_score": {
+    "neutral": 0.9308314919471741,
+    "negative": 0.03670904040336609,
+    "positive": 0.03245939686894417
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e5ed66babf8cd957f90"
+  },
+  "asset_id": "DOGE",
+  "url": "https://www.reddit.com/r/dogecoin/comments/1lw2jua/doge_coin_to_369/",
+  "author": "tobitazzz",
+  "author_fullname": "t2_zui1iu23k",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "DOGEUSDT",
+  "comments": [
+    {
+      "id": "n2awcz3",
+      "author": "Brave_Ad6276",
+      "body": "never going to happen",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:38:33.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T03:25:37.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:25:37.000Z"
+  },
+  "domain": "self.dogecoin",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:25.493Z"
+  },
+  "name": "t3_1lw2jua",
+  "num_comments": 1,
+  "query": "dogecoin OR doge",
+  "score": 7,
+  "selftext": "This is legit!! $3.69 by mid October. Keep stacking!! Retailers are buying whales are buying miss out. ",
+  "submission_dict": {
+    "title": "Doge coin to $3.69",
+    "selftext": "This is legit!! $3.69 by mid October. Keep stacking!! Retailers are buying whales are buying miss out. ",
+    "subreddit": "r/dogecoin",
+    "url": "https://www.reddit.com/r/dogecoin/comments/1lw2jua/doge_coin_to_369/",
+    "asset_id": "DOGE",
+    "query": "dogecoin OR doge",
+    "comments": [
+      {
+        "author": "Brave_Ad6276",
+        "body": "never going to happen",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:38:33.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "dogecoin",
+  "title": "Doge coin to $3.69",
+  "ups": 7,
+  "sentiment_score": {
+    "neutral": 0.9190278053283691,
+    "negative": 0.047084201127290726,
+    "positive": 0.03388798609375954
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e7ed66babf8cd958004"
+  },
+  "asset_id": "QQQ",
+  "url": "https://www.reddit.com/r/ETFs/comments/1lw2dio/why_dont_people_just_invest_in_1_etf/",
+  "asset_yfinance": "QQQ",
+  "author": "YetiWise",
+  "author_fullname": "t2_1jqze0ucwn",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [
+    {
+      "id": "n2b177l",
+      "author": "NnamdiPlume",
+      "body": "I invest in only QQQM",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:11:49.000Z"
+      }
+    },
+    {
+      "id": "n2b16bv",
+      "author": "Markkuboi",
+      "body": "I do.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:11:39.000Z"
+      }
+    },
+    {
+      "id": "n2b10y2",
+      "author": "Funny-Smoke-6422",
+      "body": "Yes. You just need one ETF: IBIT",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:10:34.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T03:16:22.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:16:22.000Z"
+  },
+  "domain": "self.ETFs",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:57.299Z"
+  },
+  "name": "t3_1lw2dio",
+  "num_comments": 52,
+  "query": "QQQ OR Nasdaq ETF",
+  "score": 17,
+  "selftext": "I see people online combining multiple ETFS. Such as SCHD, and VOO. But why don’t people just buy 1 ETF as if you’re investing for 20+ years VOO will outperform SCHD + VOO. Or how about only QQQ? Sure it’s risky but over a 20 year period it will certainly outperform VOO unless something absolutely terrible happens.",
+  "submission_dict": {
+    "title": "Why don’t people just invest in 1 ETF?",
+    "selftext": "I see people online combining multiple ETFS. Such as SCHD, and VOO. But why don’t people just buy 1 ETF as if you’re investing for 20+ years VOO will outperform SCHD + VOO. Or how about only QQQ? Sure it’s risky but over a 20 year period it will certainly outperform VOO unless something absolutely terrible happens.",
+    "subreddit": "r/ETFs",
+    "url": "https://www.reddit.com/r/ETFs/comments/1lw2dio/why_dont_people_just_invest_in_1_etf/",
+    "asset_id": "QQQ",
+    "query": "QQQ OR Nasdaq ETF",
+    "comments": [
+      {
+        "author": "NnamdiPlume",
+        "body": "I invest in only QQQM",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:11:49.000Z"
+        }
+      },
+      {
+        "author": "Markkuboi",
+        "body": "I do.",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:11:39.000Z"
+        }
+      },
+      {
+        "author": "Funny-Smoke-6422",
+        "body": "Yes. You just need one ETF: IBIT",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:10:34.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "ETFs",
+  "title": "Why don’t people just invest in 1 ETF?",
+  "ups": 17,
+  "sentiment_score": {
+    "neutral": 0.9341017007827759,
+    "positive": 0.04523542895913124,
+    "negative": 0.02066289633512497
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e60d66babf8cd957f9b"
+  },
+  "asset_id": "ADA",
+  "url": "https://www.reddit.com/r/cardano/comments/1lw2dig/error_when_using_rosen_bridge_please_help/",
+  "author": "gameuz",
+  "author_fullname": "t2_12z4cs",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "ADAUSDT",
+  "comments": [
+    {
+      "id": "n2at2xk",
+      "author": "AutoModerator",
+      "body": "*  &#x1F393; **[r/Cardano Wiki Guide](https://www.reddit.com/r/cardano/wiki/index/)** - *Your essential resource! Covers [getting started](https://www.reddit.com/r/cardano/wiki/index/quick-start-guide/), [wallet security](https://www.reddit.com/r/car",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:16:23.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T03:16:21.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:16:21.000Z"
+  },
+  "domain": "self.cardano",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:28.000Z"
+  },
+  "name": "t3_1lw2dig",
+  "num_comments": 1,
+  "query": "cardano OR ada",
+  "score": 2,
+  "selftext": "I'm trying to swap ERGO to rsERGO using Rosen Bridge and send it to my cardano wallet, but after I put all the info I get this error: Transaction failed for the \\[Nautilus\\] wallet.\n\nAny idea why?",
+  "submission_dict": {
+    "title": "Error when using Rosen Bridge. Please help",
+    "selftext": "I'm trying to swap ERGO to rsERGO using Rosen Bridge and send it to my cardano wallet, but after I put all the info I get this error: Transaction failed for the \\[Nautilus\\] wallet.\n\nAny idea why?",
+    "subreddit": "r/cardano",
+    "url": "https://www.reddit.com/r/cardano/comments/1lw2dig/error_when_using_rosen_bridge_please_help/",
+    "asset_id": "ADA",
+    "query": "cardano OR ada",
+    "comments": [
+      {
+        "author": "AutoModerator",
+        "body": "*  &#x1F393; **[r/Cardano Wiki Guide](https://www.reddit.com/r/cardano/wiki/index/)** - *Your essential resource! Covers [getting started](https://www.reddit.com/r/cardano/wiki/index/quick-start-guide/), [wallet security](https://www.reddit.com/r/car",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:16:23.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "cardano",
+  "title": "Error when using Rosen Bridge. Please help",
+  "ups": 2,
+  "sentiment_score": {
+    "neutral": 0.9063227772712708,
+    "negative": 0.06424533575773239,
+    "positive": 0.029431890696287155
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e4ed66babf8cd957f46"
+  },
+  "asset_id": "BTC",
+  "url": "https://cointelegraph.com/news/bitcoin-price-btc-bull-150k-target-new-highs-crypto-analysts",
+  "author": "Every_Hunt_160",
+  "author_fullname": "t2_7a50dm3i",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "BTCUSDT",
+  "comments": [
+    {
+      "id": "n2azwpw",
+      "author": "rocky23m",
+      "body": "https://i.redd.it/pbxsfnms0zbf1.gif",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:02:40.000Z"
+      }
+    },
+    {
+      "id": "n2azgh8",
+      "author": "Bitcoin_Is_Stupid",
+      "body": "If we’re just making up numbers, why stop there? A trillion bucks by q3 2026 or I’ll eat my dick on national television!",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:59:31.000Z"
+      }
+    },
+    {
+      "id": "n2ay4ta",
+      "author": "coinfeeds-bot",
+      "body": "tldr; Bitcoin reached a new all-time high of $112,000, with bullish predictions suggesting it could climb to $150,000. Analysts attribute the surge to institutional participation, strong ETF inflows, and a favorable macroeconomic backdrop. Market sen",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:50:26.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T03:14:31.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:14:31.000Z"
+  },
+  "domain": "cointelegraph.com",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:08.056Z"
+  },
+  "name": "t3_1lw2c7s",
+  "num_comments": 10,
+  "query": "bitcoin OR btc",
+  "score": 13,
+  "selftext": "",
+  "submission_dict": {
+    "title": "‘See you at $150K,’ says Bitcoin bull after BTC taps new highs",
+    "selftext": "",
+    "subreddit": "r/CryptoCurrency",
+    "url": "https://cointelegraph.com/news/bitcoin-price-btc-bull-150k-target-new-highs-crypto-analysts",
+    "asset_id": "BTC",
+    "query": "bitcoin OR btc",
+    "comments": [
+      {
+        "author": "rocky23m",
+        "body": "https://i.redd.it/pbxsfnms0zbf1.gif",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:02:40.000Z"
+        }
+      },
+      {
+        "author": "Bitcoin_Is_Stupid",
+        "body": "If we’re just making up numbers, why stop there? A trillion bucks by q3 2026 or I’ll eat my dick on national television!",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:59:31.000Z"
+        }
+      },
+      {
+        "author": "coinfeeds-bot",
+        "body": "tldr; Bitcoin reached a new all-time high of $112,000, with bullish predictions suggesting it could climb to $150,000. Analysts attribute the surge to institutional participation, strong ETF inflows, and a favorable macroeconomic backdrop. Market sen",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:50:26.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "CryptoCurrency",
+  "title": "‘See you at $150K,’ says Bitcoin bull after BTC taps new highs",
+  "ups": 13,
+  "sentiment_score": {
+    "positive": 0.77798992395401,
+    "neutral": 0.1998741775751114,
+    "negative": 0.022135842591524124
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e4bd66babf8cd957f3e"
+  },
+  "asset_id": "BTC",
+  "url": "https://www.reddit.com/r/Bitcoin/comments/1lw23zu/help_getting_my_bitcoin/",
+  "author": "Ms_sleuth_purple",
+  "author_fullname": "t2_uje2srt9",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "BTCUSDT",
+  "comments": [
+    {
+      "id": "n2azppl",
+      "author": "ironmonger29",
+      "body": "Don't reply to DM's. Do not reveal the key to anyone if it's a private key.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:01:18.000Z"
+      }
+    },
+    {
+      "id": "n2axqdy",
+      "author": "whispers-in_the_wind",
+      "body": "If you have the seed phrase (private key) you can simply import it into a new wallet. Should be very simple.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:47:41.000Z"
+      }
+    },
+    {
+      "id": "n2awmhs",
+      "author": "Quirky-Reveal-1669",
+      "body": "What keys do you have? Public or private? Do you have the seed phrase?",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:40:18.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T03:02:07.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:02:07.000Z"
+  },
+  "domain": "self.Bitcoin",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:05.888Z"
+  },
+  "name": "t3_1lw23zu",
+  "num_comments": 6,
+  "query": "bitcoin OR btc",
+  "score": 0,
+  "selftext": "I was given a bitcoin key years ago when it was worth almost nothing so i forgot about it.  The guy who gave it to me died and now i don't know how to cash it?  can someone tell me how?",
+  "submission_dict": {
+    "title": "Help getting my bitcoin",
+    "selftext": "I was given a bitcoin key years ago when it was worth almost nothing so i forgot about it.  The guy who gave it to me died and now i don't know how to cash it?  can someone tell me how?",
+    "subreddit": "r/Bitcoin",
+    "url": "https://www.reddit.com/r/Bitcoin/comments/1lw23zu/help_getting_my_bitcoin/",
+    "asset_id": "BTC",
+    "query": "bitcoin OR btc",
+    "comments": [
+      {
+        "author": "ironmonger29",
+        "body": "Don't reply to DM's. Do not reveal the key to anyone if it's a private key.",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:01:18.000Z"
+        }
+      },
+      {
+        "author": "whispers-in_the_wind",
+        "body": "If you have the seed phrase (private key) you can simply import it into a new wallet. Should be very simple.",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:47:41.000Z"
+        }
+      },
+      {
+        "author": "Quirky-Reveal-1669",
+        "body": "What keys do you have? Public or private? Do you have the seed phrase?",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:40:18.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "Bitcoin",
+  "title": "Help getting my bitcoin",
+  "ups": 0,
+  "sentiment_score": {
+    "neutral": 0.9375503659248352,
+    "negative": 0.03842826187610626,
+    "positive": 0.02402135729789734
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e4bd66babf8cd957f3f"
+  },
+  "asset_id": "BTC",
+  "url": "https://www.reddit.com/r/Bitcoin/comments/1lw23p4/sold_15_for_btc/",
+  "author": "InterestingGrade7144",
+  "author_fullname": "t2_nwye6hu0d",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "BTCUSDT",
+  "comments": [
+    {
+      "id": "n2aw40e",
+      "author": "biophysicsguy",
+      "body": "Fair, so could just be rebalancing the portfolio at ATH and decided to add BTC exposure.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:36:53.000Z"
+      }
+    },
+    {
+      "id": "n2au4qr",
+      "author": "random_poster_543",
+      "body": "To be fair, stocks are also at ATH.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:23:26.000Z"
+      }
+    },
+    {
+      "id": "n2au399",
+      "author": "InterestingGrade7144",
+      "body": "Yes, doing the transition one step at a time. Im very bullish but want to growing my BTC holdings while learning about it",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:23:09.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T03:01:41.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T03:01:41.000Z"
+  },
+  "domain": "self.Bitcoin",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:06.008Z"
+  },
+  "name": "t3_1lw23p4",
+  "num_comments": 6,
+  "query": "bitcoin OR btc",
+  "score": 6,
+  "selftext": "My asset allocation looks 85% stocks or etfs and 15% BTC (~1% memecoins for fun). \nJust sold 15% of my stocks to buy BTC. \nOne more step :) ",
+  "submission_dict": {
+    "title": "Sold 15% for BTC",
+    "selftext": "My asset allocation looks 85% stocks or etfs and 15% BTC (~1% memecoins for fun). \nJust sold 15% of my stocks to buy BTC. \nOne more step :) ",
+    "subreddit": "r/Bitcoin",
+    "url": "https://www.reddit.com/r/Bitcoin/comments/1lw23p4/sold_15_for_btc/",
+    "asset_id": "BTC",
+    "query": "bitcoin OR btc",
+    "comments": [
+      {
+        "author": "biophysicsguy",
+        "body": "Fair, so could just be rebalancing the portfolio at ATH and decided to add BTC exposure.",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:36:53.000Z"
+        }
+      },
+      {
+        "author": "random_poster_543",
+        "body": "To be fair, stocks are also at ATH.",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:23:26.000Z"
+        }
+      },
+      {
+        "author": "InterestingGrade7144",
+        "body": "Yes, doing the transition one step at a time. Im very bullish but want to growing my BTC holdings while learning about it",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:23:09.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "Bitcoin",
+  "title": "Sold 15% for BTC",
+  "ups": 6,
+  "sentiment_score": {
+    "neutral": 0.8814155459403992,
+    "positive": 0.10480452328920364,
+    "negative": 0.01377994753420353
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e73d66babf8cd957fe0"
+  },
+  "asset_id": "GLD",
+  "url": "https://www.reddit.com/gallery/1lw1vwd",
+  "asset_yfinance": "GLD",
+  "author": "schillerstone",
+  "author_fullname": "t2_8gb6w86t",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [
+    {
+      "id": "n2b0ebc",
+      "author": "NorthStarGold",
+      "body": "Very cool I have some of those as well I love them but man they are tiny.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:06:08.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T02:50:30.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:50:30.000Z"
+  },
+  "domain": "reddit.com",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:46.723Z"
+  },
+  "name": "t3_1lw1vwd",
+  "num_comments": 1,
+  "query": "GLD OR Gold",
+  "score": 3,
+  "selftext": "Super cool birthday present! My Dad was born in 45 and Mexico is my favorite country to visit 🎉\nI am going to have it made into a pendant ",
+  "submission_dict": {
+    "title": "1945 Mexican Peso coin",
+    "selftext": "Super cool birthday present! My Dad was born in 45 and Mexico is my favorite country to visit 🎉\nI am going to have it made into a pendant ",
+    "subreddit": "r/Gold",
+    "url": "https://www.reddit.com/gallery/1lw1vwd",
+    "asset_id": "GLD",
+    "query": "GLD OR Gold",
+    "comments": [
+      {
+        "author": "NorthStarGold",
+        "body": "Very cool I have some of those as well I love them but man they are tiny.",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:06:08.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "Gold",
+  "title": "1945 Mexican Peso coin",
+  "ups": 3,
+  "sentiment_score": {
+    "neutral": 0.9156551361083984,
+    "positive": 0.061672765761613846,
+    "negative": 0.02267206646502018
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e7cd66babf8cd957fff"
+  },
+  "asset_id": "QQQ",
+  "url": "https://www.reddit.com/r/investing/comments/1lw1vpz/need_some_advice_for_investing_250k/",
+  "asset_yfinance": "QQQ",
+  "author": "goodbyeoldhellonew",
+  "author_fullname": "t2_11epmaf6ff",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [
+    {
+      "id": "n2b03kp",
+      "author": "tommy2handzzz",
+      "body": "Lots of conflicting advice on here, ultimately you’ll have to make the best decision for yourself. I lost my last remaining parent at 27 years old so perhaps we are in a similar boat. This was 10 years ago. Here’s my 2 cents with a decade of hindsigh",
+      "score": 2,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:04:01.000Z"
+      }
+    },
+    {
+      "id": "n2ayj09",
+      "author": "achshort",
+      "body": "VOO",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:53:07.000Z"
+      }
+    },
+    {
+      "id": "n2arwnr",
+      "author": "iroh-42",
+      "body": "Not enough info. I would advise talking to a fee only CFP. Avoid anyone trying to sell you life insurance like the plague",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:08:41.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T02:50:13.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:50:13.000Z"
+  },
+  "domain": "self.investing",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:55.448Z"
+  },
+  "name": "t3_1lw1vpz",
+  "num_comments": 10,
+  "query": "QQQ OR Nasdaq ETF",
+  "score": 1,
+  "selftext": "I’m 28F, inherited money after my dad died. I have about 80k in mutual funds, 20k in HYSA, 120k in various ETFs, and 30k behind. Should I get a financial advisor? I feel a bit overwhelmed by all the options and what’s the best fit for me. Concerned that most of my money is in US stocks and about losing that money. Ideally, I’d like the money to sit there until I’m ready to retire, probably liquidate some at a point to help with buying a house. Any advise? \n",
+  "submission_dict": {
+    "title": "Need some advice for investing 250k",
+    "selftext": "I’m 28F, inherited money after my dad died. I have about 80k in mutual funds, 20k in HYSA, 120k in various ETFs, and 30k behind. Should I get a financial advisor? I feel a bit overwhelmed by all the options and what’s the best fit for me. Concerned that most of my money is in US stocks and about losing that money. Ideally, I’d like the money to sit there until I’m ready to retire, probably liquidate some at a point to help with buying a house. Any advise? \n",
+    "subreddit": "r/investing",
+    "url": "https://www.reddit.com/r/investing/comments/1lw1vpz/need_some_advice_for_investing_250k/",
+    "asset_id": "QQQ",
+    "query": "QQQ OR Nasdaq ETF",
+    "comments": [
+      {
+        "author": "tommy2handzzz",
+        "body": "Lots of conflicting advice on here, ultimately you’ll have to make the best decision for yourself. I lost my last remaining parent at 27 years old so perhaps we are in a similar boat. This was 10 years ago. Here’s my 2 cents with a decade of hindsigh",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:04:01.000Z"
+        }
+      },
+      {
+        "author": "achshort",
+        "body": "VOO",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:53:07.000Z"
+        }
+      },
+      {
+        "author": "iroh-42",
+        "body": "Not enough info. I would advise talking to a fee only CFP. Avoid anyone trying to sell you life insurance like the plague",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:08:41.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "investing",
+  "title": "Need some advice for investing 250k",
+  "ups": 1,
+  "sentiment_score": {
+    "neutral": 0.8889545202255249,
+    "negative": 0.08576774597167969,
+    "positive": 0.025277700275182724
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e63d66babf8cd957faa"
+  },
+  "asset_id": "SPY",
+  "url": "https://www.reddit.com/r/stocks/comments/1lw1tcr/nasdaq_hits_record_as_nvidia_leads_tech_higher/",
+  "asset_yfinance": "SPY",
+  "author": "BogleDick",
+  "author_fullname": "t2_1fz4jvauzt",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [],
+  "created_at": {
+    "$date": "2025-07-10T02:46:53.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:46:53.000Z"
+  },
+  "domain": "self.stocks",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:31.213Z"
+  },
+  "name": "t3_1lw1tcr",
+  "num_comments": 0,
+  "query": "SPY OR S&P 500",
+  "score": 8,
+  "selftext": "https://www.barrons.com/livecoverage/stock-market-news-today/card/nasdaq-hits-record-as-nvidia-leads-tech-higher-UzvGr5Kpnuf2QfFEZPT0\n\nThe stock market returned to its winning ways on Wednesday as Nvidia and other technology stocks helped lift the Nasdaq Composite to another record close.\nThe Dow Jones Industrial Average was up 218 points, or 0.5%. The S&P 500 was up 0.6%. The Nasdaq Composite was up 0.9%. The Nasdaq topped its closing high from Friday, while the S&P 500 moved just shy of its own record.\nThe yield on the 2-year Treasury note dropped to 3.86%, while the 10-year yield was down to 4.34%.\nThe rally in bonds, which sent yields lower, happened despite minutes from the Federal Open Market Committee's June meeting, which showcased a divide among central bankers on when to start cutting interest rates.\nAndrew Brenner, head of international fixed income at NatAlliance Securities, argues the latest moves in the bond market are all about positioning, especially given an auction of 10-year notes that saw strong demand.\nNvidia became the first U.S. firm to cross the $4 trillion market cap threshold this morning. It, along with a handful of other stocks linked to the artificial intelligence trade, helped boost the market.\nThe next major test won’t come until earnings season kicks off next week. And tech earnings will follow in the ensuing weeks after that. Given the market’s surge, any signs of weakness could jolt stocks.\nBut for now, volatility is back to its lowest levels since February. Not even the latest tariff threats could throw a wrench in that.",
+  "submission_dict": {
+    "title": "Nasdaq Hits Record as Nvidia Leads Tech Higher",
+    "selftext": "https://www.barrons.com/livecoverage/stock-market-news-today/card/nasdaq-hits-record-as-nvidia-leads-tech-higher-UzvGr5Kpnuf2QfFEZPT0\n\nThe stock market returned to its winning ways on Wednesday as Nvidia and other technology stocks helped lift the Nasdaq Composite to another record close.\nThe Dow Jones Industrial Average was up 218 points, or 0.5%. The S&P 500 was up 0.6%. The Nasdaq Composite was up 0.9%. The Nasdaq topped its closing high from Friday, while the S&P 500 moved just shy of its own record.\nThe yield on the 2-year Treasury note dropped to 3.86%, while the 10-year yield was down to 4.34%.\nThe rally in bonds, which sent yields lower, happened despite minutes from the Federal Open Market Committee's June meeting, which showcased a divide among central bankers on when to start cutting interest rates.\nAndrew Brenner, head of international fixed income at NatAlliance Securities, argues the latest moves in the bond market are all about positioning, especially given an auction of",
+    "subreddit": "r/stocks",
+    "url": "https://www.reddit.com/r/stocks/comments/1lw1tcr/nasdaq_hits_record_as_nvidia_leads_tech_higher/",
+    "asset_id": "SPY",
+    "query": "SPY OR S&P 500",
+    "comments": []
+  },
+  "subreddit": "stocks",
+  "title": "Nasdaq Hits Record as Nvidia Leads Tech Higher",
+  "ups": 8,
+  "sentiment_score": {
+    "positive": 0.9121986627578735,
+    "neutral": 0.05709495022892952,
+    "negative": 0.030706433579325676
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e69d66babf8cd957fbc"
+  },
+  "asset_id": "EEM",
+  "url": "https://www.reddit.com/r/stocks/comments/1lw1tcr/nasdaq_hits_record_as_nvidia_leads_tech_higher/",
+  "asset_yfinance": "EEM",
+  "author": "BogleDick",
+  "author_fullname": "t2_1fz4jvauzt",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [],
+  "created_at": {
+    "$date": "2025-07-10T02:46:53.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:46:53.000Z"
+  },
+  "domain": "self.stocks",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:34.801Z"
+  },
+  "name": "t3_1lw1tcr",
+  "num_comments": 0,
+  "query": "EEM OR Emerging Markets",
+  "score": 8,
+  "selftext": "https://www.barrons.com/livecoverage/stock-market-news-today/card/nasdaq-hits-record-as-nvidia-leads-tech-higher-UzvGr5Kpnuf2QfFEZPT0\n\nThe stock market returned to its winning ways on Wednesday as Nvidia and other technology stocks helped lift the Nasdaq Composite to another record close.\nThe Dow Jones Industrial Average was up 218 points, or 0.5%. The S&P 500 was up 0.6%. The Nasdaq Composite was up 0.9%. The Nasdaq topped its closing high from Friday, while the S&P 500 moved just shy of its own record.\nThe yield on the 2-year Treasury note dropped to 3.86%, while the 10-year yield was down to 4.34%.\nThe rally in bonds, which sent yields lower, happened despite minutes from the Federal Open Market Committee's June meeting, which showcased a divide among central bankers on when to start cutting interest rates.\nAndrew Brenner, head of international fixed income at NatAlliance Securities, argues the latest moves in the bond market are all about positioning, especially given an auction of 10-year notes that saw strong demand.\nNvidia became the first U.S. firm to cross the $4 trillion market cap threshold this morning. It, along with a handful of other stocks linked to the artificial intelligence trade, helped boost the market.\nThe next major test won’t come until earnings season kicks off next week. And tech earnings will follow in the ensuing weeks after that. Given the market’s surge, any signs of weakness could jolt stocks.\nBut for now, volatility is back to its lowest levels since February. Not even the latest tariff threats could throw a wrench in that.",
+  "submission_dict": {
+    "title": "Nasdaq Hits Record as Nvidia Leads Tech Higher",
+    "selftext": "https://www.barrons.com/livecoverage/stock-market-news-today/card/nasdaq-hits-record-as-nvidia-leads-tech-higher-UzvGr5Kpnuf2QfFEZPT0\n\nThe stock market returned to its winning ways on Wednesday as Nvidia and other technology stocks helped lift the Nasdaq Composite to another record close.\nThe Dow Jones Industrial Average was up 218 points, or 0.5%. The S&P 500 was up 0.6%. The Nasdaq Composite was up 0.9%. The Nasdaq topped its closing high from Friday, while the S&P 500 moved just shy of its own record.\nThe yield on the 2-year Treasury note dropped to 3.86%, while the 10-year yield was down to 4.34%.\nThe rally in bonds, which sent yields lower, happened despite minutes from the Federal Open Market Committee's June meeting, which showcased a divide among central bankers on when to start cutting interest rates.\nAndrew Brenner, head of international fixed income at NatAlliance Securities, argues the latest moves in the bond market are all about positioning, especially given an auction of",
+    "subreddit": "r/stocks",
+    "url": "https://www.reddit.com/r/stocks/comments/1lw1tcr/nasdaq_hits_record_as_nvidia_leads_tech_higher/",
+    "asset_id": "EEM",
+    "query": "EEM OR Emerging Markets",
+    "comments": []
+  },
+  "subreddit": "stocks",
+  "title": "Nasdaq Hits Record as Nvidia Leads Tech Higher",
+  "ups": 8,
+  "sentiment_score": {
+    "positive": 0.9109205603599548,
+    "neutral": 0.05628647282719612,
+    "negative": 0.032793089747428894
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e73d66babf8cd957fe1"
+  },
+  "asset_id": "GLD",
+  "url": "https://www.reddit.com/r/Gold/comments/1lw1svy/aside_from_gold_what_are_the_next_2_precious/",
+  "asset_yfinance": "GLD",
+  "author": "grilledchorizopuseye",
+  "author_fullname": "t2_6ajh0gv9",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [
+    {
+      "id": "n2b19m7",
+      "author": "NorthStarGold",
+      "body": "Aluminum and copper, gotta start cheap and stack super deep. \n\nGoing to change my company to Northstar aluminum and copper. \n\nCute you got 1oz of gold for 3400. \n\nI got a ton of copper for 2528. \n\nAll jokes aside I think copper is the next one, it’s ",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:12:17.000Z"
+      }
+    },
+    {
+      "id": "n2b0guz",
+      "author": "dazanion",
+      "body": "Gold IS number 2 for me, Silver is 1 and Platinum is 3.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:06:38.000Z"
+      }
+    },
+    {
+      "id": "n2azf2z",
+      "author": "SarcasticallyCandour",
+      "body": "Platinum (i have 2 1oz brittannicas) and then silver (i have about 35oz)",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:59:14.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T02:46:14.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:46:14.000Z"
+  },
+  "domain": "self.Gold",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:46.887Z"
+  },
+  "name": "t3_1lw1svy",
+  "num_comments": 8,
+  "query": "GLD OR Gold",
+  "score": 2,
+  "selftext": "",
+  "submission_dict": {
+    "title": "Aside from Gold what are the next 2 precious metals you would want to collect and in what order?",
+    "selftext": "",
+    "subreddit": "r/Gold",
+    "url": "https://www.reddit.com/r/Gold/comments/1lw1svy/aside_from_gold_what_are_the_next_2_precious/",
+    "asset_id": "GLD",
+    "query": "GLD OR Gold",
+    "comments": [
+      {
+        "author": "NorthStarGold",
+        "body": "Aluminum and copper, gotta start cheap and stack super deep. \n\nGoing to change my company to Northstar aluminum and copper. \n\nCute you got 1oz of gold for 3400. \n\nI got a ton of copper for 2528. \n\nAll jokes aside I think copper is the next one, it’s ",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:12:17.000Z"
+        }
+      },
+      {
+        "author": "dazanion",
+        "body": "Gold IS number 2 for me, Silver is 1 and Platinum is 3.",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:06:38.000Z"
+        }
+      },
+      {
+        "author": "SarcasticallyCandour",
+        "body": "Platinum (i have 2 1oz brittannicas) and then silver (i have about 35oz)",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:59:14.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "Gold",
+  "title": "Aside from Gold what are the next 2 precious metals you would want to collect and in what order?",
+  "ups": 2,
+  "sentiment_score": {
+    "neutral": 0.9413905739784241,
+    "positive": 0.03676116466522217,
+    "negative": 0.021848313510417938
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e73d66babf8cd957fe2"
+  },
+  "url": "https://www.reddit.com/gallery/1lw1ob5",
+  "asset_id": "GLD",
+  "asset_yfinance": "GLD",
+  "author": "AdministrativeCopy88",
+  "author_fullname": "t2_8upbhr8m",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [
+    {
+      "id": "n2azpre",
+      "author": "NorthStarGold",
+      "body": "You know how to price ASE but not these. \n\nDid you buy this Reddit account to start spamming the wrong subs trying to sell stuff. \n\n\nUse google dude",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:01:18.000Z"
+      }
+    },
+    {
+      "id": "n2aze0o",
+      "author": "Ezzachef",
+      "body": "Nice detail",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:59:02.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T02:39:50.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:39:50.000Z"
+  },
+  "domain": "reddit.com",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:47.041Z"
+  },
+  "name": "t3_1lw1ob5",
+  "num_comments": 2,
+  "query": "GLD OR Gold",
+  "score": 0,
+  "selftext": "Gold Weight: 1/10 oz (.999 fine)\n\nGraded: NGC MS70 – perfect uncirculated\n\nCert #: 3078978-002\n\nFun Fact: 2007 was the final year before the U.S. Mint redesigned the reverse in 2008. Early Release slabs are especially sought after by collectors due to tight submission windows.\n\nWhat do you thing is a reasonable price?",
+  "submission_dict": {
+    "title": "🪙 2007-W $5 Gold American Eagle – NGC MS70 (Early Releases)",
+    "selftext": "Gold Weight: 1/10 oz (.999 fine)\n\nGraded: NGC MS70 – perfect uncirculated\n\nCert #: 3078978-002\n\nFun Fact: 2007 was the final year before the U.S. Mint redesigned the reverse in 2008. Early Release slabs are especially sought after by collectors due to tight submission windows.\n\nWhat do you thing is a reasonable price?",
+    "subreddit": "r/Gold",
+    "url": "https://www.reddit.com/gallery/1lw1ob5",
+    "asset_id": "GLD",
+    "query": "GLD OR Gold",
+    "comments": [
+      {
+        "author": "NorthStarGold",
+        "body": "You know how to price ASE but not these. \n\nDid you buy this Reddit account to start spamming the wrong subs trying to sell stuff. \n\n\nUse google dude",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:01:18.000Z"
+        }
+      },
+      {
+        "author": "Ezzachef",
+        "body": "Nice detail",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:59:02.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "Gold",
+  "title": "🪙 2007-W $5 Gold American Eagle – NGC MS70 (Early Releases)",
+  "ups": 0,
+  "sentiment_score": {
+    "neutral": 0.9283632636070251,
+    "positive": 0.039349012076854706,
+    "negative": 0.03228769451379776
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e73d66babf8cd957fe3"
+  },
+  "url": "https://i.redd.it/v9rrdr6plybf1.jpeg",
+  "asset_id": "GLD",
+  "asset_yfinance": "GLD",
+  "author": "htown9231999",
+  "author_fullname": "t2_1nvhtazg62",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [
+    {
+      "id": "n2azvpu",
+      "author": "Madhat596",
+      "body": "100% chance... bring a metal detector.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:02:28.000Z"
+      }
+    },
+    {
+      "id": "n2awxjk",
+      "author": "red98GTSR",
+      "body": "I was legitimately asking for someone to explain it to me.  So those are the gold balls inside the dirt bricks?",
+      "score": 2,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:42:18.000Z"
+      }
+    },
+    {
+      "id": "n2atjju",
+      "author": "frenchman1953",
+      "body": "Better not drop that on the floor!",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:19:27.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T02:38:02.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:38:02.000Z"
+  },
+  "domain": "i.redd.it",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:47.188Z"
+  },
+  "name": "t3_1lw1n0v",
+  "num_comments": 13,
+  "query": "GLD OR Gold",
+  "score": 1,
+  "selftext": "",
+  "submission_dict": {
+    "title": "Found these in the “find gold” bricks in Walmart any idea of what they could be worth?",
+    "selftext": "",
+    "subreddit": "r/Gold",
+    "url": "https://i.redd.it/v9rrdr6plybf1.jpeg",
+    "asset_id": "GLD",
+    "query": "GLD OR Gold",
+    "comments": [
+      {
+        "author": "Madhat596",
+        "body": "100% chance... bring a metal detector.",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:02:28.000Z"
+        }
+      },
+      {
+        "author": "red98GTSR",
+        "body": "I was legitimately asking for someone to explain it to me.  So those are the gold balls inside the dirt bricks?",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:42:18.000Z"
+        }
+      },
+      {
+        "author": "frenchman1953",
+        "body": "Better not drop that on the floor!",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:19:27.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "Gold",
+  "title": "Found these in the “find gold” bricks in Walmart any idea of what they could be worth?",
+  "ups": 1,
+  "sentiment_score": {
+    "neutral": 0.8952996134757996,
+    "negative": 0.07999563217163086,
+    "positive": 0.024704784154891968
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e73d66babf8cd957fe4"
+  },
+  "asset_id": "GLD",
+  "url": "https://www.reddit.com/gallery/1lw1mnj",
+  "asset_yfinance": "GLD",
+  "author": "AdministrativeCopy88",
+  "author_fullname": "t2_8upbhr8m",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [],
+  "created_at": {
+    "$date": "2025-07-10T02:37:32.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:37:32.000Z"
+  },
+  "domain": "reddit.com",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:47.342Z"
+  },
+  "name": "t3_1lw1mnj",
+  "num_comments": 0,
+  "query": "GLD OR Gold",
+  "score": 3,
+  "selftext": "Gold Weight: 1/25 oz (~0.04 oz) of .9999 pure gold\n\nMintage: Limited — Only 350 struck in this early proof batch\n\nGraded: GEM Proof by NGC\n\nFun Fact: This was part of the “Discover Australia” series, and the Koala design changes annually. Stunning mirrored fields.\n\nWhat would be the estimated value? What's a fair price?",
+  "submission_dict": {
+    "title": "🐨 2006 $15 Australian Gold Koala – GEM Proof (NGC – 1 of First 350 Struck)",
+    "selftext": "Gold Weight: 1/25 oz (~0.04 oz) of .9999 pure gold\n\nMintage: Limited — Only 350 struck in this early proof batch\n\nGraded: GEM Proof by NGC\n\nFun Fact: This was part of the “Discover Australia” series, and the Koala design changes annually. Stunning mirrored fields.\n\nWhat would be the estimated value? What's a fair price?",
+    "subreddit": "r/Gold",
+    "url": "https://www.reddit.com/gallery/1lw1mnj",
+    "asset_id": "GLD",
+    "query": "GLD OR Gold",
+    "comments": []
+  },
+  "subreddit": "Gold",
+  "title": "🐨 2006 $15 Australian Gold Koala – GEM Proof (NGC – 1 of First 350 Struck)",
+  "ups": 3,
+  "sentiment_score": {
+    "neutral": 0.9398386478424072,
+    "positive": 0.03670770674943924,
+    "negative": 0.02345363050699234
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e7ed66babf8cd958005"
+  },
+  "asset_id": "QQQ",
+  "url": "https://www.reddit.com/r/ETFs/comments/1lw1kb1/thoughts_on_ddtl_and_ddfl/",
+  "asset_yfinance": "QQQ",
+  "author": "Lucky-Tea-2370",
+  "author_fullname": "t2_kb2vhaj8",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [
+    {
+      "id": "n2amf2k",
+      "author": "AutoModerator",
+      "body": "Hi! It looks like you're discussing SPY, the SPDR S&P 500 ETF Trust. Quick facts: It was launched in 1993, invests in U.S. Large-Cap stocks, and tracks the S&P 500 Index. \n- Gain more [insights on SPY here.](https://www.trackinsight.com/en/fund/SPY?u",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T02:34:13.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T02:34:13.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:34:13.000Z"
+  },
+  "domain": "self.ETFs",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:57.592Z"
+  },
+  "name": "t3_1lw1kb1",
+  "num_comments": 1,
+  "query": "QQQ OR Nasdaq ETF",
+  "score": 2,
+  "selftext": "What are your thoughts on these new etfs. To my knowledge both of these have a buffer for when SPY goes down and also grows if it goes up but is capped. DDTL has a buffer decline of 10% and a growth cap at 12.59%. DDFL on the other hand has a buffer decline at 15% but a growth at 8.79%. Kind of follows the typical life insurance gimmick without the fees. \n\nFor now the only real downside is the high 0.79% expense ratio and no dividends. There's also the cap growth. I'm thinking about adding a very small percentage into my Roth. \nThoughts?\n",
+  "submission_dict": {
+    "title": "Thoughts on DDTL and DDFL",
+    "selftext": "What are your thoughts on these new etfs. To my knowledge both of these have a buffer for when SPY goes down and also grows if it goes up but is capped. DDTL has a buffer decline of 10% and a growth cap at 12.59%. DDFL on the other hand has a buffer decline at 15% but a growth at 8.79%. Kind of follows the typical life insurance gimmick without the fees. \n\nFor now the only real downside is the high 0.79% expense ratio and no dividends. There's also the cap growth. I'm thinking about adding a very small percentage into my Roth. \nThoughts?\n",
+    "subreddit": "r/ETFs",
+    "url": "https://www.reddit.com/r/ETFs/comments/1lw1kb1/thoughts_on_ddtl_and_ddfl/",
+    "asset_id": "QQQ",
+    "query": "QQQ OR Nasdaq ETF",
+    "comments": [
+      {
+        "author": "AutoModerator",
+        "body": "Hi! It looks like you're discussing SPY, the SPDR S&P 500 ETF Trust. Quick facts: It was launched in 1993, invests in U.S. Large-Cap stocks, and tracks the S&P 500 Index. \n- Gain more [insights on SPY here.](https://www.trackinsight.com/en/fund/SPY?u",
+        "created_at_utc": {
+          "$date": "2025-07-10T02:34:13.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "ETFs",
+  "title": "Thoughts on DDTL and DDFL",
+  "ups": 2,
+  "sentiment_score": {
+    "neutral": 0.8161245584487915,
+    "positive": 0.0979907214641571,
+    "negative": 0.08588478714227676
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e5cd66babf8cd957f81"
+  },
+  "url": "https://i.redd.it/oupztqonkybf1.jpeg",
+  "asset_id": "SOL",
+  "author": "oh_ho_ho69",
+  "author_fullname": "t2_5y9th12n",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "SOLUSDT",
+  "comments": [
+    {
+      "id": "n2as966",
+      "author": "Invalhallalvx",
+      "body": "No there’s no liquidity, there’s a site you can run the CA in also if you’re not sure. It’ll alert you of these red flags. I’ll input the link to the website, it’s useful\n\nhttps://rugcheck.xyz",
+      "score": 2,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:10:56.000Z"
+      }
+    },
+    {
+      "id": "n2aouhb",
+      "author": "cooter6-9",
+      "body": "What’s the ca?",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T02:49:00.000Z"
+      }
+    },
+    {
+      "id": "n2aonlc",
+      "author": "oh_ho_ho69",
+      "body": "So no point buying that coin?",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T02:47:49.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T02:32:12.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:32:12.000Z"
+  },
+  "domain": "i.redd.it",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:23.066Z"
+  },
+  "name": "t3_1lw1iy8",
+  "num_comments": 6,
+  "query": "solana OR sol",
+  "score": 0,
+  "selftext": "I was checking some coin and found out this remove thing in some coins.What is this about does it effect the chart from going up?",
+  "submission_dict": {
+    "title": "Whaat is this remove thing?",
+    "selftext": "I was checking some coin and found out this remove thing in some coins.What is this about does it effect the chart from going up?",
+    "subreddit": "r/Solana",
+    "url": "https://i.redd.it/oupztqonkybf1.jpeg",
+    "asset_id": "SOL",
+    "query": "solana OR sol",
+    "comments": [
+      {
+        "author": "Invalhallalvx",
+        "body": "No there’s no liquidity, there’s a site you can run the CA in also if you’re not sure. It’ll alert you of these red flags. I’ll input the link to the website, it’s useful\n\nhttps://rugcheck.xyz",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:10:56.000Z"
+        }
+      },
+      {
+        "author": "cooter6-9",
+        "body": "What’s the ca?",
+        "created_at_utc": {
+          "$date": "2025-07-10T02:49:00.000Z"
+        }
+      },
+      {
+        "author": "oh_ho_ho69",
+        "body": "So no point buying that coin?",
+        "created_at_utc": {
+          "$date": "2025-07-10T02:47:49.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "solana",
+  "title": "Whaat is this remove thing?",
+  "ups": 0,
+  "sentiment_score": {
+    "neutral": 0.9078615307807922,
+    "negative": 0.06355883926153183,
+    "positive": 0.02857956290245056
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e4bd66babf8cd957f40"
+  },
+  "asset_id": "BTC",
+  "url": "https://www.reddit.com/r/Bitcoin/comments/1lw1fu3/lump_sum_x_or_dca_y/",
+  "author": "pm_me_your_courage",
+  "author_fullname": "t2_36fc3p1q",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "BTCUSDT",
+  "comments": [
+    {
+      "id": "n2b0qli",
+      "author": "bigocreddit",
+      "body": "No actually the opposite. I don’t think the world is getting off the dollar anytime soon. Not even in my lifetime and I’m 37. You’ll want more btc today so that it can be worth millions of dollars in the future.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:08:34.000Z"
+      }
+    },
+    {
+      "id": "n2azx4h",
+      "author": "ji-wayne",
+      "body": "Gotcha. I thought you meant having more BTC is better because the world will one day be priced in BTC, not fiat, which is possible, but that’s a major change to current financial system.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:02:45.000Z"
+      }
+    },
+    {
+      "id": "n2aw7s3",
+      "author": "bigocreddit",
+      "body": "Would you rather have 1.17btc now and then see how much that’s worth in 100 months\n\nOr \n\nDCA for 100 months and if bitcoin goes to 1M in the next 8.3 years, end up with way less than 1.17btc?",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:37:34.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T02:27:53.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:27:53.000Z"
+  },
+  "domain": "self.Bitcoin",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:06.146Z"
+  },
+  "name": "t3_1lw1fu3",
+  "num_comments": 6,
+  "query": "bitcoin OR btc",
+  "score": 3,
+  "selftext": "As a thought experiment I’m trying to come up with a spreadsheet that will help me visualize the potential between the two.\n\nLet’s say my two options are:\nLump sum of $130000 now\nOr\nDCA $2200 per month for 100 months",
+  "submission_dict": {
+    "title": "Lump sum X or DCA Y",
+    "selftext": "As a thought experiment I’m trying to come up with a spreadsheet that will help me visualize the potential between the two.\n\nLet’s say my two options are:\nLump sum of $130000 now\nOr\nDCA $2200 per month for 100 months",
+    "subreddit": "r/Bitcoin",
+    "url": "https://www.reddit.com/r/Bitcoin/comments/1lw1fu3/lump_sum_x_or_dca_y/",
+    "asset_id": "BTC",
+    "query": "bitcoin OR btc",
+    "comments": [
+      {
+        "author": "bigocreddit",
+        "body": "No actually the opposite. I don’t think the world is getting off the dollar anytime soon. Not even in my lifetime and I’m 37. You’ll want more btc today so that it can be worth millions of dollars in the future.",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:08:34.000Z"
+        }
+      },
+      {
+        "author": "ji-wayne",
+        "body": "Gotcha. I thought you meant having more BTC is better because the world will one day be priced in BTC, not fiat, which is possible, but that’s a major change to current financial system.",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:02:45.000Z"
+        }
+      },
+      {
+        "author": "bigocreddit",
+        "body": "Would you rather have 1.17btc now and then see how much that’s worth in 100 months\n\nOr \n\nDCA for 100 months and if bitcoin goes to 1M in the next 8.3 years, end up with way less than 1.17btc?",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:37:34.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "Bitcoin",
+  "title": "Lump sum X or DCA Y",
+  "ups": 3,
+  "sentiment_score": {
+    "neutral": 0.9201919436454773,
+    "positive": 0.06151577830314636,
+    "negative": 0.018292227759957314
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e66d66babf8cd957fb1"
+  },
+  "asset_id": "EEM",
+  "url": "https://www.reddit.com/r/investing/comments/1lw1dp0/been_holding_about_37k_worth_in_vusxx_should_i/",
+  "asset_yfinance": "EEM",
+  "author": "Evancolt",
+  "author_fullname": "t2_hcolf",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [
+    {
+      "id": "n2axf50",
+      "author": "rhayhay",
+      "body": "Won't matter either way. Whichever you choose the market will just do the opposite.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T03:45:35.000Z"
+      }
+    },
+    {
+      "id": "n2amz5s",
+      "author": "ForeverInTheSun82647",
+      "body": "Just like above.  All personal pref.  No right or wrong way cause it depends on strategy.   I threw what I had into the market on liberation day.  Wasn’t much.  Maybe 6-7k. Sucks cause some of it is up 60-70 percent.  Figured I’ll hold what cash I ha",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T02:37:33.000Z"
+      }
+    },
+    {
+      "id": "n2ama3y",
+      "author": "Evancolt",
+      "body": "Appreciate the insight! Thank you.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T02:33:24.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T02:24:52.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:24:52.000Z"
+  },
+  "domain": "self.investing",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:33.035Z"
+  },
+  "name": "t3_1lw1dp0",
+  "num_comments": 4,
+  "query": "EEM OR Emerging Markets",
+  "score": 0,
+  "selftext": "Hi everyone, I made the mistake earlier this year of not dumping all my available cash during liberation day (put in 20k I had saved aside, but not the entire 57k since I thought it would drop more, it did not). \n\nI'm invested fully in index funds such as VTSAX and VTIAX\n\nWell I've been waiting for another drop of some sort to put in the 37k... Been a lot of green days! Which is great but it's made me not wanna drop in the 37k due to buying high. \n\nShould I wait for a drop? Or just DCA monthly a % of it? Or just dump it all in now? My net worth is about 500k with most of that in investments across my 401k/IRA/brokerage. All would go into my brokerage. \n\nYes I realize my mistake of trying to time the market. Never again. ",
+  "submission_dict": {
+    "title": "Been holding about 37k worth in VUSXX, should I lump sum or DCA?",
+    "selftext": "Hi everyone, I made the mistake earlier this year of not dumping all my available cash during liberation day (put in 20k I had saved aside, but not the entire 57k since I thought it would drop more, it did not). \n\nI'm invested fully in index funds such as VTSAX and VTIAX\n\nWell I've been waiting for another drop of some sort to put in the 37k... Been a lot of green days! Which is great but it's made me not wanna drop in the 37k due to buying high. \n\nShould I wait for a drop? Or just DCA monthly a % of it? Or just dump it all in now? My net worth is about 500k with most of that in investments across my 401k/IRA/brokerage. All would go into my brokerage. \n\nYes I realize my mistake of trying to time the market. Never again. ",
+    "subreddit": "r/investing",
+    "url": "https://www.reddit.com/r/investing/comments/1lw1dp0/been_holding_about_37k_worth_in_vusxx_should_i/",
+    "asset_id": "EEM",
+    "query": "EEM OR Emerging Markets",
+    "comments": [
+      {
+        "author": "rhayhay",
+        "body": "Won't matter either way. Whichever you choose the market will just do the opposite.",
+        "created_at_utc": {
+          "$date": "2025-07-10T03:45:35.000Z"
+        }
+      },
+      {
+        "author": "ForeverInTheSun82647",
+        "body": "Just like above.  All personal pref.  No right or wrong way cause it depends on strategy.   I threw what I had into the market on liberation day.  Wasn’t much.  Maybe 6-7k. Sucks cause some of it is up 60-70 percent.  Figured I’ll hold what cash I ha",
+        "created_at_utc": {
+          "$date": "2025-07-10T02:37:33.000Z"
+        }
+      },
+      {
+        "author": "Evancolt",
+        "body": "Appreciate the insight! Thank you.",
+        "created_at_utc": {
+          "$date": "2025-07-10T02:33:24.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "investing",
+  "title": "Been holding about 37k worth in VUSXX, should I lump sum or DCA?",
+  "ups": 0,
+  "sentiment_score": {
+    "neutral": 0.8399553298950195,
+    "positive": 0.10631085932254791,
+    "negative": 0.05373377725481987
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e73d66babf8cd957fe5"
+  },
+  "asset_id": "GLD",
+  "url": "https://i.redd.it/4fnavvcxhybf1.jpeg",
+  "asset_yfinance": "GLD",
+  "author": "Rumcajs23",
+  "author_fullname": "t2_yzgtn",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [],
+  "created_at": {
+    "$date": "2025-07-10T02:16:52.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:16:52.000Z"
+  },
+  "domain": "i.redd.it",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:47.342Z"
+  },
+  "name": "t3_1lw17z4",
+  "num_comments": 0,
+  "query": "GLD OR Gold",
+  "score": 0,
+  "selftext": "Hey everyone,\n\nAs the title states, I’m looking for jewelers, retailers, wholesale dealers, etc. that sell yacht links (thicker mariner)? Jacoje is out of stock, and there has been an upsurge of complaints regarding him.\n\nThanks in advance!",
+  "submission_dict": {
+    "title": "Where can I buy a yacht link? Jacoje is out of stock and there have been complaints about him.",
+    "selftext": "Hey everyone,\n\nAs the title states, I’m looking for jewelers, retailers, wholesale dealers, etc. that sell yacht links (thicker mariner)? Jacoje is out of stock, and there has been an upsurge of complaints regarding him.\n\nThanks in advance!",
+    "subreddit": "r/Gold",
+    "url": "https://i.redd.it/4fnavvcxhybf1.jpeg",
+    "asset_id": "GLD",
+    "query": "GLD OR Gold",
+    "comments": []
+  },
+  "subreddit": "Gold",
+  "title": "Where can I buy a yacht link? Jacoje is out of stock and there have been complaints about him.",
+  "ups": 0,
+  "sentiment_score": {
+    "negative": 0.5315573215484619,
+    "neutral": 0.43909287452697754,
+    "positive": 0.029349839314818382
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e7ed66babf8cd958006"
+  },
+  "asset_id": "QQQ",
+  "url": "https://www.reddit.com/r/ETFs/comments/1lw17fz/help_getting_started/",
+  "asset_yfinance": "QQQ",
+  "author": "Front-Student-5564",
+  "author_fullname": "t2_1g10oijz3d",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [
+    {
+      "id": "n2b07ff",
+      "author": "Atrox_Blue",
+      "body": "Just means that you’re tilting your portfolio slightly in a specific direction. For example if I’ve got VTI (full U.S. market) and VXUS (full global without U.S.) and then add AVUV, I’m tilting my portfolio to the small cap value side because I could",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:04:46.000Z"
+      }
+    },
+    {
+      "id": "n2apyqp",
+      "author": "Sexy-Waitress69",
+      "body": "No VXUS or SCHD, they will just drawdown your Portfolio. It's not time for either, maybe in future, just not now!",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T02:56:04.000Z"
+      }
+    },
+    {
+      "id": "n2an0b4",
+      "author": "Front-Student-5564",
+      "body": "Thank you for the advice, I definitely see that same knowledge often in this sub, I’m just scared to pull the trigger as I’ve never invested before. I definitely going to put most of my money towards VOO, and some towards VXUS. Would you mind explain",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T02:37:46.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T02:16:07.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:16:07.000Z"
+  },
+  "domain": "self.ETFs",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:57.682Z"
+  },
+  "name": "t3_1lw17fz",
+  "num_comments": 5,
+  "query": "QQQ OR Nasdaq ETF",
+  "score": 2,
+  "selftext": "Hi everybody, I (20M) have been doing lots of research and trying my best to learn how to invest. I have no clue what I’m doing, but I know I want to start out by investing in ETF’s. I can invest about $1000 per month currently. I’m thinking of starting out with VOO, VGT, VXUS, and SCHD. In my mind this is a nice blend of stability, growth, and diversification. I could be 100% wrong. Is this too complicated, too much overlap, etc? Any advice is greatly appreciated! Thank you!",
+  "submission_dict": {
+    "title": "Help getting started",
+    "selftext": "Hi everybody, I (20M) have been doing lots of research and trying my best to learn how to invest. I have no clue what I’m doing, but I know I want to start out by investing in ETF’s. I can invest about $1000 per month currently. I’m thinking of starting out with VOO, VGT, VXUS, and SCHD. In my mind this is a nice blend of stability, growth, and diversification. I could be 100% wrong. Is this too complicated, too much overlap, etc? Any advice is greatly appreciated! Thank you!",
+    "subreddit": "r/ETFs",
+    "url": "https://www.reddit.com/r/ETFs/comments/1lw17fz/help_getting_started/",
+    "asset_id": "QQQ",
+    "query": "QQQ OR Nasdaq ETF",
+    "comments": [
+      {
+        "author": "Atrox_Blue",
+        "body": "Just means that you’re tilting your portfolio slightly in a specific direction. For example if I’ve got VTI (full U.S. market) and VXUS (full global without U.S.) and then add AVUV, I’m tilting my portfolio to the small cap value side because I could",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:04:46.000Z"
+        }
+      },
+      {
+        "author": "Sexy-Waitress69",
+        "body": "No VXUS or SCHD, they will just drawdown your Portfolio. It's not time for either, maybe in future, just not now!",
+        "created_at_utc": {
+          "$date": "2025-07-10T02:56:04.000Z"
+        }
+      },
+      {
+        "author": "Front-Student-5564",
+        "body": "Thank you for the advice, I definitely see that same knowledge often in this sub, I’m just scared to pull the trigger as I’ve never invested before. I definitely going to put most of my money towards VOO, and some towards VXUS. Would you mind explain",
+        "created_at_utc": {
+          "$date": "2025-07-10T02:37:46.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "ETFs",
+  "title": "Help getting started",
+  "ups": 2,
+  "sentiment_score": {
+    "neutral": 0.889472484588623,
+    "positive": 0.07822556048631668,
+    "negative": 0.032301973551511765
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e66d66babf8cd957fb2"
+  },
+  "asset_id": "EEM",
+  "url": "https://www.reddit.com/r/investing/comments/1lw12p3/hoping_to_simulate_two_different_scenarios_of/",
+  "asset_yfinance": "EEM",
+  "author": "alijaniel",
+  "author_fullname": "t2_3bgrjdnw",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [],
+  "created_at": {
+    "$date": "2025-07-10T02:09:45.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:09:45.000Z"
+  },
+  "domain": "self.investing",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:33.137Z"
+  },
+  "name": "t3_1lw12p3",
+  "num_comments": 0,
+  "query": "EEM OR Emerging Markets",
+  "score": 2,
+  "selftext": "For context, I'm 24 and \\~$2.5k of my monthly paycheck gets invested. I have a Roth IRA and a taxable brokerage account.\n\nI previously invested into my Roth IRA by DCA'ing monthly with an amount that hits the max contribution in Dec (rest of the 2.5k goes to the taxable account), but I realized this isn't ideal because it doesn't maximize my time in the market for my tax-advantaged account. Open to feedback on this, but I see two potentially better options:\n\n**Option 1: Save Oct-Dec to max out Roth IRA immediately on the 1st**\n\n* Timeline\n   * Jan-Sep: Invest all of my monthly funds into the taxable account\n   * Oct-Dec: Save up enough cash (SPAXX, earning 4%) to max out the Roth IRA, invest whatever's leftover in the taxable account\n   * Jan 1 (following year): Immediately max out the Roth IRA with the cash I saved, SPAXX returns go to taxable account\n* Pros: Maximizes time in the market for tax-free gains\n* Cons: Does not maximize overall time in the market, since I have to hold up to $2k cash in Oct, $4.5k in Nov, and $7k in Dec\n\n**Option 2: DCA more aggressively into Roth IRA Jan-Mar**\n\n* Timeline\n   * Jan-Mar: Invest all of my monthly funds into the Roth IRA, until it's maxed out at the end of March, invest whatever's leftover in the taxable account\n   * Apr-Dec: Invest all my monthly funds into the taxable account\n* Pros: Maximizes overall time in the market; never have to hold cash\n* Cons: Does not maximize time in the market for tax-free gains\n\nI'm hoping to figure out what the results of these two scenarios would be. I.e., **assuming a fixed ROI and assuming I continue to make contributions/investments at the same rate, what would my balance in the taxable account and Roth IRA be at retirement (say, 40 years from now) for each scenario?** I'm assuming Option 1 will maximize tax-free returns, but Option 2 will maximize overall returns; I'd like to see what those numbers look like.\n\nI gave this a go myself, but calculating the compound interest, figuring out the investment timing, and figuring out how to deal with the 4% money market returns is a bit beyond me. Also fed this information into an LLM, but it came up with a completely absurd answer. If someone else knows how to do this kind of analysis (or can coerce ChatGPT into doing it correctly), I'd really appreciate it.",
+  "submission_dict": {
+    "title": "Hoping to simulate two different scenarios of investment timing... could use some help with the math.",
+    "selftext": "For context, I'm 24 and \\~$2.5k of my monthly paycheck gets invested. I have a Roth IRA and a taxable brokerage account.\n\nI previously invested into my Roth IRA by DCA'ing monthly with an amount that hits the max contribution in Dec (rest of the 2.5k goes to the taxable account), but I realized this isn't ideal because it doesn't maximize my time in the market for my tax-advantaged account. Open to feedback on this, but I see two potentially better options:\n\n**Option 1: Save Oct-Dec to max out Roth IRA immediately on the 1st**\n\n* Timeline\n   * Jan-Sep: Invest all of my monthly funds into the taxable account\n   * Oct-Dec: Save up enough cash (SPAXX, earning 4%) to max out the Roth IRA, invest whatever's leftover in the taxable account\n   * Jan 1 (following year): Immediately max out the Roth IRA with the cash I saved, SPAXX returns go to taxable account\n* Pros: Maximizes time in the market for tax-free gains\n* Cons: Does not maximize overall time in the market, since I have to hold up t",
+    "subreddit": "r/investing",
+    "url": "https://www.reddit.com/r/investing/comments/1lw12p3/hoping_to_simulate_two_different_scenarios_of/",
+    "asset_id": "EEM",
+    "query": "EEM OR Emerging Markets",
+    "comments": []
+  },
+  "subreddit": "investing",
+  "title": "Hoping to simulate two different scenarios of investment timing... could use some help with the math.",
+  "ups": 2,
+  "sentiment_score": {
+    "neutral": 0.890645444393158,
+    "positive": 0.09265656024217606,
+    "negative": 0.016698064282536507
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e4bd66babf8cd957f41"
+  },
+  "asset_id": "BTC",
+  "url": "https://www.reddit.com/r/Bitcoin/comments/1lw11ux/should_i_do_it/",
+  "author": "goalieryan1",
+  "author_fullname": "t2_q1zk9d",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "BTCUSDT",
+  "comments": [
+    {
+      "id": "n2b1jli",
+      "author": "golf_234",
+      "body": "smart, this is the way, tailored approach is a good way to optimize and manage risk. can \"have your cake and eat it too\" to some degree, vs. blindly all in, sometimes you get lucky but I like this a lot more- as time reveals things. could for example",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:14:15.000Z"
+      }
+    },
+    {
+      "id": "n2b0n38",
+      "author": "ThalesAtreides",
+      "body": "Starsky and Hutch right? Lol I forget sometimes where the reference comes from but I always use it lol",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:07:52.000Z"
+      }
+    },
+    {
+      "id": "n2b0cra",
+      "author": "RonAnFawn",
+      "body": "I would do it💯% not a second thought and it seems like your mind is already made up. You just want approval “it’s your money” 😂",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T04:05:49.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T02:08:35.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:08:35.000Z"
+  },
+  "domain": "self.Bitcoin",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:06.288Z"
+  },
+  "name": "t3_1lw11ux",
+  "num_comments": 104,
+  "query": "bitcoin OR btc",
+  "score": 56,
+  "selftext": "27M ~ 150k all in all. Probably just about 110k in assets I can move around freely (brokerage, bank, crypto)\n\nI have this thought in my head I can’t shake. Do I just go balls deep and buy myself 1.0 BTC and shut up for 10 years? \n\nI’m a financial advisor by profession, so my education tells me no, but history tells me yes.\n\nEdit for more clarity:\nNo debt other than a mortgage on a duplex my gf and I own and rent one side of\n6 mo Emergency fund \nStable job - no risk of going out of business or losing it unless I do something really dumb \nGf has a stable job as well and makes double what I do \n\nOnly expenses coming up would be marriage and single family home down the line. \n",
+  "submission_dict": {
+    "title": "Should I do it?",
+    "selftext": "27M ~ 150k all in all. Probably just about 110k in assets I can move around freely (brokerage, bank, crypto)\n\nI have this thought in my head I can’t shake. Do I just go balls deep and buy myself 1.0 BTC and shut up for 10 years? \n\nI’m a financial advisor by profession, so my education tells me no, but history tells me yes.\n\nEdit for more clarity:\nNo debt other than a mortgage on a duplex my gf and I own and rent one side of\n6 mo Emergency fund \nStable job - no risk of going out of business or losing it unless I do something really dumb \nGf has a stable job as well and makes double what I do \n\nOnly expenses coming up would be marriage and single family home down the line. \n",
+    "subreddit": "r/Bitcoin",
+    "url": "https://www.reddit.com/r/Bitcoin/comments/1lw11ux/should_i_do_it/",
+    "asset_id": "BTC",
+    "query": "bitcoin OR btc",
+    "comments": [
+      {
+        "author": "golf_234",
+        "body": "smart, this is the way, tailored approach is a good way to optimize and manage risk. can \"have your cake and eat it too\" to some degree, vs. blindly all in, sometimes you get lucky but I like this a lot more- as time reveals things. could for example",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:14:15.000Z"
+        }
+      },
+      {
+        "author": "ThalesAtreides",
+        "body": "Starsky and Hutch right? Lol I forget sometimes where the reference comes from but I always use it lol",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:07:52.000Z"
+        }
+      },
+      {
+        "author": "RonAnFawn",
+        "body": "I would do it💯% not a second thought and it seems like your mind is already made up. You just want approval “it’s your money” 😂",
+        "created_at_utc": {
+          "$date": "2025-07-10T04:05:49.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "Bitcoin",
+  "title": "Should I do it?",
+  "ups": 56,
+  "sentiment_score": {
+    "neutral": 0.9314215779304504,
+    "negative": 0.04227091372013092,
+    "positive": 0.026307478547096252
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e74d66babf8cd957fe6"
+  },
+  "url": "https://www.reddit.com/gallery/1lw11fe",
+  "asset_id": "GLD",
+  "asset_yfinance": "GLD",
+  "author": "Ambitious_Radish_412",
+  "author_fullname": "t2_b9rgdng7",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "comments": [
+    {
+      "id": "n2anztg",
+      "author": "NorthStarGold",
+      "body": "I acid test everything, if done right the small amount of damage is not noticeable.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T02:43:46.000Z"
+      }
+    },
+    {
+      "id": "n2al7ct",
+      "author": "Ambitious_Radish_412",
+      "body": "Does an acid test usually prove a lot? I wanted an RF SCAN but no pawnshop or jewelry store seems to have one.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T02:26:57.000Z"
+      }
+    },
+    {
+      "id": "n2akv65",
+      "author": "NorthStarGold",
+      "body": "It’s 14k so about 27g of gold \n\nCould be real or maybe he had a fake one as well get it tested if you are worried.",
+      "score": 1,
+      "created_at_utc": {
+        "$date": "2025-07-10T02:24:55.000Z"
+      }
+    }
+  ],
+  "created_at": {
+    "$date": "2025-07-10T02:07:59.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:07:59.000Z"
+  },
+  "domain": "reddit.com",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:47.342Z"
+  },
+  "name": "t3_1lw11fe",
+  "num_comments": 3,
+  "query": "GLD OR Gold",
+  "score": 0,
+  "selftext": "Wanting to trade this guy on Facebook for this 50gram Cuban Bracelet. Wanting to know opinions on whether you think this is real or fake. Guy checks on the flags with profile, feedback, and reasons for wanting to trade. Only thing throwing me off is he told me a couple days ago that he actually made this himself  and is a part time jeweler. Don’t know why but now I’m starting to second guess. I am meeting him in a couple days at a jewelry store to do acid test/ magnet test, but I know even that has its faults. So just from the pictures, does this seem to be authentic 14k gold Cuban Bracelet? Thanks!",
+  "submission_dict": {
+    "title": "Real or Fake?",
+    "selftext": "Wanting to trade this guy on Facebook for this 50gram Cuban Bracelet. Wanting to know opinions on whether you think this is real or fake. Guy checks on the flags with profile, feedback, and reasons for wanting to trade. Only thing throwing me off is he told me a couple days ago that he actually made this himself  and is a part time jeweler. Don’t know why but now I’m starting to second guess. I am meeting him in a couple days at a jewelry store to do acid test/ magnet test, but I know even that has its faults. So just from the pictures, does this seem to be authentic 14k gold Cuban Bracelet? Thanks!",
+    "subreddit": "r/Gold",
+    "url": "https://www.reddit.com/gallery/1lw11fe",
+    "asset_id": "GLD",
+    "query": "GLD OR Gold",
+    "comments": [
+      {
+        "author": "NorthStarGold",
+        "body": "I acid test everything, if done right the small amount of damage is not noticeable.",
+        "created_at_utc": {
+          "$date": "2025-07-10T02:43:46.000Z"
+        }
+      },
+      {
+        "author": "Ambitious_Radish_412",
+        "body": "Does an acid test usually prove a lot? I wanted an RF SCAN but no pawnshop or jewelry store seems to have one.",
+        "created_at_utc": {
+          "$date": "2025-07-10T02:26:57.000Z"
+        }
+      },
+      {
+        "author": "NorthStarGold",
+        "body": "It’s 14k so about 27g of gold \n\nCould be real or maybe he had a fake one as well get it tested if you are worried.",
+        "created_at_utc": {
+          "$date": "2025-07-10T02:24:55.000Z"
+        }
+      }
+    ]
+  },
+  "subreddit": "Gold",
+  "title": "Real or Fake?",
+  "ups": 0,
+  "sentiment_score": {
+    "neutral": 0.9150924682617188,
+    "negative": 0.04645766690373421,
+    "positive": 0.03844984993338585
+  }
+},
+{
+  "_id": {
+    "$oid": "686f3e57d66babf8cd957f74"
+  },
+  "url": "https://x.com/RedbellyNetwork/status/1943099998218129833",
+  "asset_id": "USDC",
+  "author": "TheLaw-001",
+  "author_fullname": "t2_1osiab7nos",
+  "author_is_blocked": false,
+  "author_premium": false,
+  "binance_asset": "USDCUSDT",
+  "comments": [],
+  "created_at": {
+    "$date": "2025-07-10T02:04:49.000Z"
+  },
+  "created_at_utc": {
+    "$date": "2025-07-10T02:04:49.000Z"
+  },
+  "domain": "x.com",
+  "downs": 0,
+  "extraction_timestamp_utc": {
+    "$date": "2025-07-10T04:15:19.015Z"
+  },
+  "name": "t3_1lw0z3p",
+  "num_comments": 0,
+  "query": "stablecoin OR stable coin",
+  "score": 1,
+  "selftext": "https://www.coingecko.com/en/coins/redbelly-network",
+  "submission_dict": {
+    "title": "Redbelly Network selected for the Australian wholesale CBDC",
+    "selftext": "https://www.coingecko.com/en/coins/redbelly-network",
+    "subreddit": "r/Altcoin",
+    "url": "https://x.com/RedbellyNetwork/status/1943099998218129833",
+    "asset_id": "USDC",
+    "query": "stablecoin OR stable coin",
+    "comments": []
+  },
+  "subreddit": "altcoin",
+  "title": "Redbelly Network selected for the Australian wholesale CBDC",
+  "ups": 1,
+  "sentiment_score": {
+    "neutral": 0.9352864027023315,
+    "positive": 0.04751016944646835,
+    "negative": 0.017203394323587418
+  }
+}]

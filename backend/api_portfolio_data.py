@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 import logging
-from typing import Dict, List
+from typing import Dict, List, Optional
 from datetime import datetime
 from service_portfolio_data import PortfolioDataService
 
@@ -25,8 +25,19 @@ class AssetAllocation(BaseModel):
     description: str
     asset_type: str
 
+class CryptoAssetAllocation(BaseModel):
+    binance_symbol: Optional[str] = None
+    allocation_percentage: str
+    allocation_number: int
+    allocation_decimal: float
+    description: str
+    asset_type: str
+
 class MessageResponse(BaseModel):
     portfolio_allocation: Dict[str, AssetAllocation]
+
+class CryptoMessageResponse(BaseModel):
+    crypto_portfolio_allocation: Dict[str, CryptoAssetAllocation]
 
 class PerformanceDataPoint(BaseModel):
     _id: str
@@ -40,7 +51,7 @@ class PerformanceResponse(BaseModel):
 
 ### Portfolio Data Endpoints ###
 
-@router.post("/fetch-portfolio-allocation", response_model=MessageResponse)
+@router.get("/fetch-portfolio-allocation", response_model=MessageResponse)
 async def fetch_portfolio_allocation():
     """
     Fetch portfolio allocation data.
@@ -55,7 +66,22 @@ async def fetch_portfolio_allocation():
         logging.error(f"Error fetching portfolio allocation: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.post("/fetch-portfolio-performance", response_model=PerformanceResponse)
+@router.get("/fetch-crypto-portfolio-allocation", response_model=CryptoMessageResponse)
+async def fetch_crypto_portfolio_allocation():
+    """
+    Fetch crypto portfolio allocation data.
+
+    Returns:
+        CryptoMessageResponse: An object containing the crypto portfolio allocation data.
+    """
+    try:
+        crypto_portfolio_allocation = portfolio_data_service.fetch_crypto_portfolio_allocation()
+        return CryptoMessageResponse(crypto_portfolio_allocation=crypto_portfolio_allocation)
+    except Exception as e:
+        logging.error(f"Error fetching crypto portfolio allocation: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/fetch-portfolio-performance", response_model=PerformanceResponse)
 async def fetch_portfolio_performance(days: int = Query(30, description="Number of days of performance data to retrieve")):
     """
     Fetch the last N days of portfolio performance data.

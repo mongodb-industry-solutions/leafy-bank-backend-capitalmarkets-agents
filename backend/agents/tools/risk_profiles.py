@@ -33,7 +33,7 @@ class RiskProfiles(MongoDBConnector):
 
     def _get_default_profile(self) -> dict:
         """
-        Retrieve the default risk profile (with risk_id 'BALANCE').
+        Retrieve the default risk profile (with risk_id 'BALANCED').
 
         Returns:
             dict: The default risk profile document.
@@ -41,13 +41,13 @@ class RiskProfiles(MongoDBConnector):
         Raises:
             ValueError: If the default profile is not found.
         """
-        default = self.collection.find_one({"risk_id": "BALANCE"})
+        default = self.collection.find_one({"risk_id": "BALANCED"})
         if default:
-            logger.info("Default risk profile 'BALANCE' retrieved.")
+            logger.info("Default risk profile 'BALANCED' retrieved.")
             return default
         else:
-            logger.error("Default risk profile 'BALANCE' not found.")
-            raise ValueError("Default risk profile 'BALANCE' not found.")
+            logger.error("Default risk profile 'BALANCED' not found.")
+            raise ValueError("Default risk profile 'BALANCED' not found.")
 
     def get_active_risk_profile(self) -> dict:
         """
@@ -73,7 +73,7 @@ class RiskProfiles(MongoDBConnector):
                 logger.error("Multiple active risk profiles found. There must be exactly one active risk profile.")
                 raise ValueError("Multiple active risk profiles found.")
         except Exception as e:
-            logger.exception("Error retrieving active risk profile. Returning default profile 'BALANCE'.")
+            logger.exception("Error retrieving active risk profile. Returning default profile 'BALANCED'.")
             try:
                 return self._get_default_profile()
             except Exception as ex:
@@ -118,7 +118,7 @@ class RiskProfiles(MongoDBConnector):
             logger.info("Successfully set risk profile '%s' as active.", risk_id)
             return updated_profile
         except Exception as e:
-            logger.exception("Error setting active risk profile. Returning default profile 'BALANCE'.")
+            logger.exception("Error setting active risk profile. Returning default profile 'BALANCED'.")
             try:
                 return self._get_default_profile()
             except Exception as ex:
@@ -136,7 +136,7 @@ if __name__ == "__main__":
         logger.error(error)
 
     try:
-        new_active_profile = profiler.set_active_risk_profile("BALANCE")
+        new_active_profile = profiler.set_active_risk_profile("BALANCED")
         logger.info("New active risk profile: %s", new_active_profile)
     except Exception as error:
         logger.error(error)

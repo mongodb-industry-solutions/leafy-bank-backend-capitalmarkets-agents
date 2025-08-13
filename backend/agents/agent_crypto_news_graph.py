@@ -1,6 +1,6 @@
 from langgraph.graph import END, StateGraph
 
-from agents.tools.states.agent_market_news_state import MarketNewsAgentState
+from agents.tools.states.agent_crypto_news_state import CryptoNewsAgentState
 from agents.tools.tool_portfolio_allocation import check_portfolio_allocation_tool
 from agents.tools.tool_news_retrieval import fetch_market_news_tool
 from agents.tools.tool_news_sentiment_calc import calculate_news_sentiment_tool
@@ -10,11 +10,11 @@ from agents.tools.tool_news_sentiment_summary import generate_news_sentiment_sum
 # --- Create LangGraph StateGraph ---
 def create_workflow_graph(checkpointer=None):
     """
-    Create a workflow graph for the Market News Agent.
-    This graph defines the sequence of operations that the agent will perform to analyze market news and generate insights.
+    Create a workflow graph for the Crypto News Agent.
+    This graph defines the sequence of operations that the agent will perform to analyze the crypto news and generate insights.
     """
     # Define the state of the agent
-    graph = StateGraph(MarketNewsAgentState)
+    graph = StateGraph(CryptoNewsAgentState)
 
     # Define the nodes
     graph.add_node("portfolio_allocation_node", check_portfolio_allocation_tool)
