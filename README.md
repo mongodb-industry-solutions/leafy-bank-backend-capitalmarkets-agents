@@ -254,7 +254,7 @@ Create a `.env` file in the `/backend` directory with the following content:
 MONGODB_URI="your_mongodb_uri"
 DATABASE_NAME="agentic_capital_markets"
 APP_NAME="your_app_name"
-VOYAGE_API_KEY="your_voyage_api_key"
+VOYAGE_API_KEY=
 EMBEDDINGS_MODEL_ID="voyage-finance-2"
 AWS_REGION="us-east-1"
 CHAT_COMPLETIONS_MODEL_ID="anthropic.claude-3-haiku-20240307-v1:0"
@@ -368,6 +368,6 @@ The FastAPI interactive documentation provides detailed information about all av
 
 - Check that you've created an `.env` file that contains the required environment variables.
 
-## 📄 **License**
+## 📄 License
 
-This project is for educational and demonstration purposes. 
+See [LICENSE](LICENSE) file for details.

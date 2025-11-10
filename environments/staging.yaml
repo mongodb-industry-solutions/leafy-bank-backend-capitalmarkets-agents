@@ -1,0 +1,49 @@
+env:
+  NODE_ENV: staging
+  
+envSecrets:
+  MONGODB_URI: capitalmarkets-sched-agents
+  DATABASE_NAME: capitalmarkets-sched-agents
+  APP_NAME: capitalmarkets-sched-agents
+  VOYAGE_API_KEY: capitalmarkets-sched-agents
+  EMBEDDINGS_MODEL_ID: capitalmarkets-sched-agents
+  AWS_REGION: capitalmarkets-sched-agents
+  CHAT_COMPLETIONS_MODEL_ID: capitalmarkets-sched-agents
+  YFINANCE_TIMESERIES_COLLECTION: capitalmarkets-sched-agents
+  CRYPTO_TIMESERIES_COLLECTION: capitalmarkets-sched-agents
+  PYFREDAPI_COLLECTION: capitalmarkets-sched-agents
+  SUBREDDIT_SUBMISSIONS_COLLECTION: capitalmarkets-sched-agents
+  SUBREDDIT_SUBMISSIONS_VECTOR_INDEX_NAME: capitalmarkets-sched-agents
+  SUBREDDIT_SUBMISSIONS_VECTOR_FIELD: capitalmarkets-sched-agents
+  NEWS_COLLECTION: capitalmarkets-sched-agents
+  NEWS_COLLECTION_VECTOR_FIELD: capitalmarkets-sched-agents
+  NEWS_VECTOR_INDEX_NAME: capitalmarkets-sched-agents
+  VECTOR_INDEX_NAME: capitalmarkets-sched-agents
+  VECTOR_FIELD: capitalmarkets-sched-agents
+  PORTFOLIO_PERFORMANCE_COLLECTION: capitalmarkets-sched-agents
+  PORTFOLIO_COLLECTION: capitalmarkets-sched-agents
+  CRYPTO_PORTFOLIO_COLLECTION: capitalmarkets-sched-agents
+  AGENT_PROFILES_COLLECTION: capitalmarkets-sched-agents
+  RISK_PROFILES_COLLECTION: capitalmarkets-sched-agents
+  REPORTS_COLLECTION_CRYPTO_ANALYSIS: capitalmarkets-sched-agents
+  REPORTS_COLLECTION_CRYPTO_SM: capitalmarkets-sched-agents
+  REPORTS_COLLECTION_CRYPTO_NEWS: capitalmarkets-sched-agents
+  REPORTS_COLLECTION_MARKET_ANALYSIS: capitalmarkets-sched-agents
+  REPORTS_COLLECTION_MARKET_SM: capitalmarkets-sched-agents
+  REPORTS_COLLECTION_MARKET_NEWS: capitalmarkets-sched-agents
+  CHART_MAPPINGS_COLLECTION: capitalmarkets-sched-agents
+  COINGECKO_STABLECOIN_COLLECTION: capitalmarkets-sched-agents
+  MA_PERIOD: capitalmarkets-sched-agents
+  CRYPTO_SHORT_MA: capitalmarkets-sched-agents
+  CRYPTO_MID_MA: capitalmarkets-sched-agents
+  CRYPTO_LONG_MA: capitalmarkets-sched-agents
+  CRYPTO_RSI_PERIOD: capitalmarkets-sched-agents
+  CRYPTO_VOLUME_PERIOD: capitalmarkets-sched-agents
+  CRYPTO_VWAP_PERIOD: capitalmarkets-sched-agents
+  NODE_ENV: capitalmarkets-sched-agents
+
+serviceAccount:
+  enabled: true
+  irsa:
+    accountId: "275662791714"
+    roleName: "kanopy-staging-cicd-irsa"
