@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 import logging
 import threading
+import os
 from scheduled_agents import ScheduledAgents
 
 # Configure logging
@@ -115,6 +116,26 @@ async def execute_crypto_social_media_workflow():
 @router.get("/scheduler-overview")
 async def scheduler_overview():
     try:
+        # Check if scheduler is initialized
+        if scheduler is None:
+            raise HTTPException(
+                status_code=503,
+                detail="Scheduler is still initializing. Please try again in a few moments."
+            )
+
+        # Check NODE_ENV - return early if not production
+        node_env = os.getenv("NODE_ENV", "").lower()
+        if node_env != "prod":
+            return {
+                "overview": {
+                    "max_exec": "N/A",
+                    "tzinfo": "UTC",
+                    "priority_function": "N/A",
+                    "jobs": [],
+                    "message": f"No jobs scheduled (NODE_ENV={node_env}, jobs only run in 'prod')"
+                }
+            }
+
         overview = str(scheduler.scheduler)
         overview_lines = overview.split("\n")
         overview_dict = {
@@ -181,6 +202,8 @@ async def scheduler_overview():
                     
                     overview_dict["jobs"].append(job)
         return {"overview": overview_dict}
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error generating scheduler overview: {e}")
         return {"error": "Failed to generate scheduler overview"}

@@ -339,6 +339,16 @@ class ScheduledAgents:
         """
         Schedules the jobs for the market analysis and market news workflows.
         """
+        # Get NODE_ENV to determine if jobs should be scheduled
+        node_env = os.getenv("NODE_ENV", "").lower()
+
+        # Only schedule jobs in production environment
+        if node_env != "prod":
+            logger.info(f"Skipping job scheduling - NODE_ENV={node_env} (jobs only run in 'prod' environment)")
+            logger.info("Scheduled jobs configured! (no jobs scheduled)")
+            return
+
+        logger.info(f"Scheduling jobs for production environment (NODE_ENV={node_env})")
 
         ################
         #### MARKET ####
