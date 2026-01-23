@@ -40,10 +40,10 @@ steps:
         - "ingress.enabled=true"
         - "ingress.hosts[0]=capitalmarkets-sched-agents.industrysolutions.staging.corp.mongodb.com"
         - "mesh.enabled=true"
-        - "resources.limits.cpu=2000m"
-        - "resources.limits.memory=4096Mi"
-        - "resources.requests.cpu=1000m"
-        - "resources.requests.memory=2048Mi"
+        - "resources.limits.cpu=300m"
+        - "resources.limits.memory=768Mi"
+        - "resources.requests.cpu=75m"
+        - "resources.requests.memory=384Mi"
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:
         from_secret: staging_kubernetes_token
@@ -93,10 +93,10 @@ steps:
         - "ingress.enabled=true"
         - "ingress.hosts[0]=capitalmarkets-sched-agents.industrysolutions.prod.corp.mongodb.com"
         - "mesh.enabled=true"
-        - "resources.limits.cpu=2000m"
-        - "resources.limits.memory=4096Mi"
-        - "resources.requests.cpu=1000m"
-        - "resources.requests.memory=2048Mi"
+        - "resources.limits.cpu=300m"
+        - "resources.limits.memory=768Mi"
+        - "resources.requests.cpu=75m"
+        - "resources.requests.memory=384Mi"
       api_server: https://api.prod.corp.mongodb.com
       kubernetes_token:
         from_secret: prod_kubernetes_token
