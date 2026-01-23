@@ -35,19 +35,19 @@ steps:
       namespace: industrysolutions
       release: capitalmarkets-sched-agents
       values:
-        - "image.tag=git-${DRONE_COMMIT_SHA:0:7}"
-        - "image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/industrysolutions/capitalmarkets-sched-agents"
-        - "ingress.enabled=true"
-        - "ingress.hosts[0]=capitalmarkets-sched-agents.industrysolutions.staging.corp.mongodb.com"
-        - "mesh.enabled=true"
-        - "resources.limits.cpu=2000m"
-        - "resources.limits.memory=4096Mi"
-        - "resources.requests.cpu=1000m"
-        - "resources.requests.memory=2048Mi"
+        - 'image.tag=git-${DRONE_COMMIT_SHA:0:7}'
+        - 'image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/industrysolutions/capitalmarkets-sched-agents'
+        - 'ingress.enabled=true'
+        - 'ingress.hosts[0]=capitalmarkets-sched-agents.industrysolutions.staging.corp.mongodb.com'
+        - 'mesh.enabled=true'
+        - 'resources.limits.cpu=300m'
+        - 'resources.limits.memory=768Mi'
+        - 'resources.requests.cpu=75m'
+        - 'resources.requests.memory=384Mi'
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:
         from_secret: staging_kubernetes_token
-      values_files: [ "environments/staging.yaml" ]
+      values_files: ['environments/staging.yaml']
     when:
       event:
         - push
@@ -88,19 +88,19 @@ steps:
       namespace: industrysolutions
       release: capitalmarkets-sched-agents
       values:
-        - "image.tag=git-${DRONE_COMMIT_SHA:0:7}"
-        - "image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/industrysolutions/capitalmarkets-sched-agents"
-        - "ingress.enabled=true"
-        - "ingress.hosts[0]=capitalmarkets-sched-agents.industrysolutions.prod.corp.mongodb.com"
-        - "mesh.enabled=true"
-        - "resources.limits.cpu=2000m"
-        - "resources.limits.memory=4096Mi"
-        - "resources.requests.cpu=1000m"
-        - "resources.requests.memory=2048Mi"
+        - 'image.tag=git-${DRONE_COMMIT_SHA:0:7}'
+        - 'image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/industrysolutions/capitalmarkets-sched-agents'
+        - 'ingress.enabled=true'
+        - 'ingress.hosts[0]=capitalmarkets-sched-agents.industrysolutions.prod.corp.mongodb.com'
+        - 'mesh.enabled=true'
+        - 'resources.limits.cpu=300m'
+        - 'resources.limits.memory=768Mi'
+        - 'resources.requests.cpu=75m'
+        - 'resources.requests.memory=384Mi'
       api_server: https://api.prod.corp.mongodb.com
       kubernetes_token:
         from_secret: prod_kubernetes_token
-      values_files: [ "environments/prod.yaml" ]
+      values_files: ['environments/prod.yaml']
     when:
       event:
         - push
