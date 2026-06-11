@@ -15,6 +15,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Portfolio identities in the consolidated portfolioAllocation collection (equity + crypto
+# folded into one collection, distinguished by portfolioId).
+EQUITY_PORTFOLIO_ID = os.getenv("EQUITY_PORTFOLIO_ID", "PORT-0001")
+CRYPTO_PORTFOLIO_ID = os.getenv("CRYPTO_PORTFOLIO_ID", "PORT-0002")
+
 class PortfolioDataService(MongoDBConnector):
     def __init__(self, uri=None, database_name: str = None, appname: str = None):
         """
@@ -42,19 +47,19 @@ class PortfolioDataService(MongoDBConnector):
         """
         try:
             collection_name = self.collections["allocation"]
-            # Query to get all portfolio allocation data
-            result = self.db[collection_name].find()
+            # Single folded collection — filter to the equity portfolio; read camelCase fields.
+            result = self.db[collection_name].find({"portfolioId": EQUITY_PORTFOLIO_ID})
 
             # Process the result and construct the portfolio_allocation dictionary
             portfolio_allocation = {}
             for doc in result:
                 symbol = doc["symbol"]
                 allocation_data = {
-                    "allocation_percentage": doc["allocation_percentage"],
-                    "allocation_number": doc["allocation_number"],
-                    "allocation_decimal": doc["allocation_decimal"],
+                    "allocation_percentage": doc["allocationPercentage"],
+                    "allocation_number": doc["allocationNumber"],
+                    "allocation_decimal": doc["allocationDecimal"],
                     "description": doc["description"],
-                    "asset_type": doc["asset_type"]
+                    "asset_type": doc["assetType"]
                 }
                 portfolio_allocation[symbol] = allocation_data
 
@@ -73,20 +78,20 @@ class PortfolioDataService(MongoDBConnector):
         """
         try:
             collection_name = self.collections["crypto_allocation"]
-            # Query to get all crypto portfolio allocation data
-            result = self.db[collection_name].find()
+            # Single folded collection — filter to the crypto portfolio; read camelCase fields.
+            result = self.db[collection_name].find({"portfolioId": CRYPTO_PORTFOLIO_ID})
 
             # Process the result and construct the crypto_portfolio_allocation dictionary
             crypto_portfolio_allocation = {}
             for doc in result:
                 symbol = doc["symbol"]
                 allocation_data = {
-                    "binance_symbol": doc.get("binance_symbol"),
-                    "allocation_percentage": doc["allocation_percentage"],
-                    "allocation_number": doc["allocation_number"],
-                    "allocation_decimal": doc["allocation_decimal"],
+                    "binance_symbol": doc.get("binanceSymbol"),
+                    "allocation_percentage": doc["allocationPercentage"],
+                    "allocation_number": doc["allocationNumber"],
+                    "allocation_decimal": doc["allocationDecimal"],
                     "description": doc["description"],
-                    "asset_type": doc["asset_type"]
+                    "asset_type": doc["assetType"]
                 }
                 crypto_portfolio_allocation[symbol] = allocation_data
 
@@ -122,8 +127,9 @@ class PortfolioDataService(MongoDBConnector):
                     "$project": {
                         "_id": {"$toString": "$_id"},  # Convert ObjectId to string
                         "date": 1,
-                        "percentage_of_daily_return": 1,
-                        "percentage_of_cumulative_return": 1
+                        # DB fields are camelCase post-migration; expose snake keys downstream.
+                        "percentage_of_daily_return": "$percentageOfDailyReturn",
+                        "percentage_of_cumulative_return": "$percentageOfCumulativeReturn"
                     }
                 }
             ]
