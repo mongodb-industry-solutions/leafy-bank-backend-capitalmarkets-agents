@@ -8,40 +8,41 @@ This repository hosts the backend for the **Capital Markets Agents** service, a 
 
 ### Key Features
 
--  **Automated Intelligence**: Daily scheduled analysis of market trends, financial news, and social media sentiment
--  **Dual Portfolio Support**: Separate analysis and recommendations for both traditional assets and cryptocurrency portfolios
--  **Multi-Source Sentiment Analysis**: AI-powered processing of news articles and Reddit discussions to gauge market sentiment
--  **Technical Analysis for Crypto**: Advanced momentum indicators (RSI, VWAP) and trend analysis for digital assets
--  **Vector Search**: Semantic understanding of financial content across news and social media beyond simple keyword matching
--  **Comprehensive Reporting**: Six specialized agents generating targeted insights for different investment aspects
+- **Automated Intelligence**: Daily scheduled analysis of market trends, financial news, and social media sentiment
+- **Dual Portfolio Support**: Separate analysis and recommendations for both traditional assets and cryptocurrency portfolios
+- **Multi-Source Sentiment Analysis**: AI-powered processing of news articles and Reddit discussions to gauge market sentiment
+- **Technical Analysis for Crypto**: Advanced momentum indicators (RSI, VWAP) and trend analysis for digital assets
+- **Vector Search**: Semantic understanding of financial content across news and social media beyond simple keyword matching
+- **Comprehensive Reporting**: Six specialized agents generating targeted insights for different investment aspects
 
 ### Technical Architecture
+
 The service is built on a modular foundation using:
 
--  **LangGraph**: For orchestrating complex, multi-step agent workflows
--  **MongoDB Atlas**: For data persistence, time series analysis, and vector search capabilities
--  **FastAPI**: For reliable, documented API endpoints
--  **Financial Data Integration**: With Yahoo Finance, Binance (crypto), FRED economic indicators, and Reddit social media data
+- **LangGraph**: For orchestrating complex, multi-step agent workflows
+- **MongoDB Atlas**: For data persistence, time series analysis, and vector search capabilities
+- **FastAPI**: For reliable, documented API endpoints
+- **Financial Data Integration**: With Yahoo Finance, Binance (crypto), FRED economic indicators, and Reddit social media data
 
 ## Agentic Workflows
 
 ### Traditional Market Agents
 
-####  1. Market Analysis Agent:
+#### 1. Market Analysis Agent:
 
 Analyzes asset trends, macroeconomic indicators, and market volatility to generate portfolio insights and recommendations.
 
 > [!IMPORTANT]
 > This agent workflow is scheduled to execute automatically **on a daily basis at 5:00 AM UTC**, delivering consistent market analysis reports for financial decision-making.
 
-####  2. Market News Agent:
+#### 2. Market News Agent:
 
 Processes financial news data to provide portfolio-specific sentiment analysis and summarized market intelligence, helping investors understand how current news may impact their investments.
 
 > [!IMPORTANT]
 > This agent workflow is scheduled to execute automatically **on a daily basis at 5:10 AM UTC**, delivering timely news sentiment reports for financial decision-making.
 
-####  3. Market Social Media Agent:
+#### 3. Market Social Media Agent:
 
 Analyzes social media sentiment from Reddit and other platforms to gauge market sentiment and community discussions around portfolio assets.
 
@@ -50,21 +51,21 @@ Analyzes social media sentiment from Reddit and other platforms to gauge market 
 
 ### Crypto-Focused Agents
 
-####  4. Crypto Analysis Agent:
+#### 4. Crypto Analysis Agent:
 
 Analyzes cryptocurrency trends, momentum indicators (RSI, VWAP, volume patterns), and provides crypto-specific portfolio recommendations based on technical analysis.
 
 > [!IMPORTANT]
 > This agent workflow is scheduled to execute automatically **on a daily basis at 5:30 AM UTC**, delivering crypto market analysis reports for digital asset decision-making.
 
-####  5. Crypto News Agent:
+#### 5. Crypto News Agent:
 
 Processes cryptocurrency-related news to provide sentiment analysis and insights specific to digital assets in the portfolio.
 
 > [!IMPORTANT]
 > This agent workflow is scheduled to execute automatically **on a daily basis at 5:40 AM UTC**, delivering crypto news sentiment reports for digital asset decision-making.
 
-####  6. Crypto Social Media Agent:
+#### 6. Crypto Social Media Agent:
 
 Monitors crypto-specific social media channels and communities to analyze sentiment and discussions around digital assets.
 
@@ -80,56 +81,56 @@ Monitors crypto-specific social media channels and communities to analyze sentim
 
 ### Traditional Market Agent Tools
 
--  **Accessible for Market Analysis Agent:** 
-   - **Portfolio Allocation Tool**: Retrieves current portfolio composition from MongoDB, including assets, descriptions, and allocation percentages.
-   - **Asset Trends Tool**: Analyzes price movements of portfolio assets by comparing current prices with 50-day moving averages to identify trends.
-   - **Macroeconomic Indicators Tool**: Evaluates key economic metrics (GDP, Effective Interest Rate, Unemployment Rate) from the FRED API to provide market context and asset allocation recommendations.
-   - **Market Volatility Tool**: Assesses market risk using VIX index data, calculating percentage changes and providing guidance on equity exposure.
-   - **Portfolio Overall Diagnosis Tool**: Generates comprehensive investment recommendations by synthesizing all analyses through an LLM (AWS Bedrock/Anthropic).
+- **Accessible for Market Analysis Agent:**
 
--  **Accessible for Market News Agent:** 
-   - **Portfolio Allocation Tool**: Retrieves current portfolio composition from MongoDB, including assets, descriptions, and allocation percentages.
-   - **Asset News Tool**: Uses MongoDB Atlas Vector Search to find relevant financial news articles for each portfolio asset, leveraging semantic search capabilities.
-   - **Asset News Summary Tool**: Performs sentiment analysis on financial news, calculates sentiment scores, and generates concise summaries using AWS Bedrock/Anthropic LLM.
+  - **Portfolio Allocation Tool**: Retrieves current portfolio composition from MongoDB, including assets, descriptions, and allocation percentages.
+  - **Asset Trends Tool**: Analyzes price movements of portfolio assets by comparing current prices with 50-day moving averages to identify trends.
+  - **Macroeconomic Indicators Tool**: Evaluates key economic metrics (GDP, Effective Interest Rate, Unemployment Rate) from the FRED API to provide market context and asset allocation recommendations.
+  - **Market Volatility Tool**: Assesses market risk using VIX index data, calculating percentage changes and providing guidance on equity exposure.
+  - **Portfolio Overall Diagnosis Tool**: Generates comprehensive investment recommendations by synthesizing all analyses through an LLM (AWS Bedrock/Anthropic).
+- **Accessible for Market News Agent:**
 
--  **Accessible for Market Social Media Agent:** 
-   - **Portfolio Allocation Tool**: Retrieves current portfolio composition from MongoDB, including assets, descriptions, and allocation percentages.
-   - **Social Media Retrieval Tool**: Uses MongoDB Atlas Vector Search to find relevant Reddit submissions and social media posts for each portfolio asset.
-   - **Social Media Sentiment Calculation Tool**: Analyzes sentiment scores from social media content using advanced NLP techniques.
-   - **Social Media Sentiment Summary Tool**: Generates comprehensive summaries of social media sentiment and discussions using AWS Bedrock/Anthropic LLM.
+  - **Portfolio Allocation Tool**: Retrieves current portfolio composition from MongoDB, including assets, descriptions, and allocation percentages.
+  - **Asset News Tool**: Uses MongoDB Atlas Vector Search to find relevant financial news articles for each portfolio asset, leveraging semantic search capabilities.
+  - **Asset News Summary Tool**: Performs sentiment analysis on financial news, calculates sentiment scores, and generates concise summaries using AWS Bedrock/Anthropic LLM.
+- **Accessible for Market Social Media Agent:**
+
+  - **Portfolio Allocation Tool**: Retrieves current portfolio composition from MongoDB, including assets, descriptions, and allocation percentages.
+  - **Social Media Retrieval Tool**: Uses MongoDB Atlas Vector Search to find relevant Reddit submissions and social media posts for each portfolio asset.
+  - **Social Media Sentiment Calculation Tool**: Analyzes sentiment scores from social media content using advanced NLP techniques.
+  - **Social Media Sentiment Summary Tool**: Generates comprehensive summaries of social media sentiment and discussions using AWS Bedrock/Anthropic LLM.
 
 ### Crypto Agent Tools
 
--  **Accessible for Crypto Analysis Agent:** 
-   - **Portfolio Allocation Tool**: Retrieves current crypto portfolio composition from MongoDB, including digital assets and allocation percentages.
-   - **Crypto Trends Tool**: Analyzes crypto price movements using multiple moving averages (9-day, 21-day, 50-day) to identify short, medium, and long-term trends.
-   - **Crypto Momentum Indicators Tool**: Calculates technical indicators including RSI (14-day), VWAP (14-day), and volume patterns (21-day average) for momentum analysis.
-   - **Crypto Portfolio Overall Diagnosis Tool**: Generates crypto-specific investment recommendations by synthesizing technical analysis through an LLM (AWS Bedrock/Anthropic).
+- **Accessible for Crypto Analysis Agent:**
 
--  **Accessible for Crypto News Agent:** 
-   - **Portfolio Allocation Tool**: Retrieves current crypto portfolio composition from MongoDB, including digital assets and allocation percentages.
-   - **Asset News Tool**: Uses MongoDB Atlas Vector Search to find relevant cryptocurrency news articles for each digital asset.
-   - **Asset News Summary Tool**: Performs sentiment analysis on crypto news, calculates sentiment scores, and generates crypto-focused summaries using AWS Bedrock/Anthropic LLM.
+  - **Portfolio Allocation Tool**: Retrieves current crypto portfolio composition from MongoDB, including digital assets and allocation percentages.
+  - **Crypto Trends Tool**: Analyzes crypto price movements using multiple moving averages (9-day, 21-day, 50-day) to identify short, medium, and long-term trends.
+  - **Crypto Momentum Indicators Tool**: Calculates technical indicators including RSI (14-day), VWAP (14-day), and volume patterns (21-day average) for momentum analysis.
+  - **Crypto Portfolio Overall Diagnosis Tool**: Generates crypto-specific investment recommendations by synthesizing technical analysis through an LLM (AWS Bedrock/Anthropic).
+- **Accessible for Crypto News Agent:**
 
--  **Accessible for Crypto Social Media Agent:** 
-   - **Portfolio Allocation Tool**: Retrieves current crypto portfolio composition from MongoDB, including digital assets and allocation percentages.
-   - **Social Media Retrieval Tool**: Uses MongoDB Atlas Vector Search to find relevant crypto-focused Reddit submissions and social media posts.
-   - **Social Media Sentiment Calculation Tool**: Analyzes sentiment scores from crypto community discussions using specialized NLP techniques.
-   - **Social Media Sentiment Summary Tool**: Generates comprehensive summaries of crypto social media sentiment and community insights using AWS Bedrock/Anthropic LLM.
-   
+  - **Portfolio Allocation Tool**: Retrieves current crypto portfolio composition from MongoDB, including digital assets and allocation percentages.
+  - **Asset News Tool**: Uses MongoDB Atlas Vector Search to find relevant cryptocurrency news articles for each digital asset.
+  - **Asset News Summary Tool**: Performs sentiment analysis on crypto news, calculates sentiment scores, and generates crypto-focused summaries using AWS Bedrock/Anthropic LLM.
+- **Accessible for Crypto Social Media Agent:**
+
+  - **Portfolio Allocation Tool**: Retrieves current crypto portfolio composition from MongoDB, including digital assets and allocation percentages.
+  - **Social Media Retrieval Tool**: Uses MongoDB Atlas Vector Search to find relevant crypto-focused Reddit submissions and social media posts.
+  - **Social Media Sentiment Calculation Tool**: Analyzes sentiment scores from crypto community discussions using specialized NLP techniques.
+  - **Social Media Sentiment Summary Tool**: Generates comprehensive summaries of crypto social media sentiment and community insights using AWS Bedrock/Anthropic LLM.
+
 #### News & Social Media Sentiment Logic (Vector Search)
 
 The sentiment analysis logic utilizes MongoDB's Vector Search capabilities to enhance the analysis of both financial news articles and social media content. The process involves several key components:
 
 1. **Semantic Search Implementation**: Using MongoDB's Vector Search capability, the system can find semantically similar content based on embeddings—identifying both explicit mentions of ticker symbols and contextually relevant content that doesn't directly reference them.
+2. **Multi-Source Sentiment Analysis**:
 
-2. **Multi-Source Sentiment Analysis**: 
    - **News Articles**: Traditional financial news from various sources
    - **Reddit Submissions**: Community discussions from relevant subreddits mapped to specific assets
    - **Crypto-Specific Content**: Specialized content from crypto news sources and communities
-
 3. **Portfolio Sentiment Calculation**: For each asset in the portfolio, the system calculates average sentiment scores from related content across all sources, providing consolidated sentiment indicators that help assess market and community perception.
-
 4. **Temporal Analysis**: The system tracks sentiment trends over time, enabling detection of sentiment shifts and momentum changes in both traditional and digital assets.
 
 This approach enables both explicit keyword matching and deeper semantic understanding across multiple content sources, offering more comprehensive insights than traditional text-based searches.
@@ -154,12 +155,9 @@ This combination of features enables the Capital Markets Agents service to maint
 
 ## The 4 Pillars of the Document Model
 
-1. **Easy**: [MongoDB's document model](https://www.mongodb.com/resources/basics/databases/document-databases) naturally fits with object-oriented programming, utilizing BSON documents that closely resemble JSON. This design simplifies the management of complex data structures such as user accounts, allowing developers to build features like account creation, retrieval, and updates with greater ease.
-
+1. **Easy**: [MongoDB&#39;s document model](https://www.mongodb.com/resources/basics/databases/document-databases) naturally fits with object-oriented programming, utilizing BSON documents that closely resemble JSON. This design simplifies the management of complex data structures such as user accounts, allowing developers to build features like account creation, retrieval, and updates with greater ease.
 2. **Fast**: Following the principle of "Data that is accessed together should be stored together," MongoDB enhances query performance. This approach ensures that related data—like user and account information—can be quickly retrieved, optimizing the speed of operations such as account look-ups or status checks, which is crucial in services demanding real-time access to operational data.
-
 3. **Flexible**: MongoDB's schema flexibility allows account models to evolve with changing business requirements. This adaptability lets financial services update account structures or add features without expensive and disruptive schema migrations, thus avoiding costly downtime often associated with structural changes.
-
 4. **Versatile**: The document model in MongoDB effectively handles a wide variety of data types, such as strings, numbers, booleans, arrays, objects, and even vectors. This versatility empowers applications to manage diverse account-related data, facilitating comprehensive solutions that integrate user, account, and transactional data seamlessly.
 
 ## MongoDB Key Features
@@ -205,7 +203,7 @@ Before you begin, ensure you have met the following requirements:
 
 - **MongoDB Atlas** account - [Register Here](https://account.mongodb.com/account/register)
 - **Python 3.10 or higher**
-- **Poetry** (install via [Poetry's official documentation](https://python-poetry.org/docs/#installation))
+- **Poetry** (install via [Poetry&#39;s official documentation](https://python-poetry.org/docs/#installation))
 
 ## Setup Instructions
 
@@ -213,13 +211,15 @@ Before you begin, ensure you have met the following requirements:
 
 1. Log in to **MongoDB Atlas** and create a database named `agentic_capital_markets`. Ensure the name is reflected in the environment variables.
 2. Create the following collections if they do not already exist:
-   
+
    **Core Collections:**
+
    - `agent_profiles` (for storing agent profiles)
    - `risk_profiles` (for storing investor risk profiles)
    - `chartMappings` (for storing chart mappings)
-   
+
    **Traditional Market Collections:**
+
    - `reports_market_analysis` (for storing market analysis reports)
    - `reports_market_news` (for storing market news reports)
    - `reports_market_sm` (for storing market social media reports)
@@ -228,22 +228,24 @@ Before you begin, ensure you have met the following requirements:
    - `financial_news` (for storing financial news articles)
    - `yfinanceMarketData` (for storing Yahoo Finance time series data)
    - `pyfredapiMacroeconomicIndicators` (for storing macroeconomic indicators)
-   
+
    **Crypto Collections:**
+
    - `reports_crypto_analysis` (for storing crypto analysis reports)
    - `reports_crypto_news` (for storing crypto news reports)
    - `reports_crypto_sm` (for storing crypto social media reports)
    - `crypto_portfolio_allocation` (for storing crypto portfolio allocation data)
    - `binanceCryptoData` (for storing Binance crypto time series data)
    - `stablecoin_market_caps` (for storing stablecoin market cap data)
-   
+
    **Social Media Collections:**
+
    - `subredditSubmissions` (for storing Reddit submissions)
    - `subredditMappings` (for storing asset-to-subreddit mappings)
 
 ### Step 2: Add MongoDB User
 
-Follow [MongoDB's guide](https://www.mongodb.com/docs/atlas/security-add-mongodb-users/) to create a user with **readWrite** access to the `agentic_capital_markets` database.
+Follow [MongoDB&#39;s guide](https://www.mongodb.com/docs/atlas/security-add-mongodb-users/) to create a user with **readWrite** access to the `agentic_capital_markets` database
 
 ## Configure Environment Variables
 
@@ -305,7 +307,7 @@ CRYPTO_LONG_MA=50
 
 ### Virtual Environment Setup with Poetry
 
-1. Open a terminal in the project root directory.
+1. Open a terminal in the project root directory
 2. Run the following commands:
    ```bash
    make poetry_start
@@ -344,6 +346,7 @@ You can access the comprehensive API documentation by visiting the following URL
 ```
 http://localhost:<PORT_NUMBER>/docs
 ```
+
 E.g. `http://localhost:8005/docs`
 
 The FastAPI interactive documentation provides detailed information about all available endpoints, including:
