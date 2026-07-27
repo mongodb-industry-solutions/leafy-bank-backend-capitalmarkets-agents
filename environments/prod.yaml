@@ -1,46 +1,52 @@
+# TEMPORARY — ist-prod green deployment (blue/green cutover).
+# Clone of prod.yaml; the ONLY difference is every envSecrets value points at the
+# green ksec group `capitalmarkets-sched-agents-bian` instead of `capitalmarkets-sched-agents`.
+# Deployed by the `production-bian` Drone pipeline on the `prod-green` branch.
+# At Phase 3 this file is renamed to prod.yaml and the temp pipeline is deleted.
+
 env:
   NODE_ENV: prod
-  
+
 envSecrets:
-  MONGODB_URI: capitalmarkets-sched-agents
-  DATABASE_NAME: capitalmarkets-sched-agents
-  APP_NAME: capitalmarkets-sched-agents
-  VOYAGE_API_KEY: capitalmarkets-sched-agents
-  EMBEDDINGS_MODEL_ID: capitalmarkets-sched-agents
-  AWS_REGION: capitalmarkets-sched-agents
-  CHAT_COMPLETIONS_MODEL_ID: capitalmarkets-sched-agents
-  YFINANCE_TIMESERIES_COLLECTION: capitalmarkets-sched-agents
-  CRYPTO_TIMESERIES_COLLECTION: capitalmarkets-sched-agents
-  PYFREDAPI_COLLECTION: capitalmarkets-sched-agents
-  SUBREDDIT_SUBMISSIONS_COLLECTION: capitalmarkets-sched-agents
-  SUBREDDIT_SUBMISSIONS_VECTOR_INDEX_NAME: capitalmarkets-sched-agents
-  SUBREDDIT_SUBMISSIONS_VECTOR_FIELD: capitalmarkets-sched-agents
-  NEWS_COLLECTION: capitalmarkets-sched-agents
-  NEWS_COLLECTION_VECTOR_FIELD: capitalmarkets-sched-agents
-  NEWS_VECTOR_INDEX_NAME: capitalmarkets-sched-agents
-  VECTOR_INDEX_NAME: capitalmarkets-sched-agents
-  VECTOR_FIELD: capitalmarkets-sched-agents
-  PORTFOLIO_PERFORMANCE_COLLECTION: capitalmarkets-sched-agents
-  PORTFOLIO_COLLECTION: capitalmarkets-sched-agents
-  CRYPTO_PORTFOLIO_COLLECTION: capitalmarkets-sched-agents
-  AGENT_PROFILES_COLLECTION: capitalmarkets-sched-agents
-  RISK_PROFILES_COLLECTION: capitalmarkets-sched-agents
-  REPORTS_COLLECTION_CRYPTO_ANALYSIS: capitalmarkets-sched-agents
-  REPORTS_COLLECTION_CRYPTO_SM: capitalmarkets-sched-agents
-  REPORTS_COLLECTION_CRYPTO_NEWS: capitalmarkets-sched-agents
-  REPORTS_COLLECTION_MARKET_ANALYSIS: capitalmarkets-sched-agents
-  REPORTS_COLLECTION_MARKET_SM: capitalmarkets-sched-agents
-  REPORTS_COLLECTION_MARKET_NEWS: capitalmarkets-sched-agents
-  CHART_MAPPINGS_COLLECTION: capitalmarkets-sched-agents
-  COINGECKO_STABLECOIN_COLLECTION: capitalmarkets-sched-agents
-  MA_PERIOD: capitalmarkets-sched-agents
-  CRYPTO_SHORT_MA: capitalmarkets-sched-agents
-  CRYPTO_MID_MA: capitalmarkets-sched-agents
-  CRYPTO_LONG_MA: capitalmarkets-sched-agents
-  CRYPTO_RSI_PERIOD: capitalmarkets-sched-agents
-  CRYPTO_VOLUME_PERIOD: capitalmarkets-sched-agents
-  CRYPTO_VWAP_PERIOD: capitalmarkets-sched-agents
-  NODE_ENV: capitalmarkets-sched-agents
+  MONGODB_URI: capitalmarkets-sched-agents-bian
+  DATABASE_NAME: capitalmarkets-sched-agents-bian
+  APP_NAME: capitalmarkets-sched-agents-bian
+  VOYAGE_API_KEY: capitalmarkets-sched-agents-bian
+  EMBEDDINGS_MODEL_ID: capitalmarkets-sched-agents-bian
+  AWS_REGION: capitalmarkets-sched-agents-bian
+  CHAT_COMPLETIONS_MODEL_ID: capitalmarkets-sched-agents-bian
+  YFINANCE_TIMESERIES_COLLECTION: capitalmarkets-sched-agents-bian
+  CRYPTO_TIMESERIES_COLLECTION: capitalmarkets-sched-agents-bian
+  PYFREDAPI_COLLECTION: capitalmarkets-sched-agents-bian
+  SUBREDDIT_SUBMISSIONS_COLLECTION: capitalmarkets-sched-agents-bian
+  SUBREDDIT_SUBMISSIONS_VECTOR_INDEX_NAME: capitalmarkets-sched-agents-bian
+  SUBREDDIT_SUBMISSIONS_VECTOR_FIELD: capitalmarkets-sched-agents-bian
+  NEWS_COLLECTION: capitalmarkets-sched-agents-bian
+  NEWS_COLLECTION_VECTOR_FIELD: capitalmarkets-sched-agents-bian
+  NEWS_VECTOR_INDEX_NAME: capitalmarkets-sched-agents-bian
+  VECTOR_INDEX_NAME: capitalmarkets-sched-agents-bian
+  VECTOR_FIELD: capitalmarkets-sched-agents-bian
+  PORTFOLIO_PERFORMANCE_COLLECTION: capitalmarkets-sched-agents-bian
+  PORTFOLIO_COLLECTION: capitalmarkets-sched-agents-bian
+  CRYPTO_PORTFOLIO_COLLECTION: capitalmarkets-sched-agents-bian
+  AGENT_PROFILES_COLLECTION: capitalmarkets-sched-agents-bian
+  RISK_PROFILES_COLLECTION: capitalmarkets-sched-agents-bian
+  REPORTS_COLLECTION_CRYPTO_ANALYSIS: capitalmarkets-sched-agents-bian
+  REPORTS_COLLECTION_CRYPTO_SM: capitalmarkets-sched-agents-bian
+  REPORTS_COLLECTION_CRYPTO_NEWS: capitalmarkets-sched-agents-bian
+  REPORTS_COLLECTION_MARKET_ANALYSIS: capitalmarkets-sched-agents-bian
+  REPORTS_COLLECTION_MARKET_SM: capitalmarkets-sched-agents-bian
+  REPORTS_COLLECTION_MARKET_NEWS: capitalmarkets-sched-agents-bian
+  CHART_MAPPINGS_COLLECTION: capitalmarkets-sched-agents-bian
+  COINGECKO_STABLECOIN_COLLECTION: capitalmarkets-sched-agents-bian
+  MA_PERIOD: capitalmarkets-sched-agents-bian
+  CRYPTO_SHORT_MA: capitalmarkets-sched-agents-bian
+  CRYPTO_MID_MA: capitalmarkets-sched-agents-bian
+  CRYPTO_LONG_MA: capitalmarkets-sched-agents-bian
+  CRYPTO_RSI_PERIOD: capitalmarkets-sched-agents-bian
+  CRYPTO_VOLUME_PERIOD: capitalmarkets-sched-agents-bian
+  CRYPTO_VWAP_PERIOD: capitalmarkets-sched-agents-bian
+  NODE_ENV: capitalmarkets-sched-agents-bian
 
 serviceAccount:
   enabled: true

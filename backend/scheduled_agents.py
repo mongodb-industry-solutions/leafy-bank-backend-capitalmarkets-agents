@@ -356,17 +356,17 @@ class ScheduledAgents:
 
         ### MARKET ANALYSIS WORKFLOW SCHEDULING ###
         # Define the schedule for the market analysis workflow
-        agent_market_analysis_workflow_time = dt.time(hour=5, minute=0, tzinfo=timezone.utc)
+        agent_market_analysis_workflow_time = dt.time(hour=7, minute=0, tzinfo=timezone.utc)
         self.scheduler.daily(agent_market_analysis_workflow_time, self.run_agent_market_an_wf)
 
         ### MARKET NEWS WORKFLOW SCHEDULING ###
         # Define the schedule for the market news workflow
-        agent_market_news_workflow_time = dt.time(hour=5, minute=10, tzinfo=timezone.utc)
+        agent_market_news_workflow_time = dt.time(hour=7, minute=10, tzinfo=timezone.utc)
         self.scheduler.daily(agent_market_news_workflow_time, self.run_agent_market_news_wf)
 
         ### MARKET SOCIAL MEDIA WORKFLOW SCHEDULING ###
         # Define the schedule for the market social media workflow
-        agent_market_sm_workflow_time = dt.time(hour=5, minute=20, tzinfo=timezone.utc)
+        agent_market_sm_workflow_time = dt.time(hour=7, minute=20, tzinfo=timezone.utc)
         self.scheduler.daily(agent_market_sm_workflow_time, self.run_agent_market_sm_wf)
 
         ################
@@ -375,17 +375,17 @@ class ScheduledAgents:
 
         ### CRYPTO ANALYSIS WORKFLOW SCHEDULING ###
         # Define the schedule for the crypto analysis workflow
-        agent_crypto_analysis_workflow_time = dt.time(hour=5, minute=30, tzinfo=timezone.utc)
+        agent_crypto_analysis_workflow_time = dt.time(hour=7, minute=30, tzinfo=timezone.utc)
         self.scheduler.daily(agent_crypto_analysis_workflow_time, self.run_agent_crypto_an_wf)
 
         ### CRYPTO NEWS WORKFLOW SCHEDULING ###
         # Define the schedule for the crypto news workflow
-        agent_crypto_news_workflow_time = dt.time(hour=5, minute=40, tzinfo=timezone.utc)
+        agent_crypto_news_workflow_time = dt.time(hour=7, minute=40, tzinfo=timezone.utc)
         self.scheduler.daily(agent_crypto_news_workflow_time, self.run_agent_crypto_news_wf)
 
         ### CRYPTO SOCIAL MEDIA WORKFLOW SCHEDULING ###
         # Define the schedule for the crypto social media workflow
-        agent_crypto_sm_workflow_time = dt.time(hour=5, minute=50, tzinfo=timezone.utc)
+        agent_crypto_sm_workflow_time = dt.time(hour=7, minute=50, tzinfo=timezone.utc)
         self.scheduler.daily(agent_crypto_sm_workflow_time, self.run_agent_crypto_sm_wf)
         
         logger.info("Scheduled jobs configured!")
