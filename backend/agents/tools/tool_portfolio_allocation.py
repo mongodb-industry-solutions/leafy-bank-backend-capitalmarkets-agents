@@ -22,6 +22,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Portfolio identities in the consolidated portfolioAllocation collection (equity + crypto
+# folded into one collection, distinguished by portfolioId).
+EQUITY_PORTFOLIO_ID = os.getenv("EQUITY_PORTFOLIO_ID", "PORT-0001")
+CRYPTO_PORTFOLIO_ID = os.getenv("CRYPTO_PORTFOLIO_ID", "PORT-0002")
+
 # Type variable for state - updated to include CryptoNewsAgentState
 StateType = TypeVar('StateType', MarketAnalysisAgentState, MarketNewsAgentState, MarketSocialMediaAgentState, CryptoAnalysisAgentState, CryptoSocialMediaAgentState, CryptoNewsAgentState)
 
@@ -46,38 +51,40 @@ class PortfolioAllocationTool(MongoDBConnector):
         if isinstance(state, (CryptoAnalysisAgentState, CryptoSocialMediaAgentState, CryptoNewsAgentState)):
             message = "[Tool] Check crypto portfolio allocation."
             collection = self.cryptos_collection
+            portfolio_id = CRYPTO_PORTFOLIO_ID
             # Fields for crypto portfolio - matching CryptoAnalysisAgentState.CryptoPortfolioAllocation
             projection = {
-                "symbol": 1, 
-                "asset_type": 1, 
-                "description": 1, 
-                "allocation_percentage": 1, 
+                "symbol": 1,
+                "assetType": 1,
+                "description": 1,
+                "allocationPercentage": 1,
                 "_id": 0
             }
         else:
             message = "[Tool] Check portfolio allocation."
             collection = self.traditional_assets_collection
+            portfolio_id = EQUITY_PORTFOLIO_ID
             # Fields for traditional portfolio - matching MarketAnalysisAgentState.PortfolioAllocation
             projection = {
-                "symbol": 1, 
-                "description": 1, 
-                "allocation_percentage": 1, 
+                "symbol": 1,
+                "description": 1,
+                "allocationPercentage": 1,
                 "_id": 0
             }
-        
+
         logger.info(message)
 
-        # Query the appropriate collection
-        results = list(collection.find({}, projection))
+        # Single folded collection — filter to this portfolio; read camelCase fields.
+        results = list(collection.find({"portfolioId": portfolio_id}, projection))
         
         # Transform the results into the required format based on state type
         if isinstance(state, (CryptoAnalysisAgentState, CryptoSocialMediaAgentState, CryptoNewsAgentState)):
             portfolio_allocation = [
                 {
                     "asset": result["symbol"],
-                    "asset_type": result.get("asset_type"),
+                    "asset_type": result.get("assetType"),
                     "description": result["description"],
-                    "allocation_percentage": result["allocation_percentage"]
+                    "allocation_percentage": result["allocationPercentage"]
                 }
                 for result in results
             ]
@@ -86,7 +93,7 @@ class PortfolioAllocationTool(MongoDBConnector):
                 {
                     "asset": result["symbol"],
                     "description": result["description"],
-                    "allocation_percentage": result["allocation_percentage"]
+                    "allocation_percentage": result["allocationPercentage"]
                 }
                 for result in results
             ]

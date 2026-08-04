@@ -3,7 +3,11 @@ from pydantic import BaseModel
 import logging
 from typing import Dict, List, Optional
 from datetime import datetime
-from service_portfolio_data import PortfolioDataService
+from service_portfolio_data import (
+    PortfolioDataService,
+    EQUITY_PORTFOLIO_ID,
+    CRYPTO_PORTFOLIO_ID,
+)
 
 # Configure logging
 logging.basicConfig(
@@ -15,86 +19,107 @@ logger = logging.getLogger(__name__)
 # Initialize the service
 portfolio_data_service = PortfolioDataService()
 
-# Create the router
-router = APIRouter(prefix="/portfolio", tags=["Portfolio Data"])
+# BIAN service-domain routes mounted at root (no /portfolio prefix). Verb in the URL,
+# instance id (portfolioId) in the path. Bodies/responses are camelCase (wire = storage).
+router = APIRouter(tags=["InvestmentPortfolio"])
 
 class AssetAllocation(BaseModel):
-    allocation_percentage: str
-    allocation_number: int
-    allocation_decimal: float
+    binanceSymbol: Optional[str] = None
+    allocationPercentage: str
+    allocationNumber: int
+    allocationDecimal: float
     description: str
-    asset_type: str
+    assetType: str
 
-class CryptoAssetAllocation(BaseModel):
-    binance_symbol: Optional[str] = None
-    allocation_percentage: str
-    allocation_number: int
-    allocation_decimal: float
-    description: str
-    asset_type: str
-
-class MessageResponse(BaseModel):
-    portfolio_allocation: Dict[str, AssetAllocation]
-
-class CryptoMessageResponse(BaseModel):
-    crypto_portfolio_allocation: Dict[str, CryptoAssetAllocation]
+class PortfolioAllocationResponse(BaseModel):
+    portfolioAllocation: Dict[str, AssetAllocation]
 
 class PerformanceDataPoint(BaseModel):
-    _id: str
     date: datetime
-    percentage_of_daily_return: float
-    percentage_of_cumulative_return: float
+    percentageOfDailyReturn: float
+    percentageOfCumulativeReturn: float
 
 class PerformanceResponse(BaseModel):
-    portfolio_performance: List[PerformanceDataPoint]
+    portfolioPerformance: List[PerformanceDataPoint]
 
 
-### Portfolio Data Endpoints ###
+def _allocation_to_camel(allocation: Dict[str, dict]) -> Dict[str, dict]:
+    """Translate the service's internal snake_case allocation dicts to camelCase wire shape."""
+    camel = {}
+    for symbol, data in allocation.items():
+        entry = {
+            "allocationPercentage": data["allocation_percentage"],
+            "allocationNumber": data["allocation_number"],
+            "allocationDecimal": data["allocation_decimal"],
+            "description": data["description"],
+            "assetType": data["asset_type"],
+        }
+        if data.get("binance_symbol") is not None:
+            entry["binanceSymbol"] = data["binance_symbol"]
+        camel[symbol] = entry
+    return camel
 
-@router.get("/fetch-portfolio-allocation", response_model=MessageResponse)
-async def fetch_portfolio_allocation():
+
+### InvestmentPortfolioPlanning — allocation (BIAN SD) ###
+
+@router.get(
+    "/InvestmentPortfolioPlanning/{portfolio_id}/Retrieve",
+    response_model=PortfolioAllocationResponse,
+    response_model_exclude_none=True,
+)
+async def retrieve_portfolio_allocation(portfolio_id: str):
     """
-    Fetch portfolio allocation data.
+    Retrieve portfolio allocation for a portfolio instance.
+
+    The equity (PORT-0001) and crypto (PORT-0002) portfolios live in one folded
+    collection, selected by the portfolioId in the path.
 
     Returns:
-        MessageResponse: An object containing the portfolio allocation data.
+        PortfolioAllocationResponse: camelCase allocation keyed by asset symbol.
     """
     try:
-        portfolio_allocation = portfolio_data_service.fetch_portfolio_allocation()
-        return MessageResponse(portfolio_allocation=portfolio_allocation)
+        if portfolio_id == EQUITY_PORTFOLIO_ID:
+            allocation = portfolio_data_service.fetch_portfolio_allocation()
+        elif portfolio_id == CRYPTO_PORTFOLIO_ID:
+            allocation = portfolio_data_service.fetch_crypto_portfolio_allocation()
+        else:
+            raise HTTPException(status_code=404, detail=f"Unknown portfolioId: {portfolio_id}")
+        return PortfolioAllocationResponse(portfolioAllocation=_allocation_to_camel(allocation))
+    except HTTPException:
+        raise
     except Exception as e:
-        logging.error(f"Error fetching portfolio allocation: {str(e)}")
+        logging.error(f"Error retrieving portfolio allocation for {portfolio_id}: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.get("/fetch-crypto-portfolio-allocation", response_model=CryptoMessageResponse)
-async def fetch_crypto_portfolio_allocation():
-    """
-    Fetch crypto portfolio allocation data.
 
-    Returns:
-        CryptoMessageResponse: An object containing the crypto portfolio allocation data.
-    """
-    try:
-        crypto_portfolio_allocation = portfolio_data_service.fetch_crypto_portfolio_allocation()
-        return CryptoMessageResponse(crypto_portfolio_allocation=crypto_portfolio_allocation)
-    except Exception as e:
-        logging.error(f"Error fetching crypto portfolio allocation: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+### InvestmentPortfolioAnalysis — performance (BIAN SD) ###
 
-@router.get("/fetch-portfolio-performance", response_model=PerformanceResponse)
-async def fetch_portfolio_performance(days: int = Query(30, description="Number of days of performance data to retrieve")):
+@router.get(
+    "/InvestmentPortfolioAnalysis/{portfolio_id}/PerformanceAnalysis/Retrieve",
+    response_model=PerformanceResponse,
+)
+async def retrieve_portfolio_performance(
+    portfolio_id: str,
+    days: int = Query(30, description="Number of days of performance data to retrieve"),
+):
     """
-    Fetch the last N days of portfolio performance data.
-    
+    Retrieve the last N days of performance for a portfolio instance, newest first.
+
     Args:
+        portfolio_id: Portfolio instance id (PORT-0001 today — single performance series).
         days: Number of days of performance data to retrieve. Default is 30.
-    
-    Returns:
-        PerformanceResponse: An object containing the portfolio performance data sorted by date (newest first).
     """
     try:
-        portfolio_performance = portfolio_data_service.fetch_most_recent_portfolio_performance(days=days)
-        return PerformanceResponse(portfolio_performance=portfolio_performance)
+        performance = portfolio_data_service.fetch_most_recent_portfolio_performance(days=days)
+        points = [
+            {
+                "date": doc["date"],
+                "percentageOfDailyReturn": doc["percentage_of_daily_return"],
+                "percentageOfCumulativeReturn": doc["percentage_of_cumulative_return"],
+            }
+            for doc in performance
+        ]
+        return PerformanceResponse(portfolioPerformance=points)
     except Exception as e:
-        logging.error(f"Error fetching portfolio performance: {str(e)}")
+        logging.error(f"Error retrieving portfolio performance for {portfolio_id}: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))

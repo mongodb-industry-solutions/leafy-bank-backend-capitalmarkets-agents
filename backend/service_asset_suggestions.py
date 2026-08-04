@@ -13,6 +13,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Equity portfolio identity in the consolidated portfolioAllocation collection.
+EQUITY_PORTFOLIO_ID = os.getenv("EQUITY_PORTFOLIO_ID", "PORT-0001")
+
 class AssetSuggestions(MongoDBConnector):
     """
     Service class for generating asset allocation suggestions based on macroeconomic indicators.
@@ -71,15 +74,15 @@ class AssetSuggestions(MongoDBConnector):
             portfolio_collection = self.collections["portfolio_allocation"]
             portfolio_allocation = {}
             try:
-                cursor = self.db[portfolio_collection].find()
+                cursor = self.db[portfolio_collection].find({"portfolioId": EQUITY_PORTFOLIO_ID})
                 for doc in cursor:
                     symbol = doc["symbol"]
                     portfolio_allocation[symbol] = {
-                        "allocation_percentage": doc.get("allocation_percentage"),
-                        "allocation_number": doc.get("allocation_number"),
-                        "allocation_decimal": doc.get("allocation_decimal"),
+                        "allocation_percentage": doc.get("allocationPercentage"),
+                        "allocation_number": doc.get("allocationNumber"),
+                        "allocation_decimal": doc.get("allocationDecimal"),
                         "description": doc.get("description"),
-                        "asset_type": doc.get("asset_type")
+                        "asset_type": doc.get("assetType")
                     }
             except Exception as e:
                 logger.error(f"Error fetching portfolio allocation: {e}")
@@ -297,15 +300,15 @@ class AssetSuggestions(MongoDBConnector):
             portfolio_collection = self.collections["portfolio_allocation"]
             portfolio_allocation = {}
             try:
-                cursor = self.db[portfolio_collection].find()
+                cursor = self.db[portfolio_collection].find({"portfolioId": EQUITY_PORTFOLIO_ID})
                 for doc in cursor:
                     symbol = doc["symbol"]
                     portfolio_allocation[symbol] = {
-                        "allocation_percentage": doc.get("allocation_percentage"),
-                        "allocation_number": doc.get("allocation_number"),
-                        "allocation_decimal": doc.get("allocation_decimal"),
+                        "allocation_percentage": doc.get("allocationPercentage"),
+                        "allocation_number": doc.get("allocationNumber"),
+                        "allocation_decimal": doc.get("allocationDecimal"),
                         "description": doc.get("description"),
-                        "asset_type": doc.get("asset_type")
+                        "asset_type": doc.get("assetType")
                     }
             except Exception as e:
                 logger.error(f"Error fetching portfolio allocation: {e}")
