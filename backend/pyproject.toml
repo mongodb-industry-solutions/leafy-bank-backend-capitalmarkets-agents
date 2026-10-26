@@ -6,7 +6,7 @@ authors = ["Julian Boronat <julian.boronat@mongodb.com>"]
 package-mode = false
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.11"
+python = ">=3.11,<3.12"
 pymongo = "^4.10.1"
 python-dotenv = "^1.0.1"
 fastapi = "^0.115.4"
@@ -19,6 +19,7 @@ grandalf = "^0.8"
 voyageai = "^0.3.2"
 scheduler = "^0.8.8"
 pytz = "^2025.2"
+pillow = ">=13.0.0"
 
 
 [build-system]
