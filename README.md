@@ -202,7 +202,7 @@ This combination of features enables the Capital Markets Agents service to maint
 Before you begin, ensure you have met the following requirements:
 
 - **MongoDB Atlas** account - [Register Here](https://account.mongodb.com/account/register)
-- **Python 3.10 or higher**
+- **Python 3.11 or higher**
 - **Poetry** (install via [Poetry&#39;s official documentation](https://python-poetry.org/docs/#installation))
 
 ## Setup Instructions
