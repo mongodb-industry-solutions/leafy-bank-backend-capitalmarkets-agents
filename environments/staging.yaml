@@ -47,3 +47,24 @@ serviceAccount:
   irsa:
     accountId: "275662791714"
     roleName: "kanopy-staging-cicd-irsa"
+
+# See environments/prod.yaml for why these exist.
+probes:
+  enabled: true
+  path: /
+  startup:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 3
+    successThreshold: 1
+    failureThreshold: 18
+  readiness:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 3
+    failureThreshold: 3
+  liveness:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 3
+    failureThreshold: 6

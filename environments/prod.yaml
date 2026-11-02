@@ -53,3 +53,30 @@ serviceAccount:
   irsa:
     accountId: "275662791714"
     roleName: "kanopy-prod-cicd-irsa"
+
+
+# Health checks. `probes.enabled` defaults to false in the chart, which is why
+# a pod that failed to start could sit in the Service endpoints serving 503s
+# until someone restarted it by hand.
+#
+# Importing main.py takes ~40s (module-level Mongo round trips), so the startup
+# probe holds liveness/readiness off until the app actually binds :8080.
+probes:
+  enabled: true
+  path: /
+  startup:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 3
+    successThreshold: 1
+    failureThreshold: 18
+  readiness:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 3
+    failureThreshold: 3
+  liveness:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 3
+    failureThreshold: 6

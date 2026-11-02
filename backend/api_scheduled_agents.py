@@ -212,5 +212,9 @@ def start_scheduler():
     scheduler.start()
 
 scheduler = ScheduledAgents()
-scheduler_thread = threading.Thread(target=start_scheduler)
+# daemon=True so this thread never keeps the interpreter alive on its own. Without
+# it, a failure while importing main.py leaves the process running with nothing
+# listening on :8080 — the container stays Running, restartCount 0, and every
+# request 503s until someone restarts the pod by hand.
+scheduler_thread = threading.Thread(target=start_scheduler, daemon=True)
 scheduler_thread.start()
