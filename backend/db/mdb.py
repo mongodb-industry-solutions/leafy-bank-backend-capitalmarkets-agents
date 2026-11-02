@@ -20,7 +20,16 @@ class MongoDBConnector:
         self.uri = uri or os.getenv("MONGODB_URI")
         self.database_name = database_name or os.getenv("DATABASE_NAME")
         self.appname = appname or os.getenv("APP_NAME")
-        self.client = MongoClient(self.uri, appname=self.appname)
+        # pymongo defaults socketTimeoutMS to None, which lets a read block forever.
+        # Subclasses run queries at import time, so an unbounded read there hangs
+        # startup indefinitely and the app never binds its port.
+        self.client = MongoClient(
+            self.uri,
+            appname=self.appname,
+            serverSelectionTimeoutMS=int(os.getenv("MONGODB_SERVER_SELECTION_TIMEOUT_MS", "10000")),
+            connectTimeoutMS=int(os.getenv("MONGODB_CONNECT_TIMEOUT_MS", "10000")),
+            socketTimeoutMS=int(os.getenv("MONGODB_SOCKET_TIMEOUT_MS", "60000")),
+        )
         self.db = self.client[self.database_name]
 
     def get_collection(self, collection_name):
